@@ -1,5 +1,5 @@
 [cide]
-cloud
+cloud ansible_user=demid
 
 [home]
 127.0.0.1

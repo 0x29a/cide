@@ -1,0 +1,14 @@
+- name: Import the example role
+  import_role:
+    name: ansible-role-security
+
+- name: By default allow only ssh
+  ufw:
+    rule: allow
+    port: "{{ security_ssh_port }}"
+    proto: tcp
+
+- name: Set firewall default policy
+  ufw:
+    state: enabled
+    policy: reject

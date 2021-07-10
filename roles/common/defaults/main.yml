@@ -1,0 +1,6 @@
+server_hostname: cide
+server_dependencies: 
+  - htop
+  - sudo
+  - git
+  - ufw

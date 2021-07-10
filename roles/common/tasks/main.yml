@@ -1,0 +1,16 @@
+---
+
+- name: Set the hostname
+  hostname:
+    name: "{{ server_hostname }}"
+
+- name: apt-get update, dist-upgrade and autoremove
+  apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes
+
+- name: Install dependencies
+  apt:
+    name: "{{ server_dependencies }}"
+    state: present

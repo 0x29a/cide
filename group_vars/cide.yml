@@ -1,5 +1,9 @@
+# Common
+username: demid
+user_password: "CHANGE_ME"
+
 # For https://github.com/geerlingguy/ansible-role-security
 security_autoupdate_mail_to: "public@demid.dev"
 security_sudoers_passworded:
-  - demid
+  - "{{ username }}"
 security_ssh_port: 2123
