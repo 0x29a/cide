@@ -1,0 +1,105 @@
+---
+
+- name: Install zsh.
+  apt:
+    name: zsh
+    state: present
+
+- name: Check if .oh-my-zsh exists.
+  stat:
+    path: "/home/{{ username }}/.oh-my-zsh"
+  register: stat_oh_my_zsh_result
+
+- name: Install Oh My Zsh.
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  become_user: "{{ username }}"
+  when: not stat_oh_my_zsh_result.stat.exists
+
+- name: Copy zshrc.
+  template:
+    src: .zshrc.j2
+    dest: "/home/{{ username }}/.zshrc"
+
+- name: Change shell to zsh.
+  become: yes
+  user:
+    name: "{{ username }}"
+    shell: /bin/zsh
+
+- name: Check if pyenv exists.
+  stat:
+    path: "/home/{{ username }}/.pyenv"
+  register: stat_pyenv_result
+
+- name: Install pyenv.
+  shell: git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  when: not stat_pyenv_result.stat.exists
+
+- name: Check if pyenv-virtualenv exists.
+  stat:
+    path: "/home/{{ username }}/.pyenv/plugins/pyenv-virtualenv"
+  register: stat_pyenv_virtualenv_result
+
+- name: Install pyenv-virtualenv.
+  shell: "git clone https://github.com/pyenv/pyenv-virtualenv.git /home/{{ username }}/.pyenv/plugins/pyenv-virtualenv"
+  when: not stat_pyenv_virtualenv_result.stat.exists
+
+- name: Add HashiCorp key.
+  become: yes
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add HashiCorp repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }} main"
+    state: present
+
+- name: Install HashiCorp tools.
+  become: yes
+  apt:
+    name:
+      - vagrant
+      - terraform
+      - vault
+    update_cache: yes
+    state: present
+
+- name: Add Docker key.
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+    state: present
+
+- name: Install Docker.
+  become: yes
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    update_cache: yes
+    state: present
+
+- name: Ensure user is added to the docker group.
+  become: yes
+  user:
+    name: "{{ username }}"
+    groups: docker
+    append: true
+
+- name: Install pipx.
+  shell: python3 -m pip install --user pipx
+
+- name: Install ipython.
+  shell: "/home/{{ username }}/.local/bin/pipx install ipython"
+
+- name: Install docker-compose.
+  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose"

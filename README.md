@@ -7,3 +7,8 @@ Then, run:
 ```bash
 ansible-playbook -i hosts cide.yml
 ```
+
+
+Host cloud
+  HostName cloud
+  Port 2123

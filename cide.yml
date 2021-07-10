@@ -3,9 +3,12 @@
 
 - name: Set up CIDE.
   hosts: cide
-  become: yes
   roles:
     - role: common
+      become: yes
       tags: 'common'
     - role: security
+      become: yes
       tags: 'security'
+    - role: development
+      tags: 'development'
