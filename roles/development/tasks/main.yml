@@ -99,7 +99,24 @@
   shell: python3 -m pip install --user pipx
 
 - name: Install ipython.
-  shell: "/home/{{ username }}/.local/bin/pipx install ipython"
+  shell: "/home/{{ username }}/.local/bin/pipx install ipython --force"
 
 - name: Install docker-compose.
-  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose"
+  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose --force"
+
+- name: Download and install ufw-docker.
+  become: yes
+  get_url:
+    url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+    dest: /usr/local/bin/ufw-docker
+    mode: a+x
+
+- name: Install ufw-docker rules
+  become: yes
+  shell: ufw-docker install
+
+- name: Restart ufw
+  become: yes
+  service:
+    name: ufw
+    state: restarted
