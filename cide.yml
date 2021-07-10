@@ -1,0 +1,9 @@
+---
+# Playbook for setting up everything.
+
+- name: Set up CIDE.
+  hosts: cide
+  become: true
+  roles:
+    - role: common
+      tags: 'common'
