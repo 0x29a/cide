@@ -1,0 +1,5 @@
+# For https://github.com/geerlingguy/ansible-role-security
+security_autoupdate_mail_to: "public@demid.dev"
+security_sudoers_passworded:
+  - demid
+security_ssh_port: 2123
