@@ -1,0 +1,3 @@
+[submodule "roles/ansible-role-security"]
+	path = roles/ansible-role-security
+	url = git@github.com:geerlingguy/ansible-role-security.git
