@@ -15,6 +15,16 @@
         groups: sudo
         append: yes
 
+    - name: Add .ssh directory
+      file:
+        path: "{{ home_directory }}/.ssh"
+        state: "directory"
+        mode: 0700
+        owner: "{{ username }}"
+        group: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
+
     - name: Install the SSH private key used for working with repos.
       copy:
         content: "{{ private_ssh_key }}"

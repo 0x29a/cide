@@ -9,7 +9,7 @@
     dest: "{{ home_directory }}/Projects/vladick_bar/bar.png"
 
 - name: Install gunicorn.
-  shell: "{{ home_directory }}/.local/bin/pipx install flask"
+  shell: "{{ home_directory }}/.local/bin/pipx install gunicorn"
   ignore_errors: yes
 
 - name: Inject flask to gunicorn virtualenv.

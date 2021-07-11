@@ -10,6 +10,7 @@
     state: directory
 
 - name: Install zsh.
+  become: yes
   apt:
     name: zsh
     state: present
@@ -130,11 +131,6 @@
 
 - name: Install pipx.
   shell: python3 -m pip install --user pipx
-
-- name: Check if ipython installed.
-  shell: which ipython
-  register: ipython_installed
-  ignore_errors: yes
 
 - name: Install ipython.
   shell: "/home/{{ username }}/.local/bin/pipx install ipython"
