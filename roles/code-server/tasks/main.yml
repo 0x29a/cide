@@ -1,0 +1,133 @@
+- name: Create bar directory.
+  file:
+    path: "{{ home_directory }}/Projects/vladick_bar"
+    state: directory
+
+- name: Copy bar menu.
+  copy:
+    src: bar.png
+    dest: "{{ home_directory }}/Projects/vladick_bar/bar.png"
+
+- name: Install gunicorn.
+  shell: "{{ home_directory }}/.local/bin/pipx install flask"
+  ignore_errors: yes
+
+- name: Inject flask to gunicorn virtualenv.
+  shell: "{{ home_directory }}/.local/bin/pipx inject gunicorn flask"
+
+- name: Inject requests to gunicorn virtualenv.
+  shell: "{{ home_directory }}/.local/bin/pipx inject gunicorn requests"
+
+- name: Create healthcheck directory.
+  file:
+    path: "{{ home_directory }}/Soft/code-server-healthcheck"
+    state: directory
+
+- name: Create healthcheck file.
+  template:
+    src: "healthcheck.py.j2"
+    dest: "{{ home_directory }}/Soft/code-server-healthcheck/healthcheck.py"
+
+- name: Copy screen session configuration.
+  template:
+    src: "screenrc.j2"
+    dest: "{{ screenrc_path }}"
+
+- name: Copy systemd service file
+  become: yes
+  template:
+    src: "screen.service.j2"
+    dest: "/etc/systemd/system/screen.service"
+
+- name: Enable and start systemd service to start on boot automatically
+  become: yes
+  systemd:
+    daemon-reload: yes
+    name: screen.service
+    enabled: yes
+    state: started
+
+- name: Install code-server.
+  become: yes
+  apt:
+    deb: "{{ code_server_deb }}"
+
+- name: Enable code-server service.
+  become: yes
+  shell: "systemctl enable --now code-server@{{ username }}"
+
+- name: Copy code-server config.
+  template:
+    src: "code-server-config.yml.j2"
+    dest: "{{ home_directory }}/.config/code-server/config.yaml"
+
+- name: Create vscode user directory.
+  file:
+    path: "{{ home_directory }}/.local/share/code-server/User"
+    state: directory
+
+- name: Copy vscode settings.
+  template:
+    src: "vs_code_settings.json"
+    dest: "{{ home_directory }}/.local/share/code-server/User/settings.json"
+
+- name: Restart code-server.
+  shell: systemctl --user restart code-server
+
+- name: Add Caddy key.
+  become: yes
+  apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    state: present
+
+- name: Add Caddy repo.
+  become: yes
+  apt_repository:
+    repo: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    state: present
+
+- name: Add Caddy sources repo.
+  become: yes
+  apt_repository:
+    repo: deb-src https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    state: present
+
+- name: Install Caddy.
+  become: yes
+  apt:
+    name: caddy
+    update_cache: yes
+    state: present
+
+- name: Copy Caddy config.
+  become: true
+  template:
+    src: "Caddyfile.j2"
+    dest: "/etc/caddy/Caddyfile"
+
+- name: Restart Caddy.
+  become: yes
+  systemd:
+    name: caddy
+    state: restarted
+
+- name: Allow healthcheck port.
+  become: yes
+  ufw:
+    rule: allow
+    port: 57666
+    proto: tcp
+
+- name: Allow HTTP port.
+  become: yes
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+- name: Allow HTTPS port.
+  become: yes
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp

@@ -136,7 +136,7 @@ dmypy.json
 .pytype/
 
 # private variables
-vars.private.yml
+.vars.private.yml
 
 # Cython debug symbols
 cython_debug/

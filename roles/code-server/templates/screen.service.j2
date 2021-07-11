@@ -1,0 +1,11 @@
+[Unit]
+Description=Screen session running healthcheck and other tools.
+
+[Service]
+ExecStart=/usr/bin/screen -D -m -c {{ screenrc_path }}
+Restart=no
+User={{ username }}
+Group={{ username }}
+
+[Install]
+WantedBy=multi-user.target

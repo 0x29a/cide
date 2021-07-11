@@ -1,4 +1,13 @@
 ---
+- name: Create soft directory
+  file:
+    path: /home/{{ username }}/Soft
+    state: directory
+
+- name: Create projects directory
+  file:
+    path: /home/{{ username }}/Projects
+    state: directory
 
 - name: Install zsh.
   apt:
@@ -25,6 +34,11 @@
   user:
     name: "{{ username }}"
     shell: /bin/zsh
+
+- name: Copy zsh history.
+  copy:
+    src: .zsh_history
+    dest: "/home/{{ username }}/.zsh_history"
 
 - name: Check if pyenv exists.
   stat:
@@ -95,14 +109,40 @@
     groups: docker
     append: true
 
+- name: Add VirtualBox key.
+  become: yes
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+
+- name: Add VirtualBox repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release | lower }} contrib"
+    state: present
+
+- name: Install VirtualBox.
+  become: yes
+  apt:
+    name: virtualbox
+    update_cache: yes
+    state: present
+
 - name: Install pipx.
   shell: python3 -m pip install --user pipx
 
+- name: Check if ipython installed.
+  shell: which ipython
+  register: ipython_installed
+  ignore_errors: yes
+
 - name: Install ipython.
-  shell: "/home/{{ username }}/.local/bin/pipx install ipython --force"
+  shell: "/home/{{ username }}/.local/bin/pipx install ipython"
+  ignore_errors: yes
 
 - name: Install docker-compose.
-  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose --force"
+  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose"
+  ignore_errors: yes
 
 - name: Download and install ufw-docker.
   become: yes

@@ -9,3 +9,4 @@ server_dependencies:
   - python3-pip
   - build-essential
   - python3-venv
+  - screen
