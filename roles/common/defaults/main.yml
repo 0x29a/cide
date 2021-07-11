@@ -10,3 +10,4 @@ server_dependencies:
   - build-essential
   - python3-venv
   - screen
+  - ripgrep

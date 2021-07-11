@@ -1,5 +1,5 @@
 [cide]
-68.183.79.142 ansible_user=demid
+cloud ansible_user=demid
 
 [home]
 127.0.0.1
