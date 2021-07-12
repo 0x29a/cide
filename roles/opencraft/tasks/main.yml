@@ -1,0 +1,3 @@
+- name: Install tutor.
+  shell: "{{ home_directory }}/.local/bin/pipx install tutor"
+  ignore_errors: yes

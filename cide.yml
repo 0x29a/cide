@@ -16,3 +16,5 @@
       tags: 'development'
     - role: code-server
       tags: 'code-server'
+    - role: opencraft
+      tags: 'opencraft'

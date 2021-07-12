@@ -1,26 +1,55 @@
-Before, add this alias to `/etc/hosts`:
-```
-<ip_address> cloud
-```
+# CIDE
 
-Then, run:
-```bash
-ansible-playbook -i hosts cide.yml
-```
+This repository contains playbooks and roles I use to deploy my personal cloud IDE based on [code-server](https://github.com/cdr/code-server).
 
+## Getting Started
 
-Host cloud
-  HostName cloud
-  Port 2123
+### Dependencies
 
+* python3
+* python3-virtualenv
 
-vscode addons:
+### Installing
 
-bungcip.better-toml
-ms-azuretools.vscode-docker
-dbaeumer.vscode-eslint
-eamodio.gitlens
-ms-toolsai.jupyter
-ms-python.python
-vscode-icons-team.vscode-icons
-redhat.vscode-yaml
+1. Clone this repo:
+    ```bash
+    git clone --recurse-submodules git@github.com:0x29a/cide.git && cd cide
+    ```
+1. Create virtual environment and install requirements
+    ```bash
+    virtualenv -p python3 .fenv
+    . .fenv/bin/activate
+    pip install -r requirements.txt
+    ```
+
+### Provisioning CIDE
+
+1. Add the following to `/etc/hosts`:
+    ```
+    <ide_server_ip_address> cloud
+    ```
+1. Put all necessary secrets to `.vars.private.yml`.
+1. [optinal] Put zsh history to `roles/development/files/.zsh_history`.
+1. Run playbook to deploy user and SSH keys:
+    ```bash
+    make init
+    ```
+1. If user and SSH keys were deployed successfully, deploy everything else:
+    ```
+    make deploy
+    ```
+1. Change default SSH port for CIDE, add the following to `~/.ssh/config`:
+    ```
+    Host cloud
+        HostName cloud
+        Port 2123
+    ```
+1. Open SSH tunnel, open `127.0.0.1:8137` and install these addons:
+    1. `bungcip.better-toml`
+    1. `ms-azuretools.vscode-docker`
+    1. `dbaeumer.vscode-eslint`
+    1. `eamodio.gitlens`
+    1. `ms-toolsai.jupyter`.
+    1. `ms-python.python`.
+    1. `vscode-icons-team.vscode-icons`.
+    1. `redhat.vscode-yaml`.
