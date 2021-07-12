@@ -43,6 +43,7 @@ This repository contains playbooks and roles I use to deploy my personal cloud I
     Host cloud
         HostName cloud
         Port 2123
+        ForwardAgent yes
     ```
 1. Open SSH tunnel, open `127.0.0.1:8137` and install these addons:
     1. `bungcip.better-toml`

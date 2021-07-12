@@ -8,13 +8,13 @@
   roles:
     - role: common
       become: yes
-      tags: 'common'
+      tags: common
     - role: security
       become: yes
-      tags: 'security'
+      tags: security
     - role: development
-      tags: 'development'
+      tags: development
     - role: code-server
-      tags: 'code-server'
+      tags: code-server
     - role: opencraft
-      tags: 'opencraft'
+      tags: opencraft

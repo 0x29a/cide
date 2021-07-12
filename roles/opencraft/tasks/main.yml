@@ -1,3 +1,19 @@
 - name: Install tutor.
   shell: "{{ home_directory }}/.local/bin/pipx install tutor"
   ignore_errors: yes
+
+- name: Clone spm_utils.
+  git:
+    repo: git@github.com:0x29a/spm_utils.git
+    dest: "{{ home_directory }}/Projects/spm_utils"
+    accept_hostkey: yes
+
+- name: Install spm_utils requirements.
+  pip:
+    requirements: "{{ home_directory }}/Projects/spm_utils/requirements.txt"
+    virtualenv: "{{ home_directory }}/Projects/spm_utils/.fenv"
+
+- name: Create .env for spm_utils.
+  template:
+    src: spm_utils_env.j2
+    dest: "{{ home_directory }}/Projects/spm_utils/.env"
