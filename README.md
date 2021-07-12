@@ -28,7 +28,10 @@ This repository contains playbooks and roles I use to deploy my personal cloud I
     ```
     <ide_server_ip_address> cloud
     ```
-1. Put all necessary secrets to `.vars.private.yml`.
+1. Create `.vars.private.yml` and put to it all necessary secrets:
+    ```bash
+    cp example.vars.private.yml .vars.private.yml
+    ```
 1. [optinal] Put zsh history to `roles/development/files/.zsh_history`.
 1. Run playbook to deploy user and SSH keys:
     ```bash
