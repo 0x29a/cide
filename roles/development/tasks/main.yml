@@ -1,12 +1,12 @@
 ---
 - name: Create soft directory
   file:
-    path: /home/{{ username }}/Soft
+    path: "{{ home_directory }}/Soft"
     state: directory
 
 - name: Create projects directory
   file:
-    path: /home/{{ username }}/Projects
+    path: "{{ home_directory }}/Projects"
     state: directory
 
 - name: Install zsh.
@@ -17,7 +17,7 @@
 
 - name: Check if .oh-my-zsh exists.
   stat:
-    path: "/home/{{ username }}/.oh-my-zsh"
+    path: "{{ home_directory }}/.oh-my-zsh"
   register: stat_oh_my_zsh_result
 
 - name: Install Oh My Zsh.
@@ -28,7 +28,7 @@
 - name: Copy zshrc.
   template:
     src: .zshrc.j2
-    dest: "/home/{{ username }}/.zshrc"
+    dest: "{{ home_directory }}/.zshrc"
 
 - name: Change shell to zsh.
   become: yes
@@ -39,11 +39,11 @@
 - name: Copy zsh history.
   copy:
     src: .zsh_history
-    dest: "/home/{{ username }}/.zsh_history"
+    dest: "{{ home_directory }}/.zsh_history"
 
 - name: Check if pyenv exists.
   stat:
-    path: "/home/{{ username }}/.pyenv"
+    path: "{{ home_directory }}/.pyenv"
   register: stat_pyenv_result
 
 - name: Install pyenv.
@@ -52,11 +52,11 @@
 
 - name: Check if pyenv-virtualenv exists.
   stat:
-    path: "/home/{{ username }}/.pyenv/plugins/pyenv-virtualenv"
+    path: "{{ home_directory }}/.pyenv/plugins/pyenv-virtualenv"
   register: stat_pyenv_virtualenv_result
 
 - name: Install pyenv-virtualenv.
-  shell: "git clone https://github.com/pyenv/pyenv-virtualenv.git /home/{{ username }}/.pyenv/plugins/pyenv-virtualenv"
+  shell: "git clone https://github.com/pyenv/pyenv-virtualenv.git {{ home_directory }}/.pyenv/plugins/pyenv-virtualenv"
   when: not stat_pyenv_virtualenv_result.stat.exists
 
 - name: Add HashiCorp key.
@@ -133,11 +133,11 @@
   shell: python3 -m pip install --user pipx
 
 - name: Install ipython.
-  shell: "/home/{{ username }}/.local/bin/pipx install ipython"
+  shell: "{{ pipx }} install ipython"
   ignore_errors: yes
 
 - name: Install docker-compose.
-  shell: "/home/{{ username }}/.local/bin/pipx install docker-compose"
+  shell: "{{ pipx }} install docker-compose"
   ignore_errors: yes
 
 - name: Download and install ufw-docker.

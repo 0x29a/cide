@@ -9,14 +9,14 @@
     dest: "{{ home_directory }}/Projects/vladick_bar/bar.png"
 
 - name: Install gunicorn.
-  shell: "{{ home_directory }}/.local/bin/pipx install gunicorn"
+  shell: "{{ pipx }} install gunicorn"
   ignore_errors: yes
 
 - name: Inject flask to gunicorn virtualenv.
-  shell: "{{ home_directory }}/.local/bin/pipx inject gunicorn flask"
+  shell: "{{ pipx }} inject gunicorn flask"
 
 - name: Inject requests to gunicorn virtualenv.
-  shell: "{{ home_directory }}/.local/bin/pipx inject gunicorn requests"
+  shell: "{{ pipx }} inject gunicorn requests"
 
 - name: Create healthcheck directory.
   file:

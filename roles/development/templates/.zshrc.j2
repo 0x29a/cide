@@ -1,4 +1,4 @@
-export ZSH="/home/{{ username }}/.oh-my-zsh"
+export ZSH="{{ home_directory }}/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 DISABLE_UPDATE_PROMPT="true"
 plugins=(git)
@@ -7,7 +7,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # setting for pip install --user
-export PATH="/home/{{ username }}/.local/bin:$PATH"
+export PATH="{{ home_directory }}/.local/bin:$PATH"
 
 # eternal history
 HISTFILE="$HOME/.zsh_history"

@@ -6,8 +6,8 @@ This repository contains playbooks and roles I use to deploy my personal cloud I
 
 ### Dependencies
 
-* python3
-* python3-virtualenv
+* `python3`
+* `python3-virtualenv`
 
 ### Installing
 
@@ -32,7 +32,8 @@ This repository contains playbooks and roles I use to deploy my personal cloud I
     ```bash
     cp example.vars.private.yml .vars.private.yml
     ```
-1. [optinal] Put zsh history to `roles/development/files/.zsh_history`.
+1. Optionally, put `zsh` history to `roles/development/files/.zsh_history`.
+1. Update Toggl transfer script timestamp in `roles/opencraft/files/.latest`.
 1. Run playbook to deploy user and SSH keys:
     ```bash
     make init
