@@ -7,6 +7,7 @@
     repo: git@github.com:0x29a/spm_utils.git
     dest: "{{ home_directory }}/Projects/spm_utils"
     accept_hostkey: yes
+  ignore_errors: yes
 
 - name: Install spm_utils requirements.
   pip:
@@ -17,3 +18,37 @@
   template:
     src: spm_utils_env.j2
     dest: "{{ home_directory }}/Projects/spm_utils/.env"
+
+- name: Clone toggl-tempo-worklog-transfer.
+  git:
+    repo: git@github.com:0x29a/toggl-tempo-worklog-transfer.git
+    dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer"
+    accept_hostkey: yes
+
+- name: Create .env for toggl-tempo-worklog-transfer.
+  template:
+    src: toggl-tempo-worklog-transfer_env.j2
+    dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.env"
+
+- name: Install toggl-tempo-worklog-transfer requirements.
+  pip:
+    requirements: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/requirements.txt"
+    virtualenv: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv"
+
+- name: Check if .latest exists.
+  stat:
+    path: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.latest"
+  register: stat_latest_result
+
+- name: Copy toggl-tempo-worklog-transfer timestamp file.
+  copy:
+    src: .latest
+    dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.latest"
+  when: not stat_latest_result.stat.exists
+
+- name: Creates toggl-tempo-worklog-transfer cron job.
+  cron:
+    name: toggl-tempo-worklog-transfer
+    minute: "0"
+    hour: "4"
+    job: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py"
