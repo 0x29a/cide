@@ -2,6 +2,15 @@
   shell: "{{ pipx }} install tutor"
   ignore_errors: yes
 
+- name: Inject tutor-mfe plugin in tutor's virtual environment.
+  shell: "{{ pipx }} inject tutor tutor-mfe"
+
+- name: Inject tutor-mfe plugin in tutor's virtual environment.
+  shell: "{{ pipx }} inject tutor tutor-discovery"
+
+- name: Inject tutor-mfe plugin in tutor's virtual environment.
+  shell: "{{ pipx }} inject tutor tutor-ecommerce"
+
 - name: Clone spm_utils.
   git:
     repo: git@github.com:0x29a/spm_utils.git
@@ -51,4 +60,4 @@
     name: toggl-tempo-worklog-transfer
     minute: "0"
     hour: "4"
-    job: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py"
+    job: "(cd {{ home_directory }}/Soft/toggl-tempo-worklog-transfer && {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
