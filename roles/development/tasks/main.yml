@@ -156,3 +156,9 @@
   service:
     name: ufw
     state: restarted
+
+- name: Import the nodejs role
+  import_role:
+    name: ansible-role-nodejs
+  tags: nodejs
+  become: yes

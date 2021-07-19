@@ -12,3 +12,5 @@ public_ssh_key: null
 
 home_directory: "/home/{{ username }}"
 pipx: "{{ home_directory }}/.local/bin/pipx"
+
+nodejs_version: "16.x"
