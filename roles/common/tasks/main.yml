@@ -14,3 +14,6 @@
   apt:
     name: "{{ server_dependencies }}"
     state: present
+
+- name: Increase inotify user limit.
+  sysctl: name=fs.inotify.max_user_watches value=16384 sysctl_set=yes
