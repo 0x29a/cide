@@ -1,0 +1,24 @@
+- name: Install packages necessary for Jekyll.
+  become: yes
+  apt:
+    name:
+      - ruby
+      - ruby-dev
+      - rubygems
+    state: present
+
+- name: Install bundler.
+  become: yes
+  gem:
+    name: bundler
+
+- name: Clone garden repo.
+  git:
+    repo: git@github.com:0x29a/garden.git
+    dest: "{{ home_directory }}/Projects/garden"
+
+- name: Install garden gems.
+  bundler:
+    deployment_mode: yes
+    state: present
+    chdir: "{{ home_directory }}/Projects/garden"

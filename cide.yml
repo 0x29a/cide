@@ -16,5 +16,9 @@
       tags: development
     - role: code-server
       tags: code-server
+    - role: garden
+      tags: garden
+    - role: nextcloud
+      tags: nextcloud
     - role: opencraft
       tags: opencraft

@@ -58,3 +58,7 @@ This repository contains playbooks and roles I use to deploy my personal cloud I
     1. `ms-python.python`.
     1. `vscode-icons-team.vscode-icons`.
     1. `redhat.vscode-yaml`.
+
+### Post-installation steps
+
+1. Open Nextcloud, set up encryption.

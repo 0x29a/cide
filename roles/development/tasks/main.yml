@@ -36,10 +36,16 @@
     name: "{{ username }}"
     shell: /bin/zsh
 
+- name: Check if zsh history exist.
+  stat:
+    path: "{{ home_directory }}/.zsh_history"
+  register: stat_zsh_history_result
+
 - name: Copy zsh history.
   copy:
     src: .zsh_history
     dest: "{{ home_directory }}/.zsh_history"
+  when: not stat_zsh_history_result.stat.exists
 
 - name: Check if pyenv exists.
   stat:

@@ -1,0 +1,13 @@
+- name: Create nextcloud directory.
+  file:
+    path: "{{ home_directory }}/Soft/nextcloud"
+    state: directory
+
+- name: Generate docker-compose.yml.
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ home_directory }}/Soft/nextcloud/docker-compose.yml"
+
+- name: Create and start nextcloud services.
+  docker_compose:
+    project_src: "{{ home_directory }}/Soft/nextcloud/"
