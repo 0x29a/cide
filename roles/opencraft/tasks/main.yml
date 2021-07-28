@@ -61,3 +61,34 @@
     minute: "0"
     hour: "4"
     job: "(cd {{ home_directory }}/Soft/toggl-tempo-worklog-transfer && {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
+
+############## Ocim ##############
+
+- name: Install vagrant-vbguest plugin
+  shell: vagrant plugin install vagrant-vbguest
+  tags: ocim
+
+- name: Clone Ocim repo.
+  git:
+    repo: git@github.com:open-craft/opencraft.git
+    dest: "{{ home_directory }}/Projects/ocim"
+    accept_hostkey: yes
+  tags: ocim
+
+- name: Clone ansible-playbooks along with Ocim repo.
+  git:
+    repo: git@github.com:open-craft/ansible-playbooks.git
+    dest: "{{ home_directory }}/Projects/ocim/deploy"
+  tags: ocim
+
+- name: Create venvs directory.
+  file:
+    path: "{{ home_directory }}/venvs"
+    state: directory
+  tags: ocim
+
+- name: Install Ocim requirements.
+  pip:
+    requirements: "{{ home_directory }}/Projects/ocim/deploy/requirements_ansible_2.8.17.txt"
+    virtualenv: "{{ home_directory }}/venvs/ansible"
+  tags: ocim

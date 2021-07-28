@@ -125,7 +125,11 @@
 - name: Install VirtualBox.
   become: yes
   apt:
-    name: virtualbox
+    name:
+      - linux-headers-generic
+      - linux-headers-5.4.0-77-generic
+      - virtualbox-6.1
+      - virtualbox-dkms
     update_cache: yes
     state: present
 
