@@ -131,3 +131,22 @@
     rule: allow
     port: 443
     proto: tcp
+
+- name: Install Nativefier.
+  become: yes
+  npm:
+    name: nativefier
+    global: yes
+  tags: nativefier
+
+- name: Create CIDE desktop client directory.
+  file:
+    path: "{{ home_directory }}/Soft/cide"
+    state: directory
+  tags: nativefier
+
+- name: Build CIDE desktop client.
+  shell: nativefier --name 'CIDE' 'http://127.0.0.1:8137'
+  args:
+    chdir: "{{ home_directory }}/Soft/cide"
+  tags: nativefier
