@@ -104,12 +104,14 @@
   template:
     src: "Caddyfile.j2"
     dest: "/etc/caddy/Caddyfile"
+  tags: caddy
 
 - name: Restart Caddy.
   become: yes
   systemd:
     name: caddy
     state: restarted
+  tags: caddy
 
 - name: Allow healthcheck port.
   become: yes

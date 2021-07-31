@@ -4,6 +4,12 @@ space.demid.dev {
     }
 }
 
+instance.demid.dev {
+    file_server {
+        root {{ home_directory }}/Projects/instance_pay
+    }
+}
+
 space.demid.dev:57666 {
     reverse_proxy 127.0.0.1:16666
 }
