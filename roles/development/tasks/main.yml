@@ -172,3 +172,21 @@
     name: ansible-role-nodejs
   tags: nodejs
   become: yes
+
+- name: nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  tags: nodejs
+
+- name: Install some js dependencies.
+  become: yes
+  apt:
+    name:
+      - libxrender1:i386
+      - libxtst6:i386
+      - libxi6:i386
+    update_cache: yes
+    state: present
+  tags: nodejs
