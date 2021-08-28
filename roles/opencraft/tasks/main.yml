@@ -22,6 +22,8 @@
   pip:
     requirements: "{{ home_directory }}/Projects/spm_utils/requirements.txt"
     virtualenv: "{{ home_directory }}/Projects/spm_utils/.fenv"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
 
 - name: Create .env for spm_utils.
   template:
@@ -43,6 +45,8 @@
   pip:
     requirements: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/requirements.txt"
     virtualenv: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
 
 - name: Check if .latest exists.
   stat:
@@ -73,6 +77,7 @@
     repo: git@github.com:open-craft/opencraft.git
     dest: "{{ home_directory }}/Projects/ocim"
     accept_hostkey: yes
+  ignore_errors: yes
   tags: ocim
 
 - name: Clone ansible-playbooks along with Ocim repo.
@@ -92,3 +97,5 @@
     requirements: "{{ home_directory }}/Projects/ocim/deploy/requirements_ansible_2.8.17.txt"
     virtualenv: "{{ home_directory }}/venvs/ansible"
   tags: ocim
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

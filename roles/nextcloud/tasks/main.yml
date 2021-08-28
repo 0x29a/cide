@@ -11,3 +11,5 @@
 - name: Create and start nextcloud services.
   docker_compose:
     project_src: "{{ home_directory }}/Soft/nextcloud/"
+  vars:
+    ansible_python_interpreter: /bin/python3

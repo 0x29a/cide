@@ -1,10 +1,10 @@
 ---
-- name: Create soft directory
+- name: Create soft directory.
   file:
     path: "{{ home_directory }}/Soft"
     state: directory
 
-- name: Create projects directory
+- name: Create projects directory.
   file:
     path: "{{ home_directory }}/Projects"
     state: directory
@@ -116,10 +116,56 @@
     groups: docker
     append: true
 
+- name: Download Google Cloud public signing key.
+  become: yes
+  get_url:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+- name: Add Kubernetes repo.
+  become: yes
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: Install kubectl.
+  become: yes
+  apt:
+    name: kubectl
+    state: present
+
+- name: Install minicube.
+  become: yes
+  apt:
+    deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+
 - name: Add VirtualBox key.
   become: yes
   apt_key:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+
+- name: Add VirtualBox repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release | lower }} contrib"
+    state: present
+
+- name: Install VirtualBox.
+  become: yes
+  apt:
+    name:
+      - linux-headers-generic
+      - linux-headers-5.4.0-77-generic
+      - virtualbox-6.1
+      - virtualbox-dkms
+    update_cache: yes
+    state: present
+
+- name: Add Google Cloud key.
+  become: yes
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
 - name: Add VirtualBox repo.
