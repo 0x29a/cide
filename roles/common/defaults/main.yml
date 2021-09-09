@@ -12,3 +12,6 @@ server_dependencies:
   - python3-venv
   - screen
   - ripgrep
+  - libssl-dev
+  - libreadline-dev
+  - libbz2-dev
