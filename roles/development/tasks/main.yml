@@ -196,6 +196,10 @@
   shell: "{{ pipx }} install docker-compose"
   ignore_errors: yes
 
+- name: Install aws-cli.
+  shell: "{{ pipx }} install awscli"
+  ignore_errors: yes
+
 - name: Download and install ufw-docker.
   become: yes
   get_url:
