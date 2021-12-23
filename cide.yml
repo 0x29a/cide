@@ -20,5 +20,8 @@
       tags: garden
     - role: nextcloud
       tags: nextcloud
+    - role: syncthing
+      become: yes
+      tags: syncthing
     - role: opencraft
       tags: opencraft

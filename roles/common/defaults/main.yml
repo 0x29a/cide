@@ -16,3 +16,4 @@ server_dependencies:
   - libreadline-dev
   - libbz2-dev
   - libpq-dev
+  - supervisor
