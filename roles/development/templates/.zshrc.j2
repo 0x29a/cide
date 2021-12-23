@@ -46,6 +46,17 @@ alias p="ipython"
 alias pre="prettier --single-quote --write"
 alias sol="cd ~/Projects/solutions-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
 alias jol="cd ~/Projects/solutions-juniper-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
+alias uq="cd ~/Projects/uq/uq-learnx-configuration-secure && ssh -F ssh-config uq-director-stage -t \"cd uq-learnx-configuration-secure/ && ssh ubuntu@172.31.30.80 -i ssh_keys/oc-edxapp-stage.pem\""
+
+fenv () {
+	if [ -d ".fenv" ]
+	then
+		source .fenv/bin/activate
+	else
+		virtualenv -p python3 .fenv
+		source .fenv/bin/activate
+	fi
+}
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
