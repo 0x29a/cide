@@ -3,6 +3,7 @@
   apt:
     name:
       - ruby
+      - ruby-full
       - ruby-dev
       - rubygems
     state: present
@@ -11,6 +12,11 @@
   become: yes
   gem:
     name: bundler
+
+- name: Install jekyll.
+  become: yes
+  gem:
+    name: jekyll
 
 - name: Clone garden repo.
   git:
