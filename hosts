@@ -1,5 +1,8 @@
+[init]
+cloud ansible_user=root
+
 [cide]
 cloud ansible_user=demid
 
-[home]
+[local]
 127.0.0.1

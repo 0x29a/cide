@@ -2,7 +2,7 @@
 # Playbook for setting up everything.
 
 - name: Set up CIDE.
-  hosts: cide
+  hosts: init
   vars_files:
     - .vars.private.yml
   tasks:
@@ -42,7 +42,7 @@
       become_user: "{{ username }}"
 
     - name: Copy .ssh/id_ed25519 from host box to the remote box for user {{ username }}
-      become: true
+      become: yes
       copy: 
         src: ~/.ssh/id_ed25519.pub
         dest: "{{ home_directory }}/.ssh/authorized_keys"
