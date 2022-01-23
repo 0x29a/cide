@@ -9,6 +9,11 @@
     path: "{{ home_directory }}/Projects"
     state: directory
 
+- name: Copy .pypirc.
+  template:
+    src: .pypirc.j2
+    dest: "{{ home_directory }}/.pypirc"
+
 - name: Install zsh.
   become: yes
   apt:
