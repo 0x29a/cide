@@ -15,13 +15,18 @@ This repository contains playbooks and roles, that I use to:
     ```
 1. Install required packages:
     ```sh
-    sudo apt install -y git keepassxc python3 python3-virtualenv make
+    sudo apt install -y git keepassxc python3 python3-pip python3-virtualenv make
     ```
-1. Download and unzip `CIDE`:
+1. Clone `CIDE` repo:
     ```sh
-    wget https://github.com/0x29a/cide/archive/refs/heads/master.zip && unzip master.zip -d ~/Projects && cd ~/Projects/cide-master
+    mkdir -p ~/Projects && cd ~/Projects
+    git clone https://github.com/0x29a/cide.git && cd cide
     ```
-1. Insert backup USB, open KeePassXC database and export ssh keys to the `~/.ssh/` directory.
+1. Insert backup USB, open KeePassXC (`SSH`) and export ssh keys to the `~/.ssh/` directory.
+1. Create `.vars.private.yml` and put to it all necessary secrets from KeePassXC (`CIDE private vars`):
+    ```sh
+    cp example.vars.private.yml .vars.private.yml
+    ```
 1. Run installation:
     ```sh
     make set_up_localhost

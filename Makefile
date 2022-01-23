@@ -1,8 +1,8 @@
 set_up_localhost:
-	chmod 600 ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
-	virtualenv -p python3 .fenv
-	. .fenv/bin/activate
-	pip install -r requirements.txt
+	chmod 600 ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub; \
+	virtualenv -p python3 .fenv; \
+	source .fenv/bin/activate; \
+	pip install -r requirements.txt; \
 
 bootstrap:
 	ansible-playbook bootstrap.yml
