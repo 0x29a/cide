@@ -1,0 +1,11 @@
+---
+
+- name: Set up local machine.
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../.vars.private.yml
+  tasks:
+    - name: Debug task.
+      debug:
+        msg: "Test"

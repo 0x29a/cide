@@ -4,7 +4,7 @@
 - name: Set up CIDE.
   hosts: init
   vars_files:
-    - .vars.private.yml
+    - ../.vars.private.yml
   tasks:
     - name: Creating a user named {{ username }} on the specified web server.
       user: 
