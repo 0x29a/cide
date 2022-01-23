@@ -139,6 +139,13 @@
   npm:
     name: nativefier
     global: yes
+    state: latest
+  tags: nativefier
+
+- name: Remove previous build.
+  file:
+    state: absent
+    path: "{{ home_directory }}/Soft/cide"
   tags: nativefier
 
 - name: Create CIDE desktop client directory.
