@@ -15,5 +15,6 @@ server_dependencies:
   - libssl-dev
   - libreadline-dev
   - libbz2-dev
+  - libffi-dev
   - libpq-dev
   - supervisor
