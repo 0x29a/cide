@@ -3,5 +3,5 @@ jira_password: null
 toggl_token: null
 public_ssh_key: null
 private_ssh_key: null
-mysql_password: null
-mysql_root_password: null
+github_username: null
+github_email: null

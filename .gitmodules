@@ -1,6 +1,6 @@
-[submodule "roles/ansible-role-security"]
-	path = roles/ansible-role-security
-	url = git@github.com:geerlingguy/ansible-role-security.git
-[submodule "roles/ansible-role-nodejs"]
-	path = roles/ansible-role-nodejs
-	url = git@github.com:geerlingguy/ansible-role-nodejs.git
+[submodule "playbooks/roles/ansible-role-security"]
+	path = playbooks/roles/ansible-role-security
+	url = https://github.com/geerlingguy/ansible-role-security
+[submodule "playbooks/roles/ansible-role-nodejs"]
+	path = playbooks/roles/ansible-role-nodejs
+	url = https://github.com/geerlingguy/ansible-role-nodejs

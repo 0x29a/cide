@@ -1,0 +1,20 @@
+- name: Set git username for the local CIDE repo.
+  git_config:
+    name: user.name
+    repo: .
+    scope: local
+    value: "{{ github_username }}"
+
+- name: Set git email for the local CIDE repo.
+  git_config:
+    name: user.email
+    repo: .
+    scope: local
+    value: "{{ github_email }}"
+
+- name: Change remote URL to SSH.
+  git_config:
+    name: remote.origin.url
+    repo: .
+    scope: local
+    value: "git@github.com:{{ github_username }}/cide.git"

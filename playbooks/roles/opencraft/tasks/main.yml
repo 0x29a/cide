@@ -13,7 +13,7 @@
 
 - name: Clone spm_utils.
   git:
-    repo: git@github.com:0x29a/spm_utils.git
+    repo: "git@github.com:{{ github_username }}/spm_utils.git"
     dest: "{{ home_directory }}/Projects/spm_utils"
     accept_hostkey: yes
   ignore_errors: yes
@@ -32,7 +32,7 @@
 
 - name: Clone toggl-tempo-worklog-transfer.
   git:
-    repo: git@github.com:0x29a/toggl-tempo-worklog-transfer.git
+    repo: "git@github.com:{{ github_username }}/toggl-tempo-worklog-transfer.git"
     dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer"
     accept_hostkey: yes
 

@@ -20,7 +20,7 @@
 
 - name: Clone garden repo.
   git:
-    repo: git@github.com:0x29a/garden.git
+    repo: "git@github.com:{{ github_username }}/garden.git"
     dest: "{{ home_directory }}/Projects/garden"
 
 - name: Install garden gems.

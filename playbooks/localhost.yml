@@ -5,7 +5,9 @@
   connection: local
   vars_files:
     - ../.vars.private.yml
-  tasks:
-    - name: Debug task.
-      debug:
-        msg: "Test"
+  roles:
+    - role: localhost
+      tags: localhost
+    - role: vscodium
+      become: yes
+      tags: vscodium

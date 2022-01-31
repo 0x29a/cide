@@ -1,5 +1,5 @@
 jira_url: https://tasks.opencraft.com
-jira_username: "0x29a"
+jira_username: {{ github_username }}
 jira_password: password
 jira_project_prefix: BB
 jira_project_name: Bebop
