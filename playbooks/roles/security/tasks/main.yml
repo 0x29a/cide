@@ -2,6 +2,23 @@
   import_role:
     name: ansible-role-security
 
+- name: Clone Lynis.
+  git:
+    repo: https://github.com/CISOfy/Lynis
+    dest: "{{ home_directory }}/Soft/lynis"
+
+- name: Install security packages.
+  apt:
+    name:
+      - libpam-tmpdir
+      - apt-listchanges
+      - debian-goodies
+      - debsecan
+      - debsums
+      - chkrootkit
+    update_cache: yes
+    state: present
+
 - name: By default allow only ssh.
   ufw:
     rule: allow
