@@ -9,6 +9,20 @@ This repository contains playbooks and roles, that I use to:
 
 ### Localhost
 
+#### Before reinstall
+
+1. Backup database:
+    ```sh
+    cp -r ~/Cloud /media/<username>/<ID>/Cloud
+    ```
+1. Backup zsh history:
+    ```sh
+    cp ~/.zsh_history /media/demid/AF6A-73F1/.zsh_history
+    ```
+1. Check that KeePass database isn't corrupted.
+
+#### After OS reinstall
+
 1. Upgrade packages:
     ```sh
     sudo apt update && sudo apt upgrade -y
