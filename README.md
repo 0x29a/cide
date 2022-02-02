@@ -17,7 +17,7 @@ This repository contains playbooks and roles, that I use to:
     ```
 1. Backup zsh history:
     ```sh
-    cp ~/.zsh_history /media/demid/AF6A-73F1/.zsh_history
+    cp ~/.zsh_history /media/<username>/<ID>/.zsh_history
     ```
 1. Check that KeePass database isn't corrupted.
 
