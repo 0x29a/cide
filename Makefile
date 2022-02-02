@@ -6,6 +6,7 @@ virtualenv:
 requirements: virtualenv
 	chmod 600 ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
 	$(BIN)/pip install -r requirements.txt
+	$(BIN)/ansible-galaxy install -r requirements.yml
 
 set_up_localhost: requirements
 	$(BIN)/ansible-playbook playbooks/localhost.yml --ask-become-pass

@@ -121,16 +121,16 @@
     groups: docker
     append: true
 
-- name: Download Google Cloud public signing key.
+- name: Install Google Cloud public signing key.
   become: yes
-  get_url:
+  apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+    state: present
 
 - name: Add Kubernetes repo.
   become: yes
   apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+    repo: "deb http://packages.cloud.google.com/apt/ kubernetes-xenial main"
     state: present
 
 - name: Install kubectl.
@@ -148,29 +148,6 @@
   become: yes
   apt_key:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-    state: present
-
-- name: Add VirtualBox repo.
-  become: yes
-  apt_repository:
-    repo: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release | lower }} contrib"
-    state: present
-
-- name: Install VirtualBox.
-  become: yes
-  apt:
-    name:
-      - linux-headers-generic
-      - linux-headers-5.4.0-77-generic
-      - virtualbox-6.1
-      - virtualbox-dkms
-    update_cache: yes
-    state: present
-
-- name: Add Google Cloud key.
-  become: yes
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
 - name: Add VirtualBox repo.
@@ -233,15 +210,4 @@
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
-  tags: nodejs
-
-- name: Install some js dependencies.
-  become: yes
-  apt:
-    name:
-      - libxrender1:i386
-      - libxtst6:i386
-      - libxi6:i386
-    update_cache: yes
-    state: present
   tags: nodejs

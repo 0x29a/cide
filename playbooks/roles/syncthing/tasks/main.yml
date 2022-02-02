@@ -1,11 +1,12 @@
-- name: Download Syncthing public signing key.
-  get_url:
+- name: Install Syncthing public signing key.
+  become: yes
+  apt_key:
     url: https://syncthing.net/release-key.gpg
-    dest: /usr/share/keyrings/syncthing-archive-keyring.gpg
+    state: present
 
 - name: Add Syncthing repo.
   apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing candidate"
+    repo: "deb https://apt.syncthing.net/ syncthing candidate"
     state: present
 
 - name: Install Syncthing.

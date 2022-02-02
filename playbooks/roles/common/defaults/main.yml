@@ -18,3 +18,5 @@ server_dependencies:
   - libffi-dev
   - libpq-dev
   - supervisor
+  - debian-archive-keyring
+  - apt-transport-https

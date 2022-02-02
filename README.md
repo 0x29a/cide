@@ -20,7 +20,7 @@ This repository contains playbooks and roles, that I use to:
 1. Clone `CIDE` repo:
     ```sh
     mkdir -p ~/Projects && cd ~/Projects
-    git clone https://github.com/0x29a/cide.git && cd cide
+    git clone https://github.com/0x29a/cide.git --recursive && cd cide
     ```
 1. Insert backup USB, open KeePassXC (`SSH`) and export ssh keys to the `~/.ssh/` directory.
 1. Create `.vars.private.yml` and put to it all necessary secrets from KeePassXC (`CIDE private vars`):

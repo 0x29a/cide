@@ -28,3 +28,4 @@
     deployment_mode: yes
     state: present
     chdir: "{{ home_directory }}/Projects/garden"
+    executable: /bin/bundle2.7

@@ -2,11 +2,7 @@
 username: demid
 user_password: null
 
-# For https://github.com/geerlingguy/ansible-role-security
-security_autoupdate_mail_to: "public@demid.dev"
-security_sudoers_passworded:
-  - "{{ username }}"
-security_ssh_port: 2123
+ssh_port: 2123
 private_ssh_key: null
 public_ssh_key: null
 

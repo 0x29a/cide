@@ -2,7 +2,8 @@
 # Playbook for setting up everything.
 
 - name: Set up CIDE.
-  hosts: init
+  hosts: cide
+  user: root
   vars_files:
     - ../.vars.private.yml
   tasks:
@@ -22,7 +23,6 @@
         mode: 0700
         owner: "{{ username }}"
         group: "{{ username }}"
-      become: yes
       become_user: "{{ username }}"
 
     - name: Install the SSH private key used for working with repos.
@@ -30,7 +30,6 @@
         content: "{{ private_ssh_key }}"
         dest: "{{ home_directory }}/.ssh/id_ed25519"
         mode: 0600
-      become: yes
       become_user: "{{ username }}"
 
     - name: Install the SSH public key.
@@ -38,11 +37,9 @@
         content: "{{ public_ssh_key }}"
         dest: "{{ home_directory }}/.ssh/id_ed25519.pub"
         mode: 0644
-      become: yes
       become_user: "{{ username }}"
 
     - name: Copy .ssh/id_ed25519 from host box to the remote box for user {{ username }}
-      become: yes
       copy: 
         src: ~/.ssh/id_ed25519.pub
         dest: "{{ home_directory }}/.ssh/authorized_keys"

@@ -3,6 +3,7 @@
 
 - name: Set up CIDE.
   hosts: cide
+  user: demid
   vars_files:
     - ../.vars.private.yml
   roles:
@@ -18,8 +19,6 @@
       tags: code-server
     - role: garden
       tags: garden
-    - role: nextcloud
-      tags: nextcloud
     - role: syncthing
       become: yes
       tags: syncthing
