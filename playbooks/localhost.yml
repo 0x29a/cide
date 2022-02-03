@@ -11,3 +11,8 @@
     - role: vscodium
       become: yes
       tags: vscodium
+    - role: zsh
+      tags: zsh
+    - role: syncthing
+      become: yes
+      tags: syncthing

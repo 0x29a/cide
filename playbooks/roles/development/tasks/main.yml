@@ -1,18 +1,13 @@
 ---
-- name: Create soft directory.
+- name: Create "Soft" directory.
   file:
     path: "{{ home_directory }}/Soft"
     state: directory
 
-- name: Create projects directory.
+- name: Create "Projects" directory.
   file:
     path: "{{ home_directory }}/Projects"
     state: directory
-
-- name: Copy .pypirc.
-  template:
-    src: .pypirc.j2
-    dest: "{{ home_directory }}/.pypirc"
 
 - name: Install zsh.
   become: yes
@@ -51,6 +46,11 @@
     src: .zsh_history
     dest: "{{ home_directory }}/.zsh_history"
   when: not stat_zsh_history_result.stat.exists
+
+- name: Copy .pypirc.
+  template:
+    src: .pypirc.j2
+    dest: "{{ home_directory }}/.pypirc"
 
 - name: Check if pyenv exists.
   stat:

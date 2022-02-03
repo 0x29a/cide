@@ -1,3 +1,21 @@
+- name: Create "Soft" directory.
+  file:
+    path: "{{ home_directory }}/Soft"
+    state: directory
+
+- name: Run "apt-get update, dist-upgrade and autoremove".
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes
+
+- name: Install local packages.
+  become: yes
+  apt:
+    name: "{{ local_packages }}"
+    state: present
+
 - name: Set git username for the local CIDE repo.
   git_config:
     name: user.name

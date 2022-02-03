@@ -1,0 +1,6 @@
+local_packages:
+  - htop
+  - curl
+  - tmux
+  - autossh
+  - supervisor
