@@ -34,3 +34,6 @@ cide_app: requirements
 	rm -rf ~/Soft/cide/CIDE-linux-x64
 	mkdir -p ~/Soft/cide/
 	scp -r $(USER)@cloud:~/Soft/cide/CIDE-linux-x64 ~/Soft/cide/CIDE-linux-x64
+
+save_guake_settings:
+	guake --save-preferences ~/Projects/cide/playbooks/roles/localhost/files/guake_preferences

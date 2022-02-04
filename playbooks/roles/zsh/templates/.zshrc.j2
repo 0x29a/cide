@@ -132,6 +132,7 @@ alias upd="sudo apt update && sudo apt list --upgradable && sudo apt upgrade -y"
 
 alias soft="cd ~/Soft"
 alias proj="cd ~/Projects"
+alias cide="cd ~/Projects/cide"
 alias s=sudo
 
 if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
@@ -251,30 +252,78 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   ffmpeg_speedup() {
     ffmpeg -i $1 -filter_complex "[0:v]setpts=0.6666666666666666*PTS[v];[0:a]atempo=1.5[a]" -map "[v]" -map "[a]" $2
   }
+
+  # #############################################
+  # Cloud tunnel launching  #####################
+
+  if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
+    if ! ps -e | grep -q "tmux: server"; then
+      tmux new-session -d -s cloud_tunnel
+      tmux send -t cloud_tunnel "sleep 10 && cloud_tunnel" ENTER
+    fi
+    alias tunnel_session="tmux attach -t cloud_tunnel"
+  fi
+
 elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
-fi
+  # #############################################
+  # pyenv setup #################################
 
-# #############################################
-# pyenv setup #################################
-
-if [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
 
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
-fi
 
-# #############################################
-# Cloud tunnel launching  #####################
+  # #############################################
+  # nvm setup #################################
 
-if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
-  if ! ps -e | grep -q "tmux: server"; then
-    tmux new-session -d -s cloud_tunnel
-    tmux send -t cloud_tunnel "sleep 10 && cloud_tunnel" ENTER
-  fi
-  alias tunnel_session="tmux attach -t cloud_tunnel"
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  # Kubernetes setup
+  source <(kubectl completion zsh)
+  alias k=kubectl
+  complete -F __start_kubectl k
+
+  # Tutor completions
+
+  #compdef tutor
+
+  _tutor_completion() {
+      local -a completions
+      local -a completions_with_descriptions
+      local -a response
+      (( ! $+commands[tutor] )) && return 1
+
+      response=("${(@f)$(env COMP_WORDS="${words[*]}" COMP_CWORD=$((CURRENT-1)) _TUTOR_COMPLETE=zsh_complete tutor)}")
+
+      for type key descr in ${response}; do
+          if [[ "$type" == "plain" ]]; then
+              if [[ "$descr" == "_" ]]; then
+                  completions+=("$key")
+              else
+                  completions_with_descriptions+=("$key":"$descr")
+              fi
+          elif [[ "$type" == "dir" ]]; then
+              _path_files -/
+          elif [[ "$type" == "file" ]]; then
+              _path_files -f
+          fi
+      done
+
+      if [ -n "$completions_with_descriptions" ]; then
+          _describe -V unsorted completions_with_descriptions -U
+      fi
+
+      if [ -n "$completions" ]; then
+          compadd -U -V unsorted -a completions
+      fi
+  }
+
+  compdef _tutor_completion tutor;
+
 fi
 
 # #############################################

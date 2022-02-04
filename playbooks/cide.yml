@@ -13,6 +13,10 @@
     - role: security
       become: yes
       tags: security
+    - role: zsh
+      vars:
+        cide_environment: cloud
+      tags: zsh
     - role: development
       tags: development
     - role: code-server

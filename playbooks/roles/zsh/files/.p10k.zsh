@@ -53,6 +53,7 @@
     vcs                       # git status
     command_execution_time    # previous command duration
     virtualenv                # python virtual environment
+    cide                      # CIDE or localhost
     prompt_char               # prompt symbol
   )
 
@@ -180,6 +181,16 @@
   # can slow down prompt by 1-2 milliseconds, so it's better to keep it turned off unless you
   # really need it.
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+  function prompt_cide() {
+    if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
+      p10k segment -f 208 -t 'LOCAL'
+    elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
+      p10k segment -f 208 -t 'CIDE'
+    else
+      p10k segment -f 208 -t 'UNKNOWN'
+    fi
+  }
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.

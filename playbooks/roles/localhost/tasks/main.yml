@@ -48,3 +48,12 @@
   copy:
     src: guake.desktop
     dest: "{{ home_directory }}/.config/autostart/guake.desktop"
+
+- name: Import guake preferences.
+  shell: guake --restore-preferences roles/localhost/files/guake_preferences
+
+- name: Disable Gnome animations.
+  shell: gsettings set org.gnome.desktop.interface enable-animations false
+
+- name: Disable background.
+  shell: gsettings set org.gnome.desktop.background picture-options 'none'
