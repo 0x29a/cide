@@ -15,6 +15,13 @@
   apt:
     name: "{{ local_packages }}"
     state: present
+  tags: local_packages
+
+- name: Install local snap packages.
+  become: yes
+  snap:
+    name: "{{ local_snap_packages }}"
+    classic: yes
 
 - name: Set git username for the local CIDE repo.
   git_config:
@@ -36,3 +43,8 @@
     repo: .
     scope: local
     value: "git@github.com:{{ github_username }}/cide.git"
+
+- name: Copy Guake autostart file.
+  copy:
+    src: guake.desktop
+    dest: "{{ home_directory }}/.config/autostart/guake.desktop"

@@ -23,6 +23,7 @@
   template:
     src: .zshrc.j2
     dest: "{{ home_directory }}/.zshrc"
+  tags: zshrc
 
 - name: Copy p10k config.
   copy:

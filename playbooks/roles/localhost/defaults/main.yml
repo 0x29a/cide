@@ -4,3 +4,7 @@ local_packages:
   - tmux
   - autossh
   - supervisor
+  - guake
+
+local_snap_packages:
+  - spotify
