@@ -270,7 +270,7 @@ fi
 # Cloud tunnel launching  #####################
 
 if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
-  if ! tmux ls | grep -q "cloud_tunnel"; then
+  if ! ps -e | grep -q "tmux: server"; then
     tmux new-session -d -s cloud_tunnel
     tmux send -t cloud_tunnel "sleep 10 && cloud_tunnel" ENTER
   fi
