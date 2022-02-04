@@ -41,6 +41,10 @@ This repository contains playbooks and roles, that I use to:
     ```sh
     cp example.vars.private.yml .vars.private.yml
     ```
+1. [Optionally] Put zsh history in place:
+    ```sh
+    cp /media/<username>/<ID>/.zsh_history playbooks/roles/zsh/files/.zsh_history.localhost
+    ```
 1. Run installation:
     ```sh
     make set_up_localhost
@@ -58,7 +62,10 @@ This repository contains playbooks and roles, that I use to:
     ```sh
     cp example.vars.private.yml .vars.private.yml
     ```
-1. Optionally, put `zsh` history to `roles/development/files/.zsh_history`.
+1. [Optionally] Put zsh history in place:
+    ```sh
+    cp /media/<username>/<ID>/.zsh_history playbooks/roles/zsh/files/.zsh_history.cloud
+    ```
 1. Update Toggl transfer script timestamp in `roles/opencraft/files/.latest`.
 1. Run playbook to deploy user and SSH keys:
     ```sh
@@ -86,7 +93,3 @@ This repository contains playbooks and roles, that I use to:
     1. `redhat.vscode-yaml`.
     1. `esbenp.prettier-vscode`.
     1. `ms-vscode.vscode-typescript-tslint-plugin`.
-
-### Post-installation steps
-
-1. Open tunnel to the Syncthing Web UI, add host to the network.

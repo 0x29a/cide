@@ -138,6 +138,10 @@ dmypy.json
 # private variables
 .vars.private.yml
 
+# zsh history
+playbooks/roles/zsh/files/.zsh_history.cloud
+playbooks/roles/zsh/files/.zsh_history.localhost
+
 # Cython debug symbols
 cython_debug/
 
