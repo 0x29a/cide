@@ -9,7 +9,7 @@ This repository contains playbooks and roles, that I use to:
 
 ### Localhost
 
-#### Before reinstall
+#### Before OS reinstall
 
 1. Backup database:
     ```sh
@@ -45,6 +45,8 @@ This repository contains playbooks and roles, that I use to:
     ```sh
     make set_up_localhost
     ```
+1. Log in and log out to activate new default shell.
+1. Open [Syncthing Web UI](http://127.0.0.1:8384/), remove default folder and configure all devices.
 
 ### Provisioning CIDE
 
