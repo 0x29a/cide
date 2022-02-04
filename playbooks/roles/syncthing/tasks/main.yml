@@ -1,5 +1,4 @@
 - name: Install Syncthing public signing key.
-  become: yes
   apt_key:
     url: https://syncthing.net/release-key.gpg
     state: present

@@ -13,3 +13,5 @@ nodejs_version: "16.x"
 
 github_username: null
 github_email: null
+
+hosts_entries: []

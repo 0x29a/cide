@@ -5,3 +5,4 @@ public_ssh_key: null
 private_ssh_key: null
 github_username: null
 github_email: null
+hosts_entries: []

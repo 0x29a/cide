@@ -144,6 +144,10 @@
   shell: "{{ pipx }} install awscli"
   ignore_errors: yes
 
+- name: Install lolcat.
+  shell: "{{ pipx }} install lolcat"
+  ignore_errors: yes
+
 - name: Download and install ufw-docker.
   become: yes
   get_url:

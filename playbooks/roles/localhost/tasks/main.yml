@@ -44,6 +44,20 @@
     scope: local
     value: "git@github.com:{{ github_username }}/cide.git"
 
+- name: Copy SSH config.
+  copy:
+    src: ssh_config
+    dest: "{{ home_directory }}/.ssh/config"
+  tags: ssh_config
+
+- name: Set up hosts file.
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    line: '{{ item }}'
+  with_items: "{{ hosts_entries }}"
+  tags: hosts_file
+
 - name: Copy Guake autostart file.
   copy:
     src: guake.desktop
@@ -57,3 +71,60 @@
 
 - name: Disable background.
   shell: gsettings set org.gnome.desktop.background picture-options 'none'
+
+- name: Set primary background color to black.
+  shell: gsettings set org.gnome.desktop.background primary-color '#000000'
+
+- name: Set secondary background color to black.
+  shell: gsettings set org.gnome.desktop.background secondary-color '#000000'
+
+- name: Create "cide" directory.
+  file:
+    path: "{{ home_directory }}/Soft/cide"
+    state: directory
+
+# TODO: replace with https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
+# once recursive option implemented.
+- name: Download CIDE electron app build.
+  shell: "scp -r {{ username }}@cloud:{{ home_directory }}/Soft/cide/CIDE-linux-x64 {{ home_directory }}/Soft/cide/CIDE-linux-x64"
+
+- name: Copy CIDE icon.
+  copy:
+    src: cide.png
+    dest: "{{ home_directory }}/Soft/cide/CIDE-linux-x64/cide.png"
+
+- name: Copy cide.desktop.
+  become: yes
+  template:
+    src: cide.desktop
+    dest: /usr/share/applications/cide.desktop
+
+- name: Install Signal public signing key.
+  become: yes
+  apt_key:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+    state: present
+
+- name: Add Signal repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main"
+    state: present
+
+- name: Install Signal.
+  become: yes
+  apt:
+    name: signal-desktop
+    update_cache: yes
+    state: present
+
+- name: Install pipx.
+  shell: python3 -m pip install --user pipx
+
+- name: Install ipython.
+  shell: "{{ pipx }} install ipython"
+  ignore_errors: yes
+
+- name: Install lolcat.
+  shell: "{{ pipx }} install lolcat"
+  ignore_errors: yes

@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "Solarized Light",
+    "window.zoomLevel": 0,
+    "workbench.editor.enablePreview": false,
+    "editor.rulers": [80,120],
+    "editor.fontSize": 13,
+    "files.autoSave": "onFocusChange"
+}

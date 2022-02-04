@@ -5,12 +5,19 @@
     state: present
 
 - name: Add VSCodium repo.
+  become: yes
   apt_repository:
     repo: "deb https://download.vscodium.com/debs vscodium main"
     state: present
 
 - name: Install VSCodium.
+  become: yes
   apt:
     name: codium
     update_cache: yes
     state: present
+
+- name: Copy settings.
+  copy:
+    src: codium_settings.json
+    dest: "{{ home_directory }}/.config/VSCodium/User/settings.json"

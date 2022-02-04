@@ -146,3 +146,6 @@ playbooks/roles/zsh/files/.zsh_history.localhost
 cython_debug/
 
 *.retry
+
+# IDEs
+.vscode

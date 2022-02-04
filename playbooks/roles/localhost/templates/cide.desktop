@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=CIDE
+Comment=Cloud IDE
+Path={{ home_directory }}/Soft/cide/CIDE-linux-x64/
+Exec={{ home_directory }}/Soft/cide/CIDE-linux-x64/CIDE
+Icon={{ home_directory }}/Soft/cide/CIDE-linux-x64/cide.png
+Terminal=false
+Categories=Utility;Application;Development;

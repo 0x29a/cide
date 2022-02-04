@@ -1,4 +1,5 @@
 local_packages:
+  - python3-venv
   - htop
   - curl
   - tmux

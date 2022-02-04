@@ -1,0 +1,24 @@
+Host *
+    AddKeysToAgent yes
+    IdentityFile %d/.ssh/id_ed25519
+    ServerAliveInterval 60
+    ServerAliveCountMax 120
+
+Include opencraft/config
+User 0x29a
+IdentityFile %d/.ssh/id_ed25519
+
+Host cloud
+    HostName cloud
+    Port 2123
+    ForwardAgent yes
+
+Host buba
+    HostName buba
+    Port 2123
+    ForwardAgent yes
+
+Host pi-hole
+    HostName pi-hole
+    Port 2123
+    ForwardAgent yes
