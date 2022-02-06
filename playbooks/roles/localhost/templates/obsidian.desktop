@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Obsidian
+Comment=Personal knowledge database
+Path={{ home_directory }}/Soft/obsidian
+Exec={{ home_directory }}/Soft/obsidian/obsidian
+Terminal=false
+Categories=Utility;Application;

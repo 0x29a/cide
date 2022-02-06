@@ -15,3 +15,5 @@
     - role: syncthing
       become: yes
       tags: syncthing
+    - role: opencraft_local
+      tags: opencraft

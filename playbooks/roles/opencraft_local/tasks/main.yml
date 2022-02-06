@@ -1,0 +1,36 @@
+- name: Clone private documentation.
+  git:
+    repo: "git@gitlab.com:opencraft/documentation/private.git"
+    dest: "{{ home_directory }}/Projects/opencraft_private_documentation"
+    accept_hostkey: yes
+  ignore_errors: yes
+
+- name: Install a symlink.
+  shell: make ssh
+  args:
+    chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
+
+- name: Install HashiCorp public signing key.
+  become: yes
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add HashiCorp repo.
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com focal main"
+    state: present
+
+- name: Install Vault.
+  become: yes
+  apt:
+    name: vault
+    update_cache: yes
+    state: present
+
+# TODO: Rework. This actually won't fetch keys because of prompt, so has to be runned manually.
+- name: Fetch keys.
+  shell: make keys
+  args:
+    chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"

@@ -128,3 +128,22 @@
 - name: Install lolcat.
   shell: "{{ pipx }} install lolcat"
   ignore_errors: yes
+
+- name: Create "obsidian" directory.
+  file:
+    path: "{{ home_directory }}/Soft/obsidian"
+    state: directory
+  tags: obsidian
+
+- name: Download Obsidian appimage.
+  get_url:
+    url: "{{ obsidian_appimage_url }}"
+    dest: "{{ home_directory }}/Soft/obsidian/obsidian"
+    mode: a+x
+  tags: obsidian
+
+- name: Copy obsidian.desktop.
+  become: yes
+  template:
+    src: obsidian.desktop
+    dest: /usr/share/applications/obsidian.desktop
