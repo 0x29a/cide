@@ -34,3 +34,26 @@
   shell: make keys
   args:
     chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
+
+- name: Install oc_log_helper.
+  shell: "{{ pipx }} install oc_log_helper --system-site-packages"
+  ignore_errors: yes
+  tags: yay
+
+- name: Create "add_shortcut" directory.
+  file:
+    path: "{{ home_directory }}/Soft/add_shortcut"
+    state: directory
+  tags: yay
+
+- name: Copy "add_shortcut.py".
+  copy:
+    src: add_shortcut.py
+    dest: "{{ home_directory }}/Soft/add_shortcut/add_shortcut.py"
+  tags: yay
+
+- name: Run "add_shortcut.py".
+  shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>T'
+  args:
+    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+  ignore_errors: yes
