@@ -38,22 +38,39 @@
 - name: Install oc_log_helper.
   shell: "{{ pipx }} install oc_log_helper --system-site-packages"
   ignore_errors: yes
-  tags: yay
+
+# TODO: convert shortcut installer into a separate role and move this to the localhost role.
+- name: Install todoist_helper.
+  shell: "{{ pipx }} install todoist_helper --system-site-packages"
+  ignore_errors: yes
 
 - name: Create "add_shortcut" directory.
   file:
     path: "{{ home_directory }}/Soft/add_shortcut"
     state: directory
-  tags: yay
 
 - name: Copy "add_shortcut.py".
   copy:
     src: add_shortcut.py
     dest: "{{ home_directory }}/Soft/add_shortcut/add_shortcut.py"
-  tags: yay
 
-- name: Run "add_shortcut.py".
-  shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>T'
+# To remove custom keybindings:
+# gsettings reset org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+- name: Add log work shortcut.
+  shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>R'
+  args:
+    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+  ignore_errors: yes
+
+- name: Add start tracking shortcut.
+  shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>E'
+  args:
+    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+  ignore_errors: yes
+
+# TODO: convert shortcut installer into a separate role and move this to the localhost role.
+- name: Add todoist helper shortcut.
+  shell: python3 add_shortcut.py 'Add todoist task' 'todoist_helper add' '<Super>T'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: yes

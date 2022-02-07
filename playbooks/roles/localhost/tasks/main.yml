@@ -129,6 +129,10 @@
   shell: "{{ pipx }} install lolcat"
   ignore_errors: yes
 
+- name: Install black.
+  shell: "{{ pipx }} install black"
+  ignore_errors: yes
+
 - name: Create "obsidian" directory.
   file:
     path: "{{ home_directory }}/Soft/obsidian"
