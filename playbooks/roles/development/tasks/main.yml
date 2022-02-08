@@ -159,7 +159,7 @@
   become: yes
   shell: ufw-docker install
 
-- name: Restart ufw
+- name: Restart ufw.
   become: yes
   service:
     name: ufw

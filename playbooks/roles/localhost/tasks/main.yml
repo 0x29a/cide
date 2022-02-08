@@ -3,6 +3,20 @@
     path: "{{ home_directory }}/Soft"
     state: directory
 
+- name: Set default firewall policy.
+  become: yes
+  ufw:
+    state: enabled
+    policy: reject
+  tags: yay
+
+- name: Restart ufw.
+  become: yes
+  service:
+    name: ufw
+    state: restarted
+  tags: yay
+
 - name: Run "apt-get update, dist-upgrade and autoremove".
   become: yes
   apt:

@@ -50,7 +50,7 @@
     port: "{{ ssh_port }}"
     proto: tcp
 
-- name: Set firewall default policy.
+- name: Set default firewall policy.
   ufw:
     state: enabled
     policy: reject

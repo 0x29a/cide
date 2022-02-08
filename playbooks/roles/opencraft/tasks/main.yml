@@ -18,13 +18,11 @@
   file:
     path: "{{ home_directory }}/.jira.d"
     state: directory
-  tags: yay
 
 - name: Copy go-jira config.
   template:
     src: go_jira_config.yml.j2
     dest: "{{ home_directory }}/.jira.d/config.yml"
-  tags: yay
 
 - name: Install tutor.
   shell: "{{ pipx }} install tutor"
