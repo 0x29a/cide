@@ -13,6 +13,8 @@
     - role: security
       become: yes
       tags: security
+    - role: golang
+      tags: golang
     - role: zsh
       vars:
         cide_environment: cloud

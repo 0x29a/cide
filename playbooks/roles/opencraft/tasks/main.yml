@@ -1,3 +1,31 @@
+- name: Install go-jira.
+  shell: GO111MODULE=on /usr/local/go/bin/go install github.com/go-jira/jira/cmd/jira@latest
+
+- name: Copy "jira" executable.
+  copy:
+    src: "{{ home_directory }}/go/bin/jira"
+    dest: "{{ home_directory }}/.local/bin/jira"
+    remote_src: yes
+    mode: a+x
+
+- name: Remove go build directory.
+  become: yes
+  file:
+    path: "{{ home_directory }}/go"
+    state: absent
+
+- name: Create go-jira config directory.
+  file:
+    path: "{{ home_directory }}/.jira.d"
+    state: directory
+  tags: yay
+
+- name: Copy go-jira config.
+  template:
+    src: go_jira_config.yml.j2
+    dest: "{{ home_directory }}/.jira.d/config.yml"
+  tags: yay
+
 - name: Install tutor.
   shell: "{{ pipx }} install tutor"
   ignore_errors: yes

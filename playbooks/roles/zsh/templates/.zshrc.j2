@@ -210,6 +210,7 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
 elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
+  alias j="jira"
   alias dev='cd ~/Projects/bebop-devstack/devstack'
   alias pre="prettier --single-quote --write"
   alias sol="cd ~/Projects/solutions-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
@@ -287,7 +288,8 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias k=kubectl
   complete -F __start_kubectl k
 
-  # Tutor completions
+  # #############################################
+  # tutor setup config  #########################
 
   #compdef tutor
 
@@ -323,6 +325,12 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   }
 
   compdef _tutor_completion tutor;
+
+  # #############################################
+  # https://github.com/go-jira/jira config  #####
+
+  export PATH=$PATH:/usr/local/go/bin
+  eval "$(jira --completion-script-bash)"
 
 fi
 

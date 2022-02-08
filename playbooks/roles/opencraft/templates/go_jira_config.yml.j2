@@ -1,0 +1,9 @@
+endpoint: "{{ jira_url }}"
+user: "{{ github_username }}"
+custom-commands:
+  - name: sprint
+    help: display issues for active sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint not in closedSprints() and sprint not in futureSprints()"
