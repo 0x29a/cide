@@ -10,6 +10,18 @@
   args:
     chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
 
+- name: Add OBS project repository.
+  become: yes
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+
+- name: Install OBS Studio.
+  become: yes
+  apt:
+    name: obs-studio
+    update_cache: yes
+    state: present
+
 - name: Install HashiCorp public signing key.
   become: yes
   apt_key:

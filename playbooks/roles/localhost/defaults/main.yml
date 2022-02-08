@@ -6,6 +6,7 @@ local_packages:
   - autossh
   - supervisor
   - guake
+  - gnome-tweaks
 
 local_snap_packages:
   - spotify

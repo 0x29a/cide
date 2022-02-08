@@ -51,6 +51,9 @@ This repository contains playbooks and roles, that I use to:
     ```
 1. Log in and log out to activate new default shell.
 1. Open [Syncthing Web UI](http://127.0.0.1:8384/), remove default folder and configure all devices.
+1. [TO AUTOMATE] Add a new keyboard layout and set <Left Shift><Right Shift> shortcut.
+1. [TO AUTOMATE] Install Tor Browser.
+1. [TO AUTOMATE] Reverse touchpad scroll.
 
 ### Provisioning CIDE
 
