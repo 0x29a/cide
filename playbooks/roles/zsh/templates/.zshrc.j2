@@ -209,6 +209,8 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
+  alias audio_record="obs --collection opencraft_collection --scene audio_record --profile audio_record"
+  alias end_of_sprint="obs --collection opencraft_collection --scene end_of_sprint --profile end_of_sprint"
 elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias j="jira"
   alias dev='cd ~/Projects/bebop-devstack/devstack'

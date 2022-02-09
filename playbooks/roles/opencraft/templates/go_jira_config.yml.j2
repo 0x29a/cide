@@ -6,4 +6,25 @@ custom-commands:
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint not in closedSprints() and sprint not in futureSprints()"
+       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints() "Reviewer 1" = 0x29a and status not in (Recurring, Done, "Deployed & Delivered", Archived)"
+
+  - name: sprint_all
+    help: display issues for active sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: reviews
+    help: display issues for active sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "project = {{ jira_project_name }} and "Reviewer 1" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: second_reviewer
+    help: display issues for active sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "project = {{ jira_project_name }} and "Reviewer 2" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"

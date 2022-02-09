@@ -22,6 +22,16 @@
     update_cache: yes
     state: present
 
+- name: Create "Sprint Updates" directory.
+  file:
+    path: "{{ home_directory }}/Videos/Sprint Updates"
+    state: directory
+
+- name: Create "Other recordings" directory.
+  file:
+    path: "{{ home_directory }}/Documents/Other recordings"
+    state: directory
+
 - name: Install HashiCorp public signing key.
   become: yes
   apt_key:

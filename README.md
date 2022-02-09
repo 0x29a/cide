@@ -54,6 +54,8 @@ This repository contains playbooks and roles, that I use to:
 1. [TO AUTOMATE] Add a new keyboard layout and set <Left Shift><Right Shift> shortcut.
 1. [TO AUTOMATE] Install Tor Browser.
 1. [TO AUTOMATE] Reverse touchpad scroll.
+1. [TO AUTOMATE] Add [custom certificates](https://gitlab.com/opencraft/documentation/private/-/tree/master/vault#browser-access) for Vault.
+1. [TO AUTOMATE] OBS collections and profiles import.
 
 ### Provisioning CIDE
 

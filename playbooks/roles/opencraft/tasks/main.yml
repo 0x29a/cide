@@ -23,6 +23,7 @@
   template:
     src: go_jira_config.yml.j2
     dest: "{{ home_directory }}/.jira.d/config.yml"
+  tags: go_jira_config
 
 - name: Install tutor.
   shell: "{{ pipx }} install tutor"
