@@ -13,3 +13,4 @@ local_snap_packages:
   - spotify
 
 obsidian_appimage_url: https://github.com/obsidianmd/obsidian-releases/releases/download/v0.13.23/Obsidian-0.13.23.AppImage
+freetube_deb_url: https://github.com/FreeTubeApp/FreeTube/releases/download/v0.16.0-beta/freetube_0.16.0_amd64.deb

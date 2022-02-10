@@ -145,6 +145,11 @@
   shell: "{{ pipx }} install black"
   ignore_errors: yes
 
+- name: Install freetube.
+  become: yes
+  apt:
+    deb: "{{ freetube_deb_url }}"
+
 - name: Create "obsidian" directory.
   file:
     path: "{{ home_directory }}/Soft/obsidian"

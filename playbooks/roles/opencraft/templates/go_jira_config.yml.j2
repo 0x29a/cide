@@ -2,29 +2,43 @@ endpoint: "{{ jira_url }}"
 user: "{{ github_username }}"
 custom-commands:
   - name: sprint
-    help: display issues for active sprint
+    help: display issues to work on
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints() "Reviewer 1" = 0x29a and status not in (Recurring, Done, "Deployed & Delivered", Archived)"
+       --query "assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
 
   - name: sprint_all
-    help: display issues for active sprint
+    help: display all issues in my sprint
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "project = {{ jira_project_name }} and assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+       --query "assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
 
   - name: reviews
-    help: display issues for active sprint
+    help: display all reviews
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "project = {{ jira_project_name }} and "Reviewer 1" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+       --query "\"Reviewer 1\" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
 
   - name: second_reviewer
-    help: display issues for active sprint
+    help: display all issues where I'm a second reviewer
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "project = {{ jira_project_name }} and "Reviewer 2" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+       --query "\"Reviewer 2\" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: uq
+    help: display UQ issues in the current sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" = BB-1254 and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: uq_all
+    help: display ALL UQ issues
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" = BB-1254"
