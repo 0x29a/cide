@@ -9,6 +9,7 @@
   shell: make ssh
   args:
     chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
+  ignore_errors: yes
 
 - name: Add OBS project repository.
   become: yes
@@ -84,6 +85,7 @@
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: yes
 
+# TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add start tracking shortcut.
   shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>E'
   args:
@@ -91,8 +93,15 @@
   ignore_errors: yes
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
-- name: Add todoist helper shortcut.
-  shell: python3 add_shortcut.py 'Add todoist task' 'todoist_helper add' '<Super>T'
+- name: Add shared todoist helper shortcut.
+  shell: python3 add_shortcut.py 'Add shared todoist task' 'todoist_helper add -p 2284931928' '<Super>T'
+  args:
+    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+  ignore_errors: yes
+
+# TODO: convert shortcut installer into a separate role and move this to the localhost role.
+- name: Add personal todoist helper shortcut.
+  shell: python3 add_shortcut.py 'Add personal todoist task' 'todoist_helper add' '<Super>Y'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: yes
