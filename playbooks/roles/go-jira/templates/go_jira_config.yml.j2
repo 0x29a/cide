@@ -1,5 +1,6 @@
 endpoint: "{{ jira_url }}"
 user: "{{ github_username }}"
+password-source: keyring
 custom-commands:
   - name: sprint
     help: display issues to work on
@@ -34,11 +35,11 @@ custom-commands:
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" = BB-1254 and sprint in openSprints() and sprint not in futureSprints()"
+       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint in openSprints() and sprint not in futureSprints()"
 
   - name: uq_all
     help: display ALL UQ issues
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" = BB-1254"
+       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789)"

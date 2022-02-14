@@ -17,3 +17,7 @@
       tags: syncthing
     - role: opencraft_local
       tags: opencraft
+    - role: golang
+      tags: golang
+    - role: go-jira
+      tags: go-jira
