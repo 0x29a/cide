@@ -29,6 +29,13 @@
     state: present
   tags: local_packages
 
+- name: Remove local packages.
+  become: yes
+  apt:
+    name: "{{ local_packages_to_remove }}"
+    state: absent
+  tags: local_packages_remove
+
 - name: Install local snap packages.
   become: yes
   snap:
@@ -80,6 +87,9 @@
 
 - name: Disable Gnome animations.
   shell: gsettings set org.gnome.desktop.interface enable-animations false
+
+- name: Disable the Dock.
+  shell: gnome-extensions disable ubuntu-dock@ubuntu.com
 
 - name: Disable background.
   shell: gsettings set org.gnome.desktop.background picture-options 'none'

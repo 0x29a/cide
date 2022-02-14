@@ -9,6 +9,10 @@ local_packages:
   - gnome-tweaks
   - flameshot
 
+local_packages_to_remove:
+  - thunderbird
+  - rhythmbox
+
 local_snap_packages:
   - spotify
 
