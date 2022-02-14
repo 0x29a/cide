@@ -177,3 +177,15 @@
   args:
     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
   tags: nodejs
+
+# TODO: Automate https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
+- name: Install cloudflared.
+  become: yes
+  apt:
+    deb: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+  tags: cloudflare
+
+- name: Create openedx tunnel.
+  shell: cloudflared tunnel create openedx
+  ignore_errors: yes
+  tags: cloudflare

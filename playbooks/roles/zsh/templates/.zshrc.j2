@@ -132,7 +132,7 @@ alias upd="sudo apt update && sudo apt list --upgradable && sudo apt upgrade -y"
 
 alias soft="cd ~/Soft"
 alias proj="cd ~/Projects"
-alias cide="cd ~/Projects/cide"
+alias cide="cd ~/Projects/cide && code ."
 alias s=sudo
 
 if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
@@ -218,6 +218,7 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias sol="cd ~/Projects/solutions-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
   alias jol="cd ~/Projects/solutions-juniper-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
   alias uq="cd ~/Projects/uq/uq-learnx-configuration-secure && ssh -F ssh-config uq-director-stage -t \"cd uq-learnx-configuration-secure/ && ssh ubuntu@172.31.30.80 -i ssh_keys/oc-edxapp-stage.pem\""
+  alias tunnel="cloudflared tunnel run openedx"
 else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
