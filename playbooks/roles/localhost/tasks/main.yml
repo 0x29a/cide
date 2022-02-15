@@ -205,3 +205,19 @@
   template:
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
+
+- name: Download tridactyl native messenger installation shell script.
+  get_url:
+    url: "{{ tridactyl_native_messenger_url }}"
+    dest: /tmp/trinativeinstall.sh
+  tags: tridactyl
+
+- name: Run tridactyl native messenger installation shell script.
+  shell: "sh /tmp/trinativeinstall.sh {{ tridactyl_version }}"
+  tags: tridactyl
+
+- name: Copy tridactyl config.
+  copy:
+    src: .tridactylrc
+    dest: "{{ home_directory }}/.tridactylrc"
+  tags: tridactyl
