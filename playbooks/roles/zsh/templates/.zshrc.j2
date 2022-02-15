@@ -213,7 +213,8 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   alias audio_record="obs --collection opencraft_collection --scene audio_record --profile audio_record"
   alias end_of_sprint="obs --collection opencraft_collection --scene end_of_sprint --profile end_of_sprint"
 elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
-  alias dev='cd ~/Projects/bebop-devstack/devstack'
+  alias t="tutor"
+  alias dev="cd ~/Projects/bebop-devstack/devstack"
   alias pre="prettier --single-quote --write"
   alias sol="cd ~/Projects/solutions-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
   alias jol="cd ~/Projects/solutions-juniper-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
@@ -261,7 +262,7 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   # Cloud tunnel launching  #####################
 
   if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
-    if ! ps -e | grep -q "tmux: server"; then
+    if ! tmux ls | grep -q "cloud_tunnel"; then
       tmux new-session -d -s cloud_tunnel
       tmux send -t cloud_tunnel "sleep 10 && cloud_tunnel" ENTER
     fi

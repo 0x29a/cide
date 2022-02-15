@@ -77,13 +77,40 @@
   with_items: "{{ hosts_entries }}"
   tags: hosts_file
 
+- name: Configure byobu as available shell.
+  become: yes
+  lineinfile:
+    dest: /etc/shells
+    line: /usr/bin/byobu
+  tags: terminal
+
 - name: Copy Guake autostart file.
   copy:
     src: guake.desktop
     dest: "{{ home_directory }}/.config/autostart/guake.desktop"
+  tags: terminal
 
 - name: Import guake preferences.
   shell: guake --restore-preferences roles/localhost/files/guake_preferences
+  tags: terminal
+
+- name: Copy tmux config.
+  copy:
+    src: .tmux.conf
+    dest: "{{ home_directory }}/.byobu/.tmux.conf"
+  tags: terminal
+
+- name: Clone tmux-jump.
+  git:
+    repo: https://github.com/schasse/tmux-jump
+    dest: "{{ home_directory }}/.tmux-jump"
+  tags: terminal
+
+- name: Copy byobu keybindings config.
+  copy:
+    src: keybindings.tmux
+    dest: "{{ home_directory }}/.byobu/keybindings.tmux"
+  tags: terminal
 
 - name: Disable Gnome animations.
   shell: gsettings set org.gnome.desktop.interface enable-animations false
