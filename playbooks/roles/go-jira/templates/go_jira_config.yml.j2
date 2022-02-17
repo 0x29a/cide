@@ -40,6 +40,20 @@ custom-commands:
        --template table \
        --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint in openSprints() and sprint not in futureSprints()"
 
+  - name: uq_next
+    help: display UQ issues in the next sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+
+  - name: uq_no_sprint
+    help: display UQ issues without sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint is NULL and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+
   - name: uq_all
     help: display ALL UQ issues
     script: |-
@@ -53,6 +67,20 @@ custom-commands:
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
        --query "\"Epic Link\" in (BB-5169) and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: lilac_next
+    help: display Lilac issues in the next sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-5169) and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+
+  - name: lilac_no_sprint
+    help: display Lilac issues without sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-5169) and sprint is NULL and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
 
   - name: lilac_all
     help: display Lilac issues in the current sprint
