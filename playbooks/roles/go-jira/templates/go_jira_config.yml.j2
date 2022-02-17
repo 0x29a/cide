@@ -38,28 +38,40 @@ custom-commands:
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint in openSprints() and sprint not in futureSprints()"
+       --query "\"Epic Link\" in ({% raw %}{{args.epic}}{% endraw %}) and sprint in openSprints() and sprint not in futureSprints()"
+    args:
+    - name: epic
+      default: "BB-1254, BB-4591, BB-4789"
 
   - name: uq_next
     help: display UQ issues in the next sprint
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+       --query "\"Epic Link\" in ({% raw %}{{args.epic}}{% endraw %}) and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+    args:
+    - name: epic
+      default: "BB-1254, BB-4591, BB-4789"
 
   - name: uq_no_sprint
     help: display UQ issues without sprint
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789) and sprint is NULL and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+       --query "\"Epic Link\" in ({% raw %}{{args.epic}}{% endraw %}) and sprint is NULL and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+    args:
+    - name: epic
+      default: "BB-1254, BB-4591, BB-4789"
 
   - name: uq_all
     help: display ALL UQ issues
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789)"
+       --query "\"Epic Link\" in ({% raw %}{{args.epic}}{% endraw %})"
+    args:
+    - name: epic
+      default: "BB-1254, BB-4591, BB-4789"
 
   - name: lilac
     help: display Lilac issues in the current sprint
