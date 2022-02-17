@@ -121,6 +121,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # #############################################
 # Aliases #####################################
 
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"
+
 alias d=docker
 alias dps="docker ps"
 alias dck=docker-compose
@@ -207,6 +210,7 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 4000:127.0.0.1:4000 \
   -L 2101:127.0.0.1:2101 \
   -L 8875:127.0.0.1:8875 \
+  -L 6666:127.0.0.1:6666 \
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"

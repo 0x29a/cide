@@ -223,4 +223,6 @@
   copy:
     src: .tridactylrc
     dest: "{{ home_directory }}/.tridactylrc"
-  tags: tridactyl
+  tags:
+    - tridactyl
+    - tridactylrc

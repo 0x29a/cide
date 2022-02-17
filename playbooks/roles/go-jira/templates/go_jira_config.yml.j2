@@ -2,14 +2,17 @@ endpoint: "{{ jira_url }}"
 user: "{{ github_username }}"
 password-source: keyring
 custom-commands:
-  - name: sprint
+  - name: sp
     help: display issues to work on
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+       --query "assignee = {% raw %}{{ args.assignee }}{% endraw %} and sprint in openSprints() and sprint not in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+    args:
+    - name: assignee
+      default: "{{ github_username }}"
 
-  - name: sprint_all
+  - name: sp_all
     help: display all issues in my sprint
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
@@ -43,3 +46,17 @@ custom-commands:
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
        --query "\"Epic Link\" in (BB-1254, BB-4591, BB-4789)"
+
+  - name: lilac
+    help: display Lilac issues in the current sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-5169) and sprint in openSprints() and sprint not in futureSprints()"
+
+  - name: lilac_all
+    help: display Lilac issues in the current sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "\"Epic Link\" in (BB-5169)"
