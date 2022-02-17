@@ -130,6 +130,9 @@
 - name: Set secondary background color to black.
   shell: gsettings set org.gnome.desktop.background secondary-color '#000000'
 
+- name: Remove favourites.
+  shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop']"
+
 - name: Create "cide" directory.
   file:
     path: "{{ home_directory }}/Soft/cide"
