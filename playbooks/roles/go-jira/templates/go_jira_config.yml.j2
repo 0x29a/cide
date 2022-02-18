@@ -19,6 +19,14 @@ custom-commands:
        --template table \
        --query "assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
 
+  - name: o
+    help: open Jira ticket in the Firefox
+    script: |-
+      python3 -c "import re; import webbrowser; ticket = re.search(r\"[A-Z]{2,}-\d+\", \"{% raw %}{{ args.key }}{% endraw }\"); webbrowser.open(\"https://tasks.opencraft.com/browse/\" + ticket.group(0)) if ticket else None"
+    args:
+    - name: key
+      required: true
+
   - name: reviews
     help: display all reviews
     script: |-
