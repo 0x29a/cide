@@ -22,7 +22,7 @@ custom-commands:
   - name: o
     help: open Jira ticket in the Firefox
     script: |-
-      python3 -c "import re; import webbrowser; ticket = re.search(r\"[A-Z]{2,}-\d+\", \"{% raw %}{{ args.key }}{% endraw }\"); webbrowser.open(\"https://tasks.opencraft.com/browse/\" + ticket.group(0)) if ticket else None"
+      python3 -c "import re; import webbrowser; ticket = re.search(r\"[A-Z]{2,}-\d+\", \"{% raw %}{{ args.key }}{% endraw %}\"); webbrowser.open(\"https://tasks.opencraft.com/browse/\" + ticket.group(0)) if ticket else None"
     args:
     - name: key
       required: true
@@ -32,7 +32,7 @@ custom-commands:
     script: |-
       {% raw %}{{jira}}{% endraw %} list \
        --template table \
-       --query "\"Reviewer 1\" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
+       --query "\"Reviewer 1\" = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
 
   - name: second_reviewer
     help: display all issues where I'm a second reviewer
