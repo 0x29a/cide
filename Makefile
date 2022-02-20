@@ -1,4 +1,6 @@
 BIN=.fenv/bin
+# ansible-playbook
+AP=$(BIN)/ansible-playbook
 
 virtualenv:
 	if ! [ -d ".fenv" ] ; then virtualenv -p python3 .fenv ; fi
@@ -11,26 +13,35 @@ requirements: virtualenv
 	if [ ! -d /home/$(USER)/.ansible/collections/ ]; then $(BIN)/ansible-galaxy install -r requirements.yml; fi
 
 set_up_localhost: keys requirements
-	$(BIN)/ansible-playbook playbooks/localhost.yml --ask-become-pass
+	$(AP) playbooks/localhost.yml --ask-become-pass
 
 set_up_localhost.%: keys requirements
-	$(BIN)/ansible-playbook playbooks/localhost.yml --ask-become-pass --tags=$*
+	$(AP) playbooks/localhost.yml --ask-become-pass --tags=$*
 
 bootstrap: requirements
-	$(BIN)/ansible-playbook playbooks/bootstrap.yml
+	$(AP) playbooks/bootstrap.yml
 
 bootstrap.%: requirements
-	$(BIN)/ansible-playbook playbooks/bootstrap.yml --tags=$*
+	$(AP) playbooks/bootstrap.yml --tags=$*
 
 deploy: requirements
-	$(BIN)/ansible-playbook playbooks/cide.yml --ask-become-pass
+	$(AP) playbooks/cide.yml --ask-become-pass
 
 deploy.%: requirements
-	$(BIN)/ansible-playbook playbooks/cide.yml --ask-become-pass --tags=$*
+	$(AP) playbooks/cide.yml --ask-become-pass --tags=$*
+
+zsh: requirements
+	$(AP) playbooks/localhost.yml --tags=zshrc
+
+zsh.cide: requirements
+	$(AP) playbooks/cide.yml --tags=zshrc
+
+jira: requirements
+	$(AP) playbooks/localhost.yml --tags=go_jira_config
 
 # Rebuilds CIDE Electron app and reinstalls it locally.
 cide_app: requirements
-	$(BIN)/ansible-playbook playbooks/cide.yml --ask-become-pass --tags nativefier
+	$(AP) playbooks/cide.yml --ask-become-pass --tags nativefier
 	rm -rf ~/Soft/cide/CIDE-linux-x64
 	mkdir -p ~/Soft/cide/
 	scp -r $(USER)@cloud:~/Soft/cide/CIDE-linux-x64 ~/Soft/cide/CIDE-linux-x64
