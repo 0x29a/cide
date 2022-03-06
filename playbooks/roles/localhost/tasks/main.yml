@@ -133,6 +133,9 @@
 - name: Remove favourites.
   shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop']"
 
+- name: Disable natural scroll.
+  shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+
 - name: Create "cide" directory.
   file:
     path: "{{ home_directory }}/Soft/cide"
@@ -229,3 +232,17 @@
   tags:
     - tridactyl
     - tridactylrc
+
+- name: Install ProtonVPN repo.
+  become: yes
+  apt:
+    deb: "{{ protonvpn_deb_url }}"
+  tags: proton
+
+- name: Install ProtonVPN.
+  become: yes
+  apt:
+    name: protonvpn
+    update_cache: yes
+    state: present
+  tags: proton
