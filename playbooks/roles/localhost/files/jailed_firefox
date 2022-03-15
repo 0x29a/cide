@@ -1,0 +1,1 @@
+firejail --private=/home/demid/firefox_jail /usr/bin/firefox $@

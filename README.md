@@ -51,6 +51,11 @@ This repository contains playbooks and roles, that I use to:
     ```
 1. Log in and log out to activate new default shell.
 1. Open [Syncthing Web UI](http://127.0.0.1:8384/), remove default folder and configure all devices.
+1. Run the follwing in `tridactyl`:
+    ```
+    autocmd TriStart .* source --url https://raw.githubusercontent.com/0x29a/cide/master/playbooks/roles/localhost/files/.tridactylrc
+    ```
+    I need this workaround because `tridactyl` native messenger is tricky to set up in a firejail.
 1. [TO AUTOMATE] Add a new keyboard layout and set <Left Shift><Right Shift> shortcut.
 1. [TO AUTOMATE] Install Tor Browser.
 1. [TO AUTOMATE] Reverse touchpad scroll.

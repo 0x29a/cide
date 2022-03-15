@@ -215,24 +215,6 @@
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
 
-- name: Download tridactyl native messenger installation shell script.
-  get_url:
-    url: "{{ tridactyl_native_messenger_url }}"
-    dest: /tmp/trinativeinstall.sh
-  tags: tridactyl
-
-- name: Run tridactyl native messenger installation shell script.
-  shell: "sh /tmp/trinativeinstall.sh {{ tridactyl_version }}"
-  tags: tridactyl
-
-- name: Copy tridactyl config.
-  copy:
-    src: .tridactylrc
-    dest: "{{ home_directory }}/.tridactylrc"
-  tags:
-    - tridactyl
-    - tridactylrc
-
 - name: Install ProtonVPN repo.
   become: yes
   apt:
@@ -246,3 +228,33 @@
     update_cache: yes
     state: present
   tags: proton
+
+- name: Add firejail repository.
+  become: yes
+  apt_repository:
+    repo: ppa:deki/firejail
+  tags: firejail
+
+- name: Install firejail.
+  become: yes
+  apt:
+    name:
+      - firejail
+      - firejail-profiles
+    update_cache: yes
+    state: present
+  tags: firejail
+
+- name: Create "firefox_jail" directory.
+  file:
+    path: "{{ home_directory }}/firefox_jail"
+    state: directory
+  tags: firejail
+
+- name: Create firefox launcher.
+  become: yes
+  copy:
+    src: jailed_firefox
+    dest: /usr/local/bin/firefox
+    mode: a+x
+  tags: firejail

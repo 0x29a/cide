@@ -12,6 +12,8 @@ local_packages:
   - gnome-tweaks
   - flameshot
   - focuswriter
+  - firejail
+  - vlc
 
 local_packages_to_remove:
   - thunderbird
