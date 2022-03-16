@@ -1,5 +1,4 @@
 ---
-
 - name: Set up local machine.
   hosts: localhost
   connection: local
@@ -13,7 +12,7 @@
     - role: zsh
       tags: zsh
     - role: syncthing
-      become: yes
+      become: true
       tags: syncthing
     - role: opencraft_local
       tags: opencraft

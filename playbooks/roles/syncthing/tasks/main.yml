@@ -1,3 +1,4 @@
+---
 - name: Install Syncthing public signing key.
   apt_key:
     url: https://syncthing.net/release-key.gpg
@@ -5,13 +6,13 @@
 
 - name: Add Syncthing repo.
   apt_repository:
-    repo: "deb https://apt.syncthing.net/ syncthing stable"
+    repo: deb https://apt.syncthing.net/ syncthing stable
     state: present
 
 - name: Install Syncthing.
   apt:
     name: syncthing
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: Add syncthing.conf supervisor service config.

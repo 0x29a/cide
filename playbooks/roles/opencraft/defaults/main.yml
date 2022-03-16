@@ -1,3 +1,4 @@
+---
 jira_url: https://tasks.opencraft.com
 jira_username: "{{ github_username }}"
 jira_password: password

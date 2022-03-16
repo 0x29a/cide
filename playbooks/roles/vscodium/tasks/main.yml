@@ -1,20 +1,21 @@
+---
 - name: Add VSCodium key.
-  become: yes
+  become: true
   apt_key:
     url: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
     state: present
 
 - name: Add VSCodium repo.
-  become: yes
+  become: true
   apt_repository:
-    repo: "deb https://download.vscodium.com/debs vscodium main"
+    repo: deb https://download.vscodium.com/debs vscodium main
     state: present
 
 - name: Install VSCodium.
-  become: yes
+  become: true
   apt:
     name: codium
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: Copy settings.

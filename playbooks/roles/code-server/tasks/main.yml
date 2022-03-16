@@ -1,6 +1,7 @@
+---
 - name: Install gunicorn.
   shell: "{{ pipx }} install gunicorn"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Inject flask to gunicorn virtualenv.
   shell: "{{ pipx }} inject gunicorn flask"
@@ -15,40 +16,40 @@
 
 - name: Create healthcheck file.
   template:
-    src: "healthcheck.py.j2"
+    src: healthcheck.py.j2
     dest: "{{ home_directory }}/Soft/code-server-healthcheck/healthcheck.py"
 
 - name: Copy screen session configuration.
   template:
-    src: "screenrc.j2"
+    src: screenrc.j2
     dest: "{{ screenrc_path }}"
 
 - name: Copy systemd service file.
-  become: yes
+  become: true
   template:
-    src: "screen.service.j2"
-    dest: "/etc/systemd/system/screen.service"
+    src: screen.service.j2
+    dest: /etc/systemd/system/screen.service
 
 - name: Enable and start systemd service to start on boot automatically.
-  become: yes
+  become: true
   systemd:
-    daemon-reload: yes
+    daemon-reload: true
     name: screen.service
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Install code-server.
-  become: yes
+  become: true
   apt:
     deb: "{{ code_server_deb }}"
 
 - name: Enable code-server service.
-  become: yes
-  shell: "systemctl enable --now code-server@{{ username }}"
+  become: true
+  shell: systemctl enable --now code-server@{{ username }}
 
 - name: Copy code-server config.
   template:
-    src: "code-server-config.yml.j2"
+    src: code-server-config.yml.j2
     dest: "{{ home_directory }}/.config/code-server/config.yaml"
 
 - name: Create vscode user directory.
@@ -58,53 +59,53 @@
 
 - name: Copy vscode settings.
   template:
-    src: "vs_code_settings.json"
+    src: vs_code_settings.json
     dest: "{{ home_directory }}/.local/share/code-server/User/settings.json"
 
 - name: Restart code-server.
   shell: systemctl --user restart code-server
 
 - name: Add Caddy key.
-  become: yes
+  become: true
   apt_key:
     url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
     state: present
 
 - name: Add Caddy repo.
-  become: yes
+  become: true
   apt_repository:
     repo: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
     state: present
 
 - name: Add Caddy sources repo.
-  become: yes
+  become: true
   apt_repository:
     repo: deb-src https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
     state: present
 
 - name: Install Caddy.
-  become: yes
+  become: true
   apt:
     name: caddy
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: Copy Caddy config.
   become: true
   template:
-    src: "Caddyfile.j2"
-    dest: "/etc/caddy/Caddyfile"
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
   tags: caddy
 
 - name: Restart Caddy.
-  become: yes
+  become: true
   systemd:
     name: caddy
     state: restarted
   tags: caddy
 
 - name: Allow healthcheck port.
-  become: yes
+  become: true
   ufw:
     rule: allow
     port: 57666

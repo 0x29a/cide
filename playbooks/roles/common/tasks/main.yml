@@ -1,14 +1,13 @@
 ---
-
 - name: Set the hostname.
   hostname:
     name: "{{ server_hostname }}"
 
 - name: Run "apt-get update, dist-upgrade and autoremove".
   apt:
-    update_cache: yes
+    update_cache: true
     upgrade: dist
-    autoremove: yes
+    autoremove: true
 
 - name: Install server packages.
   apt:

@@ -1,6 +1,7 @@
+---
 - name: Install tutor.
   shell: "{{ pipx }} install tutor"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Inject tutor-mfe plugin in tutor's virtual environment.
   shell: "{{ pipx }} inject tutor tutor-mfe"
@@ -13,10 +14,10 @@
 
 - name: Clone spm_utils.
   git:
-    repo: "git@github.com:{{ github_username }}/spm_utils.git"
+    repo: git@github.com:{{ github_username }}/spm_utils.git
     dest: "{{ home_directory }}/Projects/spm_utils"
-    accept_hostkey: yes
-  ignore_errors: yes
+    accept_hostkey: true
+  ignore_errors: true
 
 - name: Install spm_utils requirements.
   pip:
@@ -32,9 +33,9 @@
 
 - name: Clone toggl-tempo-worklog-transfer.
   git:
-    repo: "git@github.com:{{ github_username }}/toggl-tempo-worklog-transfer.git"
+    repo: git@github.com:{{ github_username }}/toggl-tempo-worklog-transfer.git
     dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer"
-    accept_hostkey: yes
+    accept_hostkey: true
 
 - name: Create .env for toggl-tempo-worklog-transfer.
   template:
@@ -64,7 +65,7 @@
     name: toggl-tempo-worklog-transfer
     minute: "0"
     hour: "4"
-    job: "(cd {{ home_directory }}/Soft/toggl-tempo-worklog-transfer && {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
+    job: (cd {{ home_directory }}/Soft/toggl-tempo-worklog-transfer && {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python {{ home_directory }}/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)
 
 ############## Ocim ##############
 
@@ -76,8 +77,8 @@
   git:
     repo: git@github.com:open-craft/opencraft.git
     dest: "{{ home_directory }}/Projects/ocim"
-    accept_hostkey: yes
-  ignore_errors: yes
+    accept_hostkey: true
+  ignore_errors: true
   tags: ocim
 
 - name: Clone ansible-playbooks along with Ocim repo.
