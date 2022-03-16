@@ -1,4 +1,10 @@
 ---
+roles:
+  - name: geerlingguy.nodejs
+    version: 6.0.0
+  - name: geerlingguy.security
+    version: 2.1.0
+
 collections:
   - name: https://github.com/dev-sec/ansible-collection-hardening
     type: git

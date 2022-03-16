@@ -167,7 +167,7 @@
 
 - name: Import the nodejs role
   import_role:
-    name: ansible-role-nodejs
+    name: geerlingguy.nodejs
   tags: nodejs
   become: yes
 

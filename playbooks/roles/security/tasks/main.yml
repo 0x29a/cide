@@ -20,9 +20,9 @@
     ssh_allow_agent_forwarding: true
     ssh_allow_users: '{{ username }}'
 
-- name: Import ansible-role-security role.
+- name: Import geerlingguy.security role.
   import_role:
-    name: ansible-role-security
+    name: geerlingguy.security
   vars:
     # For https://github.com/geerlingguy/ansible-role-security
     security_autoupdate_mail_to: "public@demid.dev"
