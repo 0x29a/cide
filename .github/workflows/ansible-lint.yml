@@ -1,4 +1,4 @@
-name: Ansible Lint
+name: Ansible linter
 
 on: [push, pull_request]
 

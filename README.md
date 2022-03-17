@@ -5,6 +5,8 @@ This repository contains playbooks and roles, that I use to:
 - Deploy my personal cloud IDE based on [code-server](https://github.com/cdr/code-server).
 - Deploy other self-hosted services, such as [SearX](https://searx.me/).
 
+[![Linting Status][linter-image]][linter-url]
+
 ## Getting Started
 
 ### Localhost
@@ -103,3 +105,8 @@ This repository contains playbooks and roles, that I use to:
     1. `redhat.vscode-yaml`.
     1. `esbenp.prettier-vscode`.
     1. `ms-vscode.vscode-typescript-tslint-plugin`.
+
+<!-- Badges -->
+
+[linter-image]: https://github.com/0x29a/cide/actions/workflows/ansible-lint.yml/badge.svg
+[linter-url]: https://github.com/0x29a/cide/actions/workflows/ansible-lint.yml
