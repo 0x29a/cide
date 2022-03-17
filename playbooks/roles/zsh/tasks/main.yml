@@ -1,55 +1,55 @@
 ---
 - name: Install zsh.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: zsh
     state: present
 
 - name: Check if .oh-my-zsh exists.
-  stat:
+  ansible.builtin.stat:
     path: "{{ home_directory }}/.oh-my-zsh"
   register: stat_oh_my_zsh_result
 
 - name: Install Oh My Zsh.
-  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   become_user: "{{ username }}"
   when: not stat_oh_my_zsh_result.stat.exists
 
 - name: Install Powerlevel10k.
-  git:
+  ansible.builtin.git:
     repo: https://github.com/romkatv/powerlevel10k
     dest: "{{ home_directory }}/.oh-my-zsh/custom/themes/powerlevel10k"
 
 - name: Copy zshrc.
-  template:
+  ansible.builtin.template:
     src: .zshrc.j2
     dest: "{{ home_directory }}/.zshrc"
   tags: zshrc
 
 - name: Copy p10k config.
-  copy:
+  ansible.builtin.copy:
     src: .p10k.zsh
     dest: "{{ home_directory }}/.p10k.zsh"
 
 # You should log out and log in after this.
 - name: Change shell to zsh.
-  user:
+  ansible.builtin.user:
     name: "{{ username }}"
     shell: /bin/zsh
 
 - name: Check if zsh history exist.
-  stat:
+  ansible.builtin.stat:
     path: "{{ home_directory }}/.zsh_history"
   register: stat_zsh_history_result
 
 - name: Copy zsh history for localhost.
-  copy:
+  ansible.builtin.copy:
     src: .zsh_history.localhost
     dest: "{{ home_directory }}/.zsh_history"
   when: not stat_zsh_history_result.stat.exists and cide_environment == "localhost"
 
 - name: Copy zsh history for CIDE.
-  copy:
+  ansible.builtin.copy:
     src: .zsh_history.cloud
     dest: "{{ home_directory }}/.zsh_history"
   when: not stat_zsh_history_result.stat.exists and cide_environment == "cloud"

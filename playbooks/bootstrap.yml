@@ -8,7 +8,7 @@
     - ../.vars.private.yml
   tasks:
     - name: Creating a user named {{ username }} on the specified web server.
-      user:
+      ansible.builtin.user:
         name: "{{ username }}"
         password: "{{ user_password | password_hash('sha512') }}"
         state: present
@@ -17,30 +17,33 @@
         append: true
 
     - name: Add .ssh directory
-      file:
+      ansible.builtin.file:
         path: "{{ home_directory }}/.ssh"
         state: directory
         mode: 0700
         owner: "{{ username }}"
         group: "{{ username }}"
+      become: true
       become_user: "{{ username }}"
 
     - name: Install the SSH private key used for working with repos.
-      copy:
+      ansible.builtin.copy:
         content: "{{ private_ssh_key }}"
         dest: "{{ home_directory }}/.ssh/id_ed25519"
         mode: 0600
+      become: true
       become_user: "{{ username }}"
 
     - name: Install the SSH public key.
-      copy:
+      ansible.builtin.copy:
         content: "{{ public_ssh_key }}"
         dest: "{{ home_directory }}/.ssh/id_ed25519.pub"
         mode: 0644
+      become: true
       become_user: "{{ username }}"
 
     - name: Copy .ssh/id_ed25519 from host box to the remote box for user {{ username }}
-      copy:
+      ansible.builtin.copy:
         src: ~/.ssh/id_ed25519.pub
         dest: "{{ home_directory }}/.ssh/authorized_keys"
         mode: 0600
@@ -49,8 +52,8 @@
       tags:
         - copy_host_ssh_id
 
-    - name: Add new user to sudoers list
-      lineinfile:
+    - name: Add new users to the sudoers.
+      ansible.builtin.lineinfile:
         dest: /etc/sudoers
         regexp: "{{ username }} ALL"
         line: "{{ username }}\tALL=(ALL) \tNOPASSWD: ALL"

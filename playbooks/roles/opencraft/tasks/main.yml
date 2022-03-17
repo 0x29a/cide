@@ -1,67 +1,67 @@
 ---
 - name: Install tutor.
-  shell: "{{ pipx }} install tutor"
-  ignore_errors: true
+  community.general.pipx:
+    name: tutor
 
-- name: Inject tutor-mfe plugin in tutor's virtual environment.
-  shell: "{{ pipx }} inject tutor tutor-mfe"
-
-- name: Inject tutor-mfe plugin in tutor's virtual environment.
-  shell: "{{ pipx }} inject tutor tutor-discovery"
-
-- name: Inject tutor-mfe plugin in tutor's virtual environment.
-  shell: "{{ pipx }} inject tutor tutor-ecommerce"
+- name: Inject plugins to tutor virtualenv.
+  community.general.pipx:
+    name: ipython
+    state: inject
+    inject_packages:
+      - tutor-mfe
+      - tutor-discovery
+      - tutor-ecommerce
 
 - name: Clone spm_utils.
-  git:
+  ansible.builtin.git:
     repo: git@github.com:{{ github_username }}/spm_utils.git
     dest: "{{ home_directory }}/Projects/spm_utils"
     accept_hostkey: true
   ignore_errors: true
 
 - name: Install spm_utils requirements.
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ home_directory }}/Projects/spm_utils/requirements.txt"
     virtualenv: "{{ home_directory }}/Projects/spm_utils/.fenv"
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
 - name: Create .env for spm_utils.
-  template:
+  ansible.builtin.template:
     src: spm_utils_env.j2
     dest: "{{ home_directory }}/Projects/spm_utils/.env"
 
 - name: Clone toggl-tempo-worklog-transfer.
-  git:
+  ansible.builtin.git:
     repo: git@github.com:{{ github_username }}/toggl-tempo-worklog-transfer.git
     dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer"
     accept_hostkey: true
 
 - name: Create .env for toggl-tempo-worklog-transfer.
-  template:
+  ansible.builtin.template:
     src: toggl-tempo-worklog-transfer_env.j2
     dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.env"
 
 - name: Install toggl-tempo-worklog-transfer requirements.
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/requirements.txt"
     virtualenv: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.fenv"
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
 - name: Check if .latest exists.
-  stat:
+  ansible.builtin.stat:
     path: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.latest"
   register: stat_latest_result
 
 - name: Copy toggl-tempo-worklog-transfer timestamp file.
-  copy:
+  ansible.builtin.copy:
     src: .latest
     dest: "{{ home_directory }}/Soft/toggl-tempo-worklog-transfer/.latest"
   when: not stat_latest_result.stat.exists
 
 - name: Creates toggl-tempo-worklog-transfer cron job.
-  cron:
+  ansible.builtin.cron:
     name: toggl-tempo-worklog-transfer
     minute: "0"
     hour: "4"
@@ -70,11 +70,11 @@
 ############## Ocim ##############
 
 - name: Install vagrant-vbguest plugin
-  shell: vagrant plugin install vagrant-vbguest
+  ansible.builtin.shell: vagrant plugin install vagrant-vbguest
   tags: ocim
 
 - name: Clone Ocim repo.
-  git:
+  ansible.builtin.git:
     repo: git@github.com:open-craft/opencraft.git
     dest: "{{ home_directory }}/Projects/ocim"
     accept_hostkey: true
@@ -82,19 +82,19 @@
   tags: ocim
 
 - name: Clone ansible-playbooks along with Ocim repo.
-  git:
+  ansible.builtin.git:
     repo: git@github.com:open-craft/ansible-playbooks.git
     dest: "{{ home_directory }}/Projects/ocim/deploy"
   tags: ocim
 
 - name: Create venvs directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/venvs"
     state: directory
   tags: ocim
 
 - name: Install Ocim requirements.
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ home_directory }}/Projects/ocim/deploy/requirements_ansible_2.8.17.txt"
     virtualenv: "{{ home_directory }}/venvs/ansible"
   tags: ocim

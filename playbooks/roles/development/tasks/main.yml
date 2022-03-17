@@ -1,52 +1,52 @@
 ---
 - name: Create "Soft" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft"
     state: directory
 
 - name: Create "Projects" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Projects"
     state: directory
 
 - name: Copy .pypirc.
-  template:
+  ansible.builtin.template:
     src: .pypirc.j2
     dest: "{{ home_directory }}/.pypirc"
 
 - name: Check if pyenv exists.
-  stat:
+  ansible.builtin.stat:
     path: "{{ home_directory }}/.pyenv"
   register: stat_pyenv_result
 
 - name: Install pyenv.
-  shell: git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  ansible.builtin.shell: git clone https://github.com/pyenv/pyenv.git ~/.pyenv
   when: not stat_pyenv_result.stat.exists
 
 - name: Check if pyenv-virtualenv exists.
-  stat:
+  ansible.builtin.stat:
     path: "{{ home_directory }}/.pyenv/plugins/pyenv-virtualenv"
   register: stat_pyenv_virtualenv_result
 
 - name: Install pyenv-virtualenv.
-  shell: git clone https://github.com/pyenv/pyenv-virtualenv.git {{ home_directory }}/.pyenv/plugins/pyenv-virtualenv
+  ansible.builtin.shell: git clone https://github.com/pyenv/pyenv-virtualenv.git {{ home_directory }}/.pyenv/plugins/pyenv-virtualenv
   when: not stat_pyenv_virtualenv_result.stat.exists
 
 - name: Add HashiCorp key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://apt.releases.hashicorp.com/gpg
     state: present
 
 - name: Add HashiCorp repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }} main
     state: present
 
 - name: Install HashiCorp tools.
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - vagrant
       - terraform
@@ -56,19 +56,19 @@
 
 - name: Add Docker key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
 - name: Add Docker repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable
     state: present
 
 - name: Install Docker.
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - docker-ce
       - docker-ce-cli
@@ -78,49 +78,49 @@
 
 - name: Ensure user is added to the docker group.
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ username }}"
     groups: docker
     append: true
 
 - name: Install Google Cloud public signing key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
 - name: Add Kubernetes repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb http://packages.cloud.google.com/apt/ kubernetes-xenial main
     state: present
 
 - name: Install kubectl.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: kubectl
     state: present
 
 - name: Install minicube.
   become: true
-  apt:
+  ansible.builtin.apt:
     deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 
 - name: Add VirtualBox key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
     state: present
 
 - name: Add VirtualBox repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release | lower }} contrib
     state: present
 
 - name: Install VirtualBox.
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - linux-headers-generic
       - linux-headers-5.4.0-77-generic
@@ -130,49 +130,49 @@
     state: present
 
 - name: Install pipx.
-  shell: python3 -m pip install --user pipx
+  ansible.builtin.shell: python3 -m pip install --user pipx
 
-- name: Install ipython.
-  shell: "{{ pipx }} install ipython"
-  ignore_errors: true
+- name: Install python packages.
+  community.general.pipx:
+    name: "{{ item }}"
+  loop:
+    - ipython
+    - docker-compose
+    - awscli
+    - lolcat
 
-- name: Install docker-compose.
-  shell: "{{ pipx }} install docker-compose"
-  ignore_errors: true
-
-- name: Install aws-cli.
-  shell: "{{ pipx }} install awscli"
-  ignore_errors: true
-
-- name: Install lolcat.
-  shell: "{{ pipx }} install lolcat"
-  ignore_errors: true
+- name: Inject requests to ipython virtualenv.
+  community.general.pipx:
+    name: ipython
+    state: inject
+    inject_packages:
+      - requests
 
 - name: Download and install ufw-docker.
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
     dest: /usr/local/bin/ufw-docker
     mode: a+x
 
 - name: Install ufw-docker rules
   become: true
-  shell: ufw-docker install
+  ansible.builtin.shell: ufw-docker install
 
 - name: Restart ufw.
   become: true
-  service:
+  ansible.builtin.service:
     name: ufw
     state: restarted
 
 - name: Import the nodejs role
-  import_role:
+  ansible.builtin.import_role:
     name: geerlingguy.nodejs
   tags: nodejs
   become: true
 
 - name: nvm
-  shell: >
+  ansible.builtin.shell: >
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
@@ -181,11 +181,11 @@
 # TODO: Automate https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
 - name: Install cloudflared.
   become: true
-  apt:
+  ansible.builtin.apt:
     deb: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
   tags: cloudflare
 
 - name: Create openedx tunnel.
-  shell: cloudflared tunnel create openedx
+  ansible.builtin.shell: cloudflared tunnel create openedx
   ignore_errors: true
   tags: cloudflare

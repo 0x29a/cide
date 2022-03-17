@@ -1,38 +1,40 @@
 ---
 - name: Install gunicorn.
-  shell: "{{ pipx }} install gunicorn"
-  ignore_errors: true
+  community.general.pipx:
+    name: gunicorn
 
-- name: Inject flask to gunicorn virtualenv.
-  shell: "{{ pipx }} inject gunicorn flask"
-
-- name: Inject requests to gunicorn virtualenv.
-  shell: "{{ pipx }} inject gunicorn requests"
+- name: Inject flask and requests to gunicorn virtualenv.
+  community.general.pipx:
+    name: gunicorn
+    state: inject
+    inject_packages:
+      - flask
+      - requests
 
 - name: Create healthcheck directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft/code-server-healthcheck"
     state: directory
 
 - name: Create healthcheck file.
-  template:
+  ansible.builtin.template:
     src: healthcheck.py.j2
     dest: "{{ home_directory }}/Soft/code-server-healthcheck/healthcheck.py"
 
 - name: Copy screen session configuration.
-  template:
+  ansible.builtin.template:
     src: screenrc.j2
     dest: "{{ screenrc_path }}"
 
 - name: Copy systemd service file.
   become: true
-  template:
+  ansible.builtin.template:
     src: screen.service.j2
     dest: /etc/systemd/system/screen.service
 
 - name: Enable and start systemd service to start on boot automatically.
   become: true
-  systemd:
+  ansible.builtin.systemd:
     daemon-reload: true
     name: screen.service
     enabled: true
@@ -40,98 +42,98 @@
 
 - name: Install code-server.
   become: true
-  apt:
+  ansible.builtin.apt:
     deb: "{{ code_server_deb }}"
 
 - name: Enable code-server service.
   become: true
-  shell: systemctl enable --now code-server@{{ username }}
+  ansible.builtin.shell: systemctl enable --now code-server@{{ username }}
 
 - name: Copy code-server config.
-  template:
+  ansible.builtin.template:
     src: code-server-config.yml.j2
     dest: "{{ home_directory }}/.config/code-server/config.yaml"
 
 - name: Create vscode user directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/.local/share/code-server/User"
     state: directory
 
 - name: Copy vscode settings.
-  template:
+  ansible.builtin.template:
     src: vs_code_settings.json
     dest: "{{ home_directory }}/.local/share/code-server/User/settings.json"
 
 - name: Restart code-server.
-  shell: systemctl --user restart code-server
+  ansible.builtin.shell: systemctl --user restart code-server
 
 - name: Add Caddy key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
     state: present
 
 - name: Add Caddy repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
     state: present
 
 - name: Add Caddy sources repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb-src https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
     state: present
 
 - name: Install Caddy.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: caddy
     update_cache: true
     state: present
 
 - name: Copy Caddy config.
   become: true
-  template:
+  ansible.builtin.template:
     src: Caddyfile.j2
     dest: /etc/caddy/Caddyfile
   tags: caddy
 
 - name: Restart Caddy.
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: caddy
     state: restarted
   tags: caddy
 
 - name: Allow healthcheck port.
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     port: 57666
     proto: tcp
 
 - name: Remove previous build.
-  file:
+  ansible.builtin.file:
     state: absent
     path: "{{ home_directory }}/Soft/cide"
   tags: nativefier
 
 - name: Create CIDE desktop client directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft/cide"
     state: directory
   tags: nativefier
 
 - name: Install Nativefier.
-  npm:
+  community.general.npm:
     name: nativefier
     path: "{{ home_directory }}/Soft/cide"
     state: latest
   tags: nativefier
 
 - name: Build CIDE desktop client.
-  shell: node_modules/nativefier/lib/cli.js --name 'CIDE' 'http://127.0.0.1:8137'
+  ansible.builtin.shell: node_modules/nativefier/lib/cli.js --name 'CIDE' 'http://127.0.0.1:8137'
   args:
     chdir: "{{ home_directory }}/Soft/cide"
   tags: nativefier

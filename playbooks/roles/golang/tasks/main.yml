@@ -3,13 +3,13 @@
 
 - name: Remove local go directory.
   become: true
-  file:
+  ansible.builtin.file:
     path: /usr/local/go
     state: absent
 
 - name: Download and extract go.
   become: true
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ go_tar_download_url }}"
     dest: /usr/local
     remote_src: true

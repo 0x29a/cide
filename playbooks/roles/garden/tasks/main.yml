@@ -1,7 +1,7 @@
 ---
 - name: Install packages necessary for Jekyll.
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - ruby
       - ruby-full
@@ -11,21 +11,21 @@
 
 - name: Install bundler.
   become: true
-  gem:
+  community.general.gem:
     name: bundler
 
 - name: Install jekyll.
   become: true
-  gem:
+  community.general.gem:
     name: jekyll
 
 - name: Clone garden repo.
-  git:
+  ansible.builtin.git:
     repo: git@github.com:{{ github_username }}/garden.git
     dest: "{{ home_directory }}/Projects/garden"
 
 - name: Install garden gems.
-  bundler:
+  community.general.bundler:
     deployment_mode: true
     state: present
     chdir: "{{ home_directory }}/Projects/garden"

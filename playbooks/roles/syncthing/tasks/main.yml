@@ -1,29 +1,29 @@
 ---
 - name: Install Syncthing public signing key.
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://syncthing.net/release-key.gpg
     state: present
 
 - name: Add Syncthing repo.
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://apt.syncthing.net/ syncthing stable
     state: present
 
 - name: Install Syncthing.
-  apt:
+  ansible.builtin.apt:
     name: syncthing
     update_cache: true
     state: present
 
 - name: Add syncthing.conf supervisor service config.
-  template:
+  ansible.builtin.template:
     src: syncthing.conf.j2
     dest: /etc/supervisor/conf.d/syncthing.conf
 
 - name: Reload supervisor.
-  service: name=supervisor state=reloaded
+  ansible.builtin.service: name=supervisor state=reloaded
 
 - name: Start syncthing process.
-  supervisorctl:
+  community.general.supervisorctl:
     name: syncthing
     state: started

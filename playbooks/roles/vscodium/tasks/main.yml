@@ -1,24 +1,24 @@
 ---
 - name: Add VSCodium key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
     state: present
 
 - name: Add VSCodium repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://download.vscodium.com/debs vscodium main
     state: present
 
 - name: Install VSCodium.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: codium
     update_cache: true
     state: present
 
 - name: Copy settings.
-  copy:
+  ansible.builtin.copy:
     src: codium_settings.json
     dest: "{{ home_directory }}/.config/VSCodium/User/settings.json"

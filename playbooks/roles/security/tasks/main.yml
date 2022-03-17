@@ -1,6 +1,6 @@
 ---
 - name: Import devsec.hardening.os_hardening role.
-  import_role:
+  ansible.builtin.import_role:
     name: devsec.hardening.os_hardening
   vars:
     # For https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/os_hardening
@@ -10,7 +10,7 @@
     os_auth_pw_max_age: 99999
 
 - name: Import devsec.hardening.ssh_hardening role.
-  import_role:
+  ansible.builtin.import_role:
     name: devsec.hardening.ssh_hardening
   vars:
     # For https://github.com/dev-sec/ansible-collection-hardening/tree/master/roles/ssh_hardening
@@ -22,7 +22,7 @@
     ssh_allow_users: "{{ username }}"
 
 - name: Import geerlingguy.security role.
-  import_role:
+  ansible.builtin.import_role:
     name: geerlingguy.security
   vars:
     # For https://github.com/geerlingguy/ansible-role-security
@@ -34,7 +34,7 @@
       - "{{ username }}"
 
 - name: Install security packages.
-  apt:
+  ansible.builtin.apt:
     name:
       - libpam-tmpdir
       - apt-listchanges
@@ -46,17 +46,17 @@
     state: present
 
 - name: By default allow only ssh.
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ ssh_port }}"
     proto: tcp
 
 - name: Set default firewall policy.
-  ufw:
+  community.general.ufw:
     state: enabled
     policy: reject
 
 - name: Clone Lynis.
-  git:
+  ansible.builtin.git:
     repo: https://github.com/CISOfy/Lynis
     dest: "{{ home_directory }}/lynis"

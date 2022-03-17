@@ -1,9 +1,9 @@
 ---
 - name: Install go-jira.
-  shell: GO111MODULE=on /usr/local/go/bin/go install github.com/go-jira/jira/cmd/jira@latest
+  ansible.builtin.shell: GO111MODULE=on /usr/local/go/bin/go install github.com/go-jira/jira/cmd/jira@latest
 
 - name: Copy "jira" executable.
-  copy:
+  ansible.builtin.copy:
     src: "{{ home_directory }}/go/bin/jira"
     dest: "{{ home_directory }}/.local/bin/jira"
     remote_src: true
@@ -11,17 +11,17 @@
 
 - name: Remove go build directory.
   become: true
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/go"
     state: absent
 
 - name: Create go-jira config directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/.jira.d"
     state: directory
 
 - name: Copy go-jira config.
-  template:
+  ansible.builtin.template:
     src: go_jira_config.yml.j2
     dest: "{{ home_directory }}/.jira.d/config.yml"
   tags: go_jira_config

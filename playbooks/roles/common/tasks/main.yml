@@ -1,18 +1,18 @@
 ---
 - name: Set the hostname.
-  hostname:
+  ansible.builtin.hostname:
     name: "{{ server_hostname }}"
 
 - name: Run "apt-get update, dist-upgrade and autoremove".
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     upgrade: dist
     autoremove: true
 
 - name: Install server packages.
-  apt:
+  ansible.builtin.apt:
     name: "{{ server_packages }}"
     state: present
 
 - name: Increase inotify user limit.
-  sysctl: name=fs.inotify.max_user_watches value=524288 sysctl_set=yes
+  ansible.posix.sysctl: name=fs.inotify.max_user_watches value=524288 sysctl_set=yes

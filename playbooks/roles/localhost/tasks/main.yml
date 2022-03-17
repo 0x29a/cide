@@ -1,78 +1,78 @@
 ---
 - name: Create "Soft" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft"
     state: directory
 
 - name: Set default firewall policy.
   become: true
-  ufw:
+  community.general.ufw:
     state: enabled
     policy: reject
 
 - name: Restart ufw.
   become: true
-  service:
+  ansible.builtin.service:
     name: ufw
     state: restarted
 
 - name: Run "apt-get update, dist-upgrade and autoremove".
   become: true
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     upgrade: dist
     autoremove: true
 
 - name: Install local packages.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: "{{ local_packages }}"
     state: present
   tags: local_packages
 
 - name: Remove local packages.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: "{{ local_packages_to_remove }}"
     state: absent
   tags: local_packages_remove
 
 - name: Install local snap packages.
   become: true
-  snap:
+  community.general.snap:
     name: "{{ local_snap_packages }}"
     classic: true
 
 - name: Set git username for the local CIDE repo.
-  git_config:
+  community.general.git_config:
     name: user.name
     repo: .
     scope: local
     value: "{{ github_username }}"
 
 - name: Set git email for the local CIDE repo.
-  git_config:
+  community.general.git_config:
     name: user.email
     repo: .
     scope: local
     value: "{{ github_email }}"
 
 - name: Change remote URL to SSH.
-  git_config:
+  community.general.git_config:
     name: remote.origin.url
     repo: .
     scope: local
     value: git@github.com:{{ github_username }}/cide.git
 
 - name: Copy SSH config.
-  copy:
+  ansible.builtin.copy:
     src: ssh_config
     dest: "{{ home_directory }}/.ssh/config"
   tags: ssh_config
 
 - name: Set up hosts file.
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/hosts
     line: "{{ item }}"
   with_items: "{{ hosts_entries }}"
@@ -80,131 +80,134 @@
 
 - name: Configure byobu as available shell.
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/shells
     line: /usr/bin/byobu
   tags: terminal
 
 - name: Copy Guake autostart file.
-  copy:
+  ansible.builtin.copy:
     src: guake.desktop
     dest: "{{ home_directory }}/.config/autostart/guake.desktop"
   tags: terminal
 
 - name: Import guake preferences.
-  shell: guake --restore-preferences roles/localhost/files/guake_preferences
+  ansible.builtin.shell: guake --restore-preferences roles/localhost/files/guake_preferences
   tags: terminal
 
 - name: Copy tmux config.
-  copy:
+  ansible.builtin.copy:
     src: .tmux.conf
     dest: "{{ home_directory }}/.byobu/.tmux.conf"
   tags: terminal
 
 - name: Clone tmux-jump.
-  git:
+  ansible.builtin.git:
     repo: https://github.com/schasse/tmux-jump
     dest: "{{ home_directory }}/.tmux-jump"
   tags: terminal
 
 - name: Copy byobu keybindings config.
-  copy:
+  ansible.builtin.copy:
     src: keybindings.tmux
     dest: "{{ home_directory }}/.byobu/keybindings.tmux"
   tags: terminal
 
 - name: Disable Gnome animations.
-  shell: gsettings set org.gnome.desktop.interface enable-animations false
+  ansible.builtin.shell: gsettings set org.gnome.desktop.interface enable-animations false
 
 - name: Disable the Dock.
-  shell: gnome-extensions disable ubuntu-dock@ubuntu.com
+  ansible.builtin.shell: gnome-extensions disable ubuntu-dock@ubuntu.com
 
 - name: Disable desktop icons.
-  shell: gnome-extensions disable desktop-icons@csoriano
+  ansible.builtin.shell: gnome-extensions disable desktop-icons@csoriano
 
 - name: Disable background.
-  shell: gsettings set org.gnome.desktop.background picture-options 'none'
+  ansible.builtin.shell: gsettings set org.gnome.desktop.background picture-options 'none'
 
 - name: Set primary background color to black.
-  shell: gsettings set org.gnome.desktop.background primary-color '#000000'
+  ansible.builtin.shell: gsettings set org.gnome.desktop.background primary-color '#000000'
 
 - name: Set secondary background color to black.
-  shell: gsettings set org.gnome.desktop.background secondary-color '#000000'
+  ansible.builtin.shell: gsettings set org.gnome.desktop.background secondary-color '#000000'
 
 - name: Remove favourites.
-  shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop']"
+  ansible.builtin.shell: gsettings set org.gnome.shell favorite-apps "['firefox.desktop']"
 
 - name: Disable natural scroll.
-  shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+  ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 - name: Create "cide" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft/cide"
     state: directory
 
 # TODO: replace with https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
 # once recursive option implemented.
 - name: Download CIDE electron app build.
-  shell: scp -r {{ username }}@cloud:{{ home_directory }}/Soft/cide/CIDE-linux-x64 {{ home_directory }}/Soft/cide/CIDE-linux-x64
+  ansible.builtin.shell: scp -r {{ username }}@cloud:{{ home_directory }}/Soft/cide/CIDE-linux-x64 {{ home_directory }}/Soft/cide/CIDE-linux-x64
 
 - name: Copy CIDE icon.
-  copy:
+  ansible.builtin.copy:
     src: cide.png
     dest: "{{ home_directory }}/Soft/cide/CIDE-linux-x64/cide.png"
 
 - name: Copy cide.desktop.
   become: true
-  template:
+  ansible.builtin.template:
     src: cide.desktop
     dest: /usr/share/applications/cide.desktop
 
 - name: Install Signal public signing key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://updates.signal.org/desktop/apt/keys.asc
     state: present
 
 - name: Add Signal repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main
     state: present
 
 - name: Install Signal.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: signal-desktop
     update_cache: true
     state: present
 
 - name: Install pipx.
-  shell: python3 -m pip install --user pipx
+  ansible.builtin.shell: python3 -m pip install --user pipx
 
-- name: Install ipython.
-  shell: "{{ pipx }} install ipython"
-  ignore_errors: true
+- name: Install python packages.
+  community.general.pipx:
+    name: "{{ item }}"
+  loop:
+    - ipython
+    - lolcat
+    - black
 
-- name: Install lolcat.
-  shell: "{{ pipx }} install lolcat"
-  ignore_errors: true
-
-- name: Install black.
-  shell: "{{ pipx }} install black"
-  ignore_errors: true
+- name: Inject requests to ipython virtualenv.
+  community.general.pipx:
+    name: ipython
+    state: inject
+    inject_packages:
+      - requests
 
 - name: Install freetube.
   become: true
-  apt:
+  ansible.builtin.apt:
     deb: "{{ freetube_deb_url }}"
 
 - name: Create "obsidian" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft/obsidian"
     state: directory
   tags: obsidian
 
 - name: Download Obsidian appimage.
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ obsidian_appimage_url }}"
     dest: "{{ home_directory }}/Soft/obsidian/obsidian"
     mode: a+x
@@ -212,19 +215,19 @@
 
 - name: Copy obsidian.desktop.
   become: true
-  template:
+  ansible.builtin.template:
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
 
 - name: Install ProtonVPN repo.
   become: true
-  apt:
+  ansible.builtin.apt:
     deb: "{{ protonvpn_deb_url }}"
   tags: proton
 
 - name: Install ProtonVPN.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: protonvpn
     update_cache: true
     state: present
@@ -232,13 +235,13 @@
 
 - name: Add firejail repository.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:deki/firejail
   tags: firejail
 
 - name: Install firejail.
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - firejail
       - firejail-profiles
@@ -247,14 +250,14 @@
   tags: firejail
 
 - name: Create "firefox_jail" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/firefox_jail"
     state: directory
   tags: firejail
 
 - name: Create firefox launcher.
   become: true
-  copy:
+  ansible.builtin.copy:
     src: jailed_firefox
     dest: /usr/local/bin/firefox
     mode: a+x

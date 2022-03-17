@@ -1,108 +1,108 @@
 ---
 - name: Clone private documentation.
-  git:
+  ansible.builtin.git:
     repo: git@gitlab.com:opencraft/documentation/private.git
     dest: "{{ home_directory }}/Projects/opencraft_private_documentation"
     accept_hostkey: true
   ignore_errors: true
 
 - name: Install a symlink.
-  shell: make ssh
+  ansible.builtin.shell: make ssh
   args:
     chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
   ignore_errors: true
 
 - name: Add OBS project repository.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:obsproject/obs-studio
 
 - name: Install OBS Studio.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: obs-studio
     update_cache: true
     state: present
 
 - name: Create "Sprint Updates" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Videos/Sprint Updates"
     state: directory
 
 - name: Create "Other recordings" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Documents/Other recordings"
     state: directory
 
 - name: Install HashiCorp public signing key.
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://apt.releases.hashicorp.com/gpg
     state: present
 
 - name: Add HashiCorp repo.
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
     state: present
 
 - name: Install Vault.
   become: true
-  apt:
+  ansible.builtin.apt:
     name: vault
     update_cache: true
     state: present
 
 # TODO: Rework. This actually won't fetch keys because of prompt, so has to be runned manually.
 - name: Fetch keys.
-  shell: make keys
+  ansible.builtin.shell: make keys
   args:
     chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
 
 - name: Install oc_log_helper.
-  shell: "{{ pipx }} install oc_log_helper --system-site-packages"
+  ansible.builtin.shell: "{{ pipx }} install oc_log_helper --system-site-packages"
   ignore_errors: true
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Install todoist_helper.
-  shell: "{{ pipx }} install todoist_helper --system-site-packages"
+  ansible.builtin.shell: "{{ pipx }} install todoist_helper --system-site-packages"
   ignore_errors: true
 
 - name: Create "add_shortcut" directory.
-  file:
+  ansible.builtin.file:
     path: "{{ home_directory }}/Soft/add_shortcut"
     state: directory
 
 - name: Copy "add_shortcut.py".
-  copy:
+  ansible.builtin.copy:
     src: add_shortcut.py
     dest: "{{ home_directory }}/Soft/add_shortcut/add_shortcut.py"
 
 # To remove custom keybindings:
 # gsettings reset org.gnome.settings-daemon.plugins.media-keys custom-keybindings
 - name: Add log work shortcut.
-  shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>R'
+  ansible.builtin.shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>R'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: true
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add start tracking shortcut.
-  shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>E'
+  ansible.builtin.shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>E'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: true
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add shared todoist helper shortcut.
-  shell: python3 add_shortcut.py 'Add shared todoist task' 'todoist_helper add -p 2284931928' '<Super>T'
+  ansible.builtin.shell: python3 add_shortcut.py 'Add shared todoist task' 'todoist_helper add -p 2284931928' '<Super>T'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: true
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add personal todoist helper shortcut.
-  shell: python3 add_shortcut.py 'Add personal todoist task' 'todoist_helper add' '<Super>Y'
+  ansible.builtin.shell: python3 add_shortcut.py 'Add personal todoist task' 'todoist_helper add' '<Super>Y'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   ignore_errors: true
