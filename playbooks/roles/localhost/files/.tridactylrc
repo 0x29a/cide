@@ -73,3 +73,4 @@ keymap Ю >
 keymap я z
 keymap Я Z
 blacklistadd mail.google.com/mail
+autocmd DocStart buba.demid.dev unfocus
