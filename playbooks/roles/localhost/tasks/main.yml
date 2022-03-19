@@ -232,33 +232,3 @@
     update_cache: true
     state: present
   tags: proton
-
-- name: Add firejail repository.
-  become: true
-  ansible.builtin.apt_repository:
-    repo: ppa:deki/firejail
-  tags: firejail
-
-- name: Install firejail.
-  become: true
-  ansible.builtin.apt:
-    name:
-      - firejail
-      - firejail-profiles
-    update_cache: true
-    state: present
-  tags: firejail
-
-- name: Create "firefox_jail" directory.
-  ansible.builtin.file:
-    path: "{{ home_directory }}/firefox_jail"
-    state: directory
-  tags: firejail
-
-- name: Create firefox launcher.
-  become: true
-  ansible.builtin.copy:
-    src: jailed_firefox
-    dest: /usr/local/bin/firefox
-    mode: a+x
-  tags: firejail

@@ -1,0 +1,32 @@
+- name: Add firejail repository.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: ppa:deki/firejail
+
+- name: Install firejail.
+  become: true
+  ansible.builtin.apt:
+    name:
+      - firejail
+      - firejail-profiles
+    update_cache: true
+    state: present
+
+- name: Create "firefox_jail" directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/firefox_jail"
+    state: directory
+
+- name: Create firefox launcher.
+  become: true
+  ansible.builtin.copy:
+    src: jailed_firefox
+    dest: /usr/local/bin/firefox
+    mode: a+x
+
+- name: Create "freetube" firejail symbolic link.
+  become: true
+  ansible.builtin.file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/freetube
+    state: link
