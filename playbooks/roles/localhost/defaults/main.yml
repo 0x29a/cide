@@ -15,6 +15,7 @@ local_packages:
   - focuswriter
   - firejail
   - vlc
+  - calibre
 
 local_packages_to_remove:
   - thunderbird

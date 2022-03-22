@@ -24,9 +24,13 @@
     dest: /usr/local/bin/firefox
     mode: a+x
 
-- name: Create "freetube" firejail symbolic link.
+- name: Create firejail symbolic links.
   become: true
   ansible.builtin.file:
     src: /usr/bin/firejail
-    dest: /usr/local/bin/freetube
+    dest: "/usr/local/bin/{{ item }}"
     state: link
+  loop:
+    - freetube
+    - evince
+    - ebook-viewer
