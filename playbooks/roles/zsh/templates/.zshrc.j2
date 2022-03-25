@@ -221,13 +221,16 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   # browser shortcuts
   alias estimation_session="firefox --new-tab \"https://tasks.opencraft.com/projects/BB?selectedItem=com.spartez.jira.plugins.jiraplanningpoker:pokerng-project-side-panel-link&rapidView=26&source=internal\""
 elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
-  alias t="tutor"
   alias dev="cd ~/Projects/bebop-devstack/devstack"
   alias pre="prettier --single-quote --write"
   alias sol="cd ~/Projects/solutions-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
   alias jol="cd ~/Projects/solutions-juniper-devstack/ && vagrant ssh -- -t 'cd devstack/devstack/; /bin/bash'"
   alias uq="cd ~/Projects/uq/uq-learnx-configuration-secure && ssh -F ssh-config uq-director-stage -t \"cd uq-learnx-configuration-secure/ && ssh ubuntu@172.31.30.80 -i ssh_keys/oc-edxapp-stage.pem\""
   alias tunnel="cloudflared tunnel run openedx"
+
+  # tutor shortcuts
+  alias t="tutor"
+  alias t_root="cd $(t config printroot)"
 else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
