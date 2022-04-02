@@ -19,6 +19,8 @@
       vars:
         cide_environment: cloud
       tags: zsh
+    - role: vim
+      tags: vim
     - role: development
       tags: development
     - role: code-server

@@ -122,6 +122,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # Aliases #####################################
 
 alias v="vim"
+alias nano="vim"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 
@@ -231,6 +232,8 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   # tutor shortcuts
   alias t="tutor"
   alias t_root="cd $(t config printroot)"
+  alias nt="TUTOR_ROOT=${HOME}/Projects/tutor_dirs/nightly/root ${HOME}/Projects/tutor_dirs/nightly/.fenv/bin/tutor"
+  alias nt_root="cd $(nt config printroot)"
 else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
