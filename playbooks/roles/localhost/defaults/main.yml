@@ -3,6 +3,7 @@ local_packages:
   - python3-venv
   - ruby-full
   - htop
+  - strace
   - curl
   - xclip
   - tmux
@@ -16,6 +17,8 @@ local_packages:
   - firejail
   - vlc
   - calibre
+  - anki
+  - taskwarrior
 
 local_packages_to_remove:
   - thunderbird
