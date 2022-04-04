@@ -254,3 +254,15 @@
     update_cache: true
     state: present
   tags: spotify
+
+- name: Create taskwarrior directory in a synced directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/Cloud/taskwarrior"
+    state: directory
+  tags: taskwarrior
+
+- name: Copy taskwarrior config.
+  ansible.builtin.template:
+    src: .taskrc.j2
+    dest: "{{ home_directory }}/.taskrc"
+  tags: taskwarrior
