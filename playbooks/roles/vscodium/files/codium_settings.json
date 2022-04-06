@@ -1,8 +1,11 @@
 {
-    "workbench.colorTheme": "Solarized Light",
-    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Gruvbox Material Dark",
     "workbench.editor.enablePreview": false,
     "editor.rulers": [80,120],
     "editor.fontSize": 13,
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "window.zoomLevel": 1,
+    "gruvboxMaterial.darkContrast": "soft",
+    "vscode-neovim.neovimInitVimPaths.linux": "/usr/bin/vim",
+    "editor.scrollBeyondLastLine": false
 }

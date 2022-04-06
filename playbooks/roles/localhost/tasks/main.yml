@@ -137,6 +137,30 @@
 - name: Disable natural scroll.
   ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
+- name: Clone gruvbox theme.
+  ansible.builtin.git:
+    repo: https://github.com/TheGreatMcPain/gruvbox-material-gtk.git 
+    dest: "{{ home_directory }}/Projects/gruvbox-material-gtk"
+  tags: theme
+
+- name: Copy gruvbox theme.
+  ansible.builtin.copy:
+    src: "{{ home_directory }}/Projects/gruvbox-material-gtk/{{ item }}"
+    dest: "{{ home_directory }}/.local/share/"
+    remote_src: true
+  loop:
+    - themes
+    - icons
+  tags: theme
+
+- name: Set GTK theme.
+  ansible.builtin.shell: gsettings set org.gnome.desktop.interface gtk-theme "Gruvbox-Material-Dark"
+  tags: theme
+
+- name: Set icon theme.
+  ansible.builtin.shell: gsettings set org.gnome.desktop.interface icon-theme "Gruvbox-Material-Dark"
+  tags: theme
+
 - name: Create "cide" directory.
   ansible.builtin.file:
     path: "{{ home_directory }}/Soft/cide"
@@ -187,6 +211,7 @@
     - ipython
     - lolcat
     - black
+    - glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:
@@ -254,15 +279,3 @@
     update_cache: true
     state: present
   tags: spotify
-
-- name: Create taskwarrior directory in a synced directory.
-  ansible.builtin.file:
-    path: "{{ home_directory }}/Cloud/taskwarrior"
-    state: directory
-  tags: taskwarrior
-
-- name: Copy taskwarrior config.
-  ansible.builtin.template:
-    src: .taskrc.j2
-    dest: "{{ home_directory }}/.taskrc"
-  tags: taskwarrior

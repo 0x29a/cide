@@ -105,6 +105,7 @@ This repository contains playbooks and roles, that I use to:
     1. `redhat.vscode-yaml`.
     1. `esbenp.prettier-vscode`.
     1. `ms-vscode.vscode-typescript-tslint-plugin`.
+    1. `sainnhe.gruvbox-material`.
 
 <!-- Badges -->
 

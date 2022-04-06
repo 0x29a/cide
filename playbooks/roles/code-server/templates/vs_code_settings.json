@@ -1,6 +1,5 @@
 {
-    "workbench.colorTheme": "Tomorrow Night Blue",
-    "terminal.integrated.shell.linux": "/bin/zsh",
+    "workbench.colorTheme": "Gruvbox Material Dark",
     "editor.rulers": [
         80,
         120
@@ -9,7 +8,6 @@
     "files.autoSaveDelay": 100,
     "explorer.autoReveal": false,
     "prettier.resolveGlobalModules": true,
-    "prettier.packageManager": "yarn",
     "prettier.prettierPath": "/usr/bin/prettier",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -20,12 +18,14 @@
     "prettier.jsxSingleQuote": true,
     "javascript.preferences.quoteStyle": "single",
     "typescript.preferences.quoteStyle": "single",
-    "jest.pathToJest": "",
     "prettier.singleQuote": true,
     "editor.tabSize": 2,
     "eslint.alwaysShowStatus": true,
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": false,
-    "workbench.iconTheme": "vscode-icons",
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "editor.fontSize": 18,
+    "scm.inputFontSize": 18,
+    "gruvboxMaterial.darkContrast": "soft",
+    "editor.scrollBeyondLastLine": false
 }

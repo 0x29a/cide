@@ -1,7 +1,13 @@
+- name: Add nightly neovim ppa.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: ppa:neovim-ppa/stable 
+
 - name: Install neovim.
   become: true
   ansible.builtin.apt:
     name: neovim
+    update_cache: true
     state: present
 
 - name: Create "autoload" directory.

@@ -22,5 +22,7 @@
       tags: golang
     - role: go-jira
       tags: go-jira
+    - role: taskwarrior
+      tags: taskwarrior
     - role: firejail
       tags: firejail

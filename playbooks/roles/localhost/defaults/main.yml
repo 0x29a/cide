@@ -19,6 +19,8 @@ local_packages:
   - calibre
   - anki
   - taskwarrior
+  - apt-transport-https
+  - guvcview
 
 local_packages_to_remove:
   - thunderbird
