@@ -53,3 +53,8 @@
     src: .zsh_history.cloud
     dest: "{{ home_directory }}/.zsh_history"
   when: not stat_zsh_history_result.stat.exists and cide_environment == "cloud"
+
+- name: Clone "z".
+  ansible.builtin.git:
+    repo: https://github.com/rupa/z.git
+    dest: "{{ home_directory }}/Soft/z_jump_around"

@@ -55,3 +55,12 @@ else
     """ Hardtime
     let g:hardtime_default_on = 1
 endif
+
+""" System clipboard
+set clipboard+=unnamedplus
+
+""" Other keybindings
+vmap <C-c> "+yi
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa

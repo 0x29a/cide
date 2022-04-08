@@ -146,6 +146,9 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   alias j="jira"
   alias dem="ssh demid@cloud"
   alias db="codium ~/Cloud/PersonalDatabase"
+  alias fo="firefox --new-tab $(pbpaste)"
+  alias jo="j o"
+  alias sp="j sp"
   alias uq="ssh demid@cloud -t 'cd ~/Projects/uq/uq-learnx-configuration-secure && ssh -F ssh-config uq-director-stage -t \"cd uq-learnx-configuration-secure/ && ssh ubuntu@172.31.30.80 -i ssh_keys/oc-edxapp-stage.pem\"'"
   alias cloud_tunnel="autossh -N \
   -L 1976:127.0.0.1:1976 \
@@ -351,6 +354,8 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   eval "$(jira --completion-script-bash)"
 
 fi
+
+. ${HOME}/Soft/z_jump_around/z.sh
 
 # #############################################
 # powerlevel10k initialization ################

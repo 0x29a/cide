@@ -25,3 +25,13 @@
     src: go_jira_config.yml.j2
     dest: "{{ home_directory }}/.jira.d/config.yml"
   tags: go_jira_config
+
+- name: Create "Quickopen" directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/Soft/Quickopen"
+    state: directory
+
+- name: Copy "jiraopen" script.
+  ansible.builtin.copy:
+    src: jiraopen.py
+    dest: "{{ home_directory }}/Soft/Quickopen/jiraopen.py"
