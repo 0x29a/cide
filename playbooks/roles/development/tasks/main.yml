@@ -140,6 +140,7 @@
     - docker-compose
     - awscli
     - lolcat
+    - speedtest-cli
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:

@@ -7,15 +7,6 @@ import subprocess
 import sys
 from os.path import exists
 
-added_shortcuts = ""
-if exists(".added"):
-    with open(".added") as added:
-        added_shortcuts = added.read()
-
-if f"{sys.argv[1]} + {sys.argv[2]} + {sys.argv[3]}" in added_shortcuts:
-    sys.exit("Shortcut already has been added.")
-
-
 # defining keys & strings to be used
 key = "org.gnome.settings-daemon.plugins.media-keys custom-keybindings"
 subkey1 = key.replace(" ", ".")[:-1] + ":"
@@ -45,6 +36,3 @@ cmd3 = "gsettings set " + subkey1 + new + " binding '" + sys.argv[3] + "'"
 
 for cmd in [cmd0, cmd1, cmd2, cmd3]:
     subprocess.call(["/bin/bash", "-c", cmd])
-
-with open(".added", "w") as added:
-    added.write(added_shortcuts + f"{sys.argv[1]} + {sys.argv[2]} + {sys.argv[3]}\n")

@@ -72,37 +72,53 @@
   ansible.builtin.file:
     path: "{{ home_directory }}/Soft/add_shortcut"
     state: directory
+  tags: shortcuts
 
 - name: Copy "add_shortcut.py".
   ansible.builtin.copy:
     src: add_shortcut.py
     dest: "{{ home_directory }}/Soft/add_shortcut/add_shortcut.py"
+  tags: shortcuts
 
-# To remove custom keybindings:
-# gsettings reset org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+# https://ubuntuforums.org/showthread.php?t=2106567
+# https://gitlab.com/rubdos/gsettings-desktop-schemas/-/blob/5ea3e6a64cffdc634a5eff55d0ae3a384b937eeb/schemas/org.gnome.desktop.wm.keybindings.gschema.xml.in
+- name: Unset some default keybindings.
+  ansible.builtin.shell: "gsettings set org.gnome.desktop.wm.keybindings {{ item }} []"
+  loop:
+    - switch-input-source
+  tags: shortcuts
+
+- name: Disable <Super>s keybinding.
+  ansible.builtin.shell: gsettings set org.gnome.shell.keybindings toggle-overview []
+  tags: shortcuts
+
+- name: Reset all shortcuts.
+  ansible.builtin.shell: gsettings reset org.gnome.settings-daemon.plugins.media-keys custom-keybindings
+  tags: shortcuts
+
 - name: Add log work shortcut.
-  ansible.builtin.shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>R'
+  ansible.builtin.shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>T'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
-  ignore_errors: true
+  tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add start tracking shortcut.
-  ansible.builtin.shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>E'
+  ansible.builtin.shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>S'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
-  ignore_errors: true
+  tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add shared todoist helper shortcut.
-  ansible.builtin.shell: python3 add_shortcut.py 'Add shared todoist task' 'todoist_helper add -p 2284931928' '<Super>T'
+  ansible.builtin.shell: "python3 add_shortcut.py 'Add obsidian task' 'todoist_helper add-obsidian -i {{ home_directory }}/Cloud/0x29a/_todo/Inbox.md' '<Super>Space'"
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
-  ignore_errors: true
+  tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add personal todoist helper shortcut.
   ansible.builtin.shell: python3 add_shortcut.py 'Add personal todoist task' 'todoist_helper add' '<Super>Y'
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
-  ignore_errors: true
+  tags: shortcuts

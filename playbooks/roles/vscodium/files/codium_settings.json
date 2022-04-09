@@ -9,5 +9,6 @@
     "editor.scrollBeyondLastLine": false,
     "window.zoomLevel": 1,
     "python.formatting.blackPath": "/home/demid/.local/bin/black",
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "workbench.list.automaticKeyboardNavigation": false
 }

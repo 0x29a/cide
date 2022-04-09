@@ -27,5 +27,6 @@
     "editor.fontSize": 18,
     "scm.inputFontSize": 18,
     "gruvboxMaterial.darkContrast": "soft",
-    "editor.scrollBeyondLastLine": false
+    "editor.scrollBeyondLastLine": false,
+    "workbench.list.automaticKeyboardNavigation": false
 }
