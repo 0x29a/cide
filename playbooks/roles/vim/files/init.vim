@@ -11,6 +11,19 @@ else
 endif
 call plug#end()
 
+""" Disable default x and d behavior.
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+nnoremap <leader>d ""d
+nnoremap <leader>D ""D
+vnoremap <leader>d ""d
+
+let mapleader= ","
+let g:mapleader = ","
+
 """ EasyMotion config
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 

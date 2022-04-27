@@ -237,6 +237,10 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias t_root="cd $(t config printroot)"
   alias nt="TUTOR_ROOT=${HOME}/Projects/tutor_dirs/nightly/root ${HOME}/Projects/tutor_dirs/nightly/.fenv/bin/tutor"
   alias nt_root="cd $(nt config printroot)"
+  alias lt="TUTOR_ROOT=${HOME}/Projects/tutor_dirs/lilac/root ${HOME}/Projects/tutor_dirs/lilac/.fenv/bin/tutor"
+  alias lt_root="cd $(lt config printroot)"
+  alias mt="TUTOR_ROOT=${HOME}/Projects/tutor_dirs/maple/root ${HOME}/Projects/tutor_dirs/maple/.fenv/bin/tutor"
+  alias mt_root="cd $(mt config printroot)"
 else
     echo "You have to set CIDE_ENVIRONMENT"
 fi

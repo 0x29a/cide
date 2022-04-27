@@ -21,6 +21,7 @@ local_packages:
   - taskwarrior
   - apt-transport-https
   - guvcview
+  - ffmpeg
 
 local_packages_to_remove:
   - thunderbird
