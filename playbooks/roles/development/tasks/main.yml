@@ -141,6 +141,7 @@
     - awscli
     - lolcat
     - speedtest-cli
+    - cookiecutter
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:

@@ -122,3 +122,9 @@
   args:
     chdir: "{{ home_directory }}/Soft/add_shortcut/"
   tags: shortcuts
+
+- name: Add Jira open shortcut.
+  ansible.builtin.shell: "python3 add_shortcut.py 'Jira open' 'python3 /home/{{ username }}/Soft/Quickopen/jiraopen.py' '<Super>J'"
+  args:
+    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+  tags: shortcuts

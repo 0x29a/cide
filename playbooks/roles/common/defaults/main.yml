@@ -21,3 +21,5 @@ server_packages:
   - supervisor
   - debian-archive-keyring
   - apt-transport-https
+  - telnet
+  - nmap

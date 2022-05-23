@@ -22,6 +22,8 @@ local_packages:
   - apt-transport-https
   - guvcview
   - ffmpeg
+  - pidgin
+  - pidgin-otr
 
 local_packages_to_remove:
   - thunderbird
