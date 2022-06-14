@@ -4,6 +4,7 @@ server_packages:
   - htop
   - sudo
   - git
+  - unzip
   - ufw
   - neofetch
   - python3-dev

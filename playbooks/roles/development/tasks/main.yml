@@ -180,6 +180,10 @@
     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
   tags: nodejs
 
+- name: Install Deno.
+  ansible.builtin.shell: curl -fsSL https://deno.land/install.sh | sh
+  tags: deno
+
 # TODO: Automate https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
 - name: Install cloudflared.
   become: true

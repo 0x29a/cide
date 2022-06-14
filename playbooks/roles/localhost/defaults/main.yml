@@ -24,6 +24,7 @@ local_packages:
   - ffmpeg
   - pidgin
   - pidgin-otr
+  - gimp
 
 local_packages_to_remove:
   - thunderbird
