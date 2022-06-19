@@ -245,19 +245,11 @@
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
 
-- name: Install ProtonVPN repo.
+- name: Install Mullvad.
   become: true
   ansible.builtin.apt:
-    deb: "{{ protonvpn_deb_url }}"
-  tags: proton
-
-- name: Install ProtonVPN.
-  become: true
-  ansible.builtin.apt:
-    name: protonvpn
-    update_cache: true
-    state: present
-  tags: proton
+    deb: "{{ mullvad_deb_url }}"
+  tags: mullvad
 
 - name: Add Spotify repository key.
   become: true
