@@ -316,3 +316,11 @@
     update_cache: true
     state: present
   tags: brave
+
+- name: Download and extract Monero.
+  become: true
+  ansible.builtin.unarchive:
+    src: "https://downloads.getmonero.org/cli/linux64"
+    dest: "{{ home_directory }}/Soft"
+    remote_src: true
+  tags: monero
