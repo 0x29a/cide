@@ -280,3 +280,25 @@
     update_cache: true
     state: present
   tags: spotify
+
+- name: Add LibreWolf repository key.
+  become: true
+  ansible.builtin.apt_key:
+    url: https://deb.librewolf.net/keyring.gpg
+    state: present
+  tags: librewolf
+
+- name: Add LibreWolf repo.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] http://deb.librewolf.net focal main
+    state: present
+  tags: librewolf
+
+- name: Install LibreWolf.
+  become: true
+  ansible.builtin.apt:
+    name: librewolf
+    update_cache: true
+    state: present
+  tags: librewolf
