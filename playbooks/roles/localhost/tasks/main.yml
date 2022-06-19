@@ -294,3 +294,25 @@
     update_cache: true
     state: present
   tags: librewolf
+
+- name: Add Brave repository key.
+  become: true
+  ansible.builtin.apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    state: present
+  tags: brave
+
+- name: Add Brave repo.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+  tags: brave
+
+- name: Install Brave.
+  become: true
+  ansible.builtin.apt:
+    name: brave-browser
+    update_cache: true
+    state: present
+  tags: brave
