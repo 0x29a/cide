@@ -1,4 +1,3 @@
----
 # Based on https://go.dev/doc/install
 
 - name: Remove local go directory.

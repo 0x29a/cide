@@ -1,6 +1,4 @@
----
 # Playbook for setting up everything.
-
 - name: Set up CIDE.
   hosts: cide
   user: root

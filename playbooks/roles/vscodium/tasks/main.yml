@@ -1,4 +1,3 @@
----
 - name: Add VSCodium key.
   become: true
   ansible.builtin.apt_key:

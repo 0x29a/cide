@@ -1,4 +1,3 @@
----
 - name: Install gunicorn.
   community.general.pipx:
     name: gunicorn

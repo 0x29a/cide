@@ -1,4 +1,3 @@
----
 server_hostname: cide
 server_packages:
   - htop

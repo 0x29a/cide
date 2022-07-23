@@ -1,4 +1,3 @@
----
 - name: Import devsec.hardening.os_hardening role.
   ansible.builtin.import_role:
     name: devsec.hardening.os_hardening

@@ -1,4 +1,3 @@
----
 - name: Install packages necessary for Jekyll.
   become: true
   ansible.builtin.apt:

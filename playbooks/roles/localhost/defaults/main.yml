@@ -1,4 +1,3 @@
----
 local_packages:
   - python3-venv
   - ruby-full
