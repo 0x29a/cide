@@ -6,8 +6,8 @@
   roles:
     - role: localhost
       tags: localhost
-    - role: vscodium
-      tags: vscodium
+    - role: vscode
+      tags: vscode
     - role: zsh
       tags: zsh
     - role: vim

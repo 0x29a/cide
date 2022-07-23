@@ -1,0 +1,31 @@
+- name: Add VSCode key.
+  become: true
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Add VSCode repo.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+    state: present
+
+- name: Install VSCode.
+  become: true
+  ansible.builtin.apt:
+    name: code
+    update_cache: true
+    state: present
+
+- name: Install VSCode extensions.
+  ansible.builtin.shell: code --install-extension {{ item }}
+  loop:
+    - sainnhe.gruvbox-material
+    - ms-python.python
+    - ms-vscode-remote.remote-ssh
+    - asvetliakov.vscode-neovim
+
+- name: Copy VSCode settings.
+  ansible.builtin.copy:
+    src: vscode_settings.json
+    dest: "{{ home_directory }}/.config/Code/User/settings.json"
