@@ -57,4 +57,4 @@
 - name: Clone "z".
   ansible.builtin.git:
     repo: https://github.com/rupa/z.git
-    dest: "{{ home_directory }}/Soft/z_jump_around"
+    dest: "{{ software_directory }}/z_jump_around"

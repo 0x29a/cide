@@ -9,27 +9,27 @@
 - name: Download and unarchive taskwarrior sources.
   ansible.builtin.unarchive:
     src: "{{ taskwarrior_tarball_url }}"
-    dest: "{{ home_directory }}/Soft/"
+    dest: "{{ software_directory }}/"
     remote_src: true
 
 - name: Compile taskwarrior.
   ansible.builtin.shell: cmake -DENABLE_SYNC=OFF -DCMAKE_BUILD_TYPE=release .
   args:
-    chdir: "{{ home_directory }}/Soft/task-{{ taskwarrior_version }}"
+    chdir: "{{ software_directory }}/task-{{ taskwarrior_version }}"
 
 - name: Run the default taskwarrior make target.
   community.general.make:
-    chdir: "{{ home_directory }}/Soft/task-{{ taskwarrior_version }}"
+    chdir: "{{ software_directory }}/task-{{ taskwarrior_version }}"
 
 - name: Run "install" taswarrior target as root.
   community.general.make:
-    chdir: "{{ home_directory }}/Soft/task-{{ taskwarrior_version }}"
+    chdir: "{{ software_directory }}/task-{{ taskwarrior_version }}"
     target: install
   become: true
 
 - name: Create taskwarrior directory in a synced directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Cloud/taskwarrior"
+    path: "{{ personal_vault_directory }}/taskwarrior"
     state: directory
 
 - name: Copy taskwarrior config.

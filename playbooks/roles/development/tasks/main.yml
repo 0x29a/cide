@@ -1,12 +1,12 @@
 ---
 - name: Create "Soft" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft"
+    path: "{{ software_directory }}"
     state: directory
 
 - name: Create "Projects" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Projects"
+    path: "{{ projects_directory }}"
     state: directory
 
 - name: Copy .pypirc.

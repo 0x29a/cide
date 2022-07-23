@@ -13,13 +13,13 @@
 
 - name: Create healthcheck directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft/code-server-healthcheck"
+    path: "{{ software_directory }}/code-server-healthcheck"
     state: directory
 
 - name: Create healthcheck file.
   ansible.builtin.template:
     src: healthcheck.py.j2
-    dest: "{{ home_directory }}/Soft/code-server-healthcheck/healthcheck.py"
+    dest: "{{ software_directory }}/code-server-healthcheck/healthcheck.py"
 
 - name: Copy screen session configuration.
   ansible.builtin.template:
@@ -116,24 +116,24 @@
 - name: Remove previous build.
   ansible.builtin.file:
     state: absent
-    path: "{{ home_directory }}/Soft/cide"
+    path: "{{ software_directory }}/cide"
   tags: nativefier
 
 - name: Create CIDE desktop client directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft/cide"
+    path: "{{ software_directory }}/cide"
     state: directory
   tags: nativefier
 
 - name: Install Nativefier.
   community.general.npm:
     name: nativefier
-    path: "{{ home_directory }}/Soft/cide"
+    path: "{{ software_directory }}/cide"
     state: latest
   tags: nativefier
 
 - name: Build CIDE desktop client.
   ansible.builtin.shell: node_modules/nativefier/lib/cli.js --name 'CIDE' 'http://127.0.0.1:8137'
   args:
-    chdir: "{{ home_directory }}/Soft/cide"
+    chdir: "{{ software_directory }}/cide"
   tags: nativefier

@@ -22,11 +22,11 @@
 - name: Clone garden repo.
   ansible.builtin.git:
     repo: git@github.com:{{ github_username }}/garden.git
-    dest: "{{ home_directory }}/Projects/garden"
+    dest: "{{ projects_directory }}/garden"
 
 - name: Install garden gems.
   community.general.bundler:
     deployment_mode: true
     state: present
-    chdir: "{{ home_directory }}/Projects/garden"
+    chdir: "{{ projects_directory }}/garden"
     executable: /bin/bundle2.7

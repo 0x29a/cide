@@ -2,14 +2,14 @@
 - name: Clone private documentation.
   ansible.builtin.git:
     repo: git@gitlab.com:opencraft/documentation/private.git
-    dest: "{{ home_directory }}/Projects/opencraft_private_documentation"
+    dest: "{{ projects_directory }}/opencraft_private_documentation"
     accept_hostkey: true
   ignore_errors: true
 
 - name: Install a symlink.
   ansible.builtin.shell: make ssh
   args:
-    chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
+    chdir: "{{ projects_directory }}/opencraft_private_documentation/ssh_config"
   ignore_errors: true
 
 - name: Add OBS project repository.
@@ -26,12 +26,12 @@
 
 - name: Create "Sprint Updates" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Videos/Sprint Updates"
+    path: "{{ videos_directory }}/Sprint Updates"
     state: directory
 
 - name: Create "Other recordings" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Documents/Other recordings"
+    path: "{{ documents_directory }}/Other recordings"
     state: directory
 
 - name: Install HashiCorp public signing key.
@@ -57,7 +57,7 @@
 - name: Fetch keys.
   ansible.builtin.shell: make keys
   args:
-    chdir: "{{ home_directory }}/Projects/opencraft_private_documentation/ssh_config"
+    chdir: "{{ projects_directory }}/opencraft_private_documentation/ssh_config"
 
 - name: Install oc_log_helper.
   ansible.builtin.shell: "{{ pipx }} install oc_log_helper --system-site-packages"
@@ -70,14 +70,14 @@
 
 - name: Create "add_shortcut" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft/add_shortcut"
+    path: "{{ software_directory }}/add_shortcut"
     state: directory
   tags: shortcuts
 
 - name: Copy "add_shortcut.py".
   ansible.builtin.copy:
     src: add_shortcut.py
-    dest: "{{ home_directory }}/Soft/add_shortcut/add_shortcut.py"
+    dest: "{{ software_directory }}/add_shortcut/add_shortcut.py"
   tags: shortcuts
 
 # https://ubuntuforums.org/showthread.php?t=2106567
@@ -99,32 +99,32 @@
 - name: Add log work shortcut.
   ansible.builtin.shell: python3 add_shortcut.py 'Add log record' 'oc_log_helper log-work' '<Super>T'
   args:
-    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+    chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add start tracking shortcut.
   ansible.builtin.shell: python3 add_shortcut.py 'Start tracking' 'oc_log_helper start-tracking' '<Super>S'
   args:
-    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+    chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add shared todoist helper shortcut.
-  ansible.builtin.shell: "python3 add_shortcut.py 'Add obsidian task' 'todoist_helper add-obsidian -i {{ home_directory }}/Cloud/0x29a/_todo/Inbox.md' '<Super>Space'"
+  ansible.builtin.shell: "python3 add_shortcut.py 'Add obsidian task' 'todoist_helper add-obsidian -i {{ personal_vault_directory }}/0x29a/_todo/Inbox.md' '<Super>Space'"
   args:
-    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+    chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add personal todoist helper shortcut.
   ansible.builtin.shell: python3 add_shortcut.py 'Add personal todoist task' 'todoist_helper add' '<Super>Y'
   args:
-    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+    chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
 
 - name: Add Jira open shortcut.
   ansible.builtin.shell: "python3 add_shortcut.py 'Jira open' 'python3 /home/{{ username }}/Soft/Quickopen/jiraopen.py' '<Super>J'"
   args:
-    chdir: "{{ home_directory }}/Soft/add_shortcut/"
+    chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts

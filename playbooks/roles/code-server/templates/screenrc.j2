@@ -1,5 +1,5 @@
 screen -t healthcheck
-stuff "cd {{ home_directory }}/Soft/code-server-healthcheck\n"
+stuff "cd {{ software_directory }}/code-server-healthcheck\n"
 stuff "gunicorn healthcheck:app -b 127.0.0.1:16666\n"
 
 screen -t portainer

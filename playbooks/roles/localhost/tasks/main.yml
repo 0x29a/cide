@@ -1,7 +1,7 @@
 ---
 - name: Create "Soft" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft"
+    path: "{{ software_directory }}"
     state: directory
 
 - name: Set default firewall policy.
@@ -140,12 +140,12 @@
 - name: Clone gruvbox theme.
   ansible.builtin.git:
     repo: https://github.com/TheGreatMcPain/gruvbox-material-gtk.git 
-    dest: "{{ home_directory }}/Projects/gruvbox-material-gtk"
+    dest: "{{ projects_directory }}/gruvbox-material-gtk"
   tags: theme
 
 - name: Copy gruvbox theme.
   ansible.builtin.copy:
-    src: "{{ home_directory }}/Projects/gruvbox-material-gtk/{{ item }}"
+    src: "{{ projects_directory }}/gruvbox-material-gtk/{{ item }}"
     dest: "{{ home_directory }}/.local/share/"
     remote_src: true
   loop:
@@ -163,18 +163,18 @@
 
 - name: Create "cide" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft/cide"
+    path: "{{ software_directory }}/cide"
     state: directory
 
 # TODO: replace with https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
 # once recursive option implemented.
 - name: Download CIDE electron app build.
-  ansible.builtin.shell: scp -r {{ username }}@cloud:{{ home_directory }}/Soft/cide/CIDE-linux-x64 {{ home_directory }}/Soft/cide/CIDE-linux-x64
+  ansible.builtin.shell: scp -r {{ username }}@cloud:{{ software_directory }}/cide/CIDE-linux-x64 {{ software_directory }}/cide/CIDE-linux-x64
 
 - name: Copy CIDE icon.
   ansible.builtin.copy:
     src: cide.png
-    dest: "{{ home_directory }}/Soft/cide/CIDE-linux-x64/cide.png"
+    dest: "{{ software_directory }}/cide/CIDE-linux-x64/cide.png"
 
 - name: Copy cide.desktop.
   become: true
@@ -228,14 +228,14 @@
 
 - name: Create "obsidian" directory.
   ansible.builtin.file:
-    path: "{{ home_directory }}/Soft/obsidian"
+    path: "{{ software_directory }}/obsidian"
     state: directory
   tags: obsidian
 
 - name: Download Obsidian appimage.
   ansible.builtin.get_url:
     url: "{{ obsidian_appimage_url }}"
-    dest: "{{ home_directory }}/Soft/obsidian/obsidian"
+    dest: "{{ software_directory }}/obsidian/obsidian"
     mode: a+x
   tags: obsidian
 
@@ -321,6 +321,6 @@
   become: true
   ansible.builtin.unarchive:
     src: "https://downloads.getmonero.org/cli/linux64"
-    dest: "{{ home_directory }}/Soft"
+    dest: "{{ software_directory }}"
     remote_src: true
   tags: monero
