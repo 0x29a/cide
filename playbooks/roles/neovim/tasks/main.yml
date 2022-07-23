@@ -1,0 +1,39 @@
+- name: Add nightly neovim ppa.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: ppa:neovim-ppa/stable 
+
+- name: Install neovim.
+  become: true
+  ansible.builtin.apt:
+    name: neovim
+    update_cache: true
+    state: present
+
+- name: Create "nvim" directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/.config/nvim"
+    state: directory
+
+- name: Copy "init.lua".
+  ansible.builtin.copy:
+    src: init.lua
+    dest: "{{ home_directory }}/.config/nvim/init.lua"
+  tags: vimrc
+
+- name: Create lua modules directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/.config/nvim/lua/user"
+    state: directory
+
+- name: Copy "plugins.lua".
+  ansible.builtin.copy:
+    src: plugins.lua
+    dest: "{{ home_directory }}/.config/nvim/lua/user/plugins.lua"
+  tags: vimrc
+
+- name: Copy patch for lightspeed.
+  ansible.builtin.copy:
+    src: vscode_neovim_patch_lightspeed.lua
+    dest: "{{ home_directory }}/.config/nvim/lua/user/vscode_neovim_patch_lightspeed.lua"
+  tags: vimrc

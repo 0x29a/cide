@@ -10,8 +10,8 @@
       tags: vscode
     - role: zsh
       tags: zsh
-    - role: vim
-      tags: vim
+    - role: neovim
+      tags: neovim
     - role: syncthing
       become: true
       tags: syncthing
