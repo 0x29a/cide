@@ -21,19 +21,8 @@
     dest: "{{ home_directory }}/.config/nvim/init.lua"
   tags: vimrc
 
-- name: Create lua modules directory.
-  ansible.builtin.file:
-    path: "{{ home_directory }}/.config/nvim/lua/user"
-    state: directory
-
-- name: Copy "plugins.lua".
-  ansible.builtin.copy:
-    src: plugins.lua
-    dest: "{{ home_directory }}/.config/nvim/lua/user/plugins.lua"
-  tags: vimrc
-
-- name: Copy patch for lightspeed.
-  ansible.builtin.copy:
-    src: vscode_neovim_patch_lightspeed.lua
-    dest: "{{ home_directory }}/.config/nvim/lua/user/vscode_neovim_patch_lightspeed.lua"
+- name: Copy Lua modules.
+  copy:
+    src: lua/user
+    dest: "{{ home_directory }}/.config/nvim/lua"
   tags: vimrc

@@ -23,7 +23,9 @@
     - sainnhe.gruvbox-material
     - ms-python.python
     - ms-vscode-remote.remote-ssh
+    - eamodio.gitlens
     - asvetliakov.vscode-neovim
+  tags: vscode-extensions
 
 - name: Copy VSCode settings.
   ansible.builtin.copy:
