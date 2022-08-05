@@ -141,6 +141,7 @@
     - lolcat
     - speedtest-cli
     - cookiecutter
+    - pre-commit
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:
@@ -182,15 +183,3 @@
 - name: Install Deno.
   ansible.builtin.shell: curl -fsSL https://deno.land/install.sh | sh
   tags: deno
-
-# TODO: Automate https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
-- name: Install cloudflared.
-  become: true
-  ansible.builtin.apt:
-    deb: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-  tags: cloudflare
-
-- name: Create openedx tunnel.
-  ansible.builtin.shell: cloudflared tunnel create openedx
-  ignore_errors: true
-  tags: cloudflare
