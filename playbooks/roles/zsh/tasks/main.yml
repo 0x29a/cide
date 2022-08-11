@@ -32,6 +32,7 @@
 
 # You should log out and log in after this.
 - name: Change shell to zsh.
+  become: true
   ansible.builtin.user:
     name: "{{ username }}"
     shell: /bin/zsh
@@ -41,6 +42,9 @@
     path: "{{ home_directory }}/.zsh_history"
   register: stat_zsh_history_result
 
+# TODO:
+# this shouldn't error out if .zsh_history.localhost doesn't exist.
+# Remove when SQLite for the history is used.
 - name: Copy zsh history for localhost.
   ansible.builtin.copy:
     src: .zsh_history.localhost

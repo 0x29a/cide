@@ -36,11 +36,12 @@
     state: absent
   tags: local_packages_remove
 
-- name: Install local snap packages.
-  become: true
-  community.general.snap:
-    name: "{{ local_snap_packages }}"
-    classic: true
+# UBUNTU-SPECIFIC
+#- name: Install local snap packages.
+#  become: true
+#  community.general.snap:
+#    name: "{{ local_snap_packages }}"
+#    classic: true
 
 - name: Set git username for the local CIDE repo.
   community.general.git_config:
@@ -84,6 +85,11 @@
     line: /usr/bin/byobu
   tags: terminal
 
+- name: Create autostart directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/.config/autostart"
+    state: directory
+
 - name: Copy Guake autostart file.
   ansible.builtin.copy:
     src: guake.desktop
@@ -93,6 +99,11 @@
 - name: Import guake preferences.
   ansible.builtin.shell: guake --restore-preferences roles/localhost/files/guake_preferences
   tags: terminal
+
+- name: Create .byobu directory.
+  ansible.builtin.file:
+    path: "{{ home_directory }}/.byobu"
+    state: directory
 
 - name: Copy tmux config.
   ansible.builtin.copy:
@@ -112,14 +123,15 @@
     dest: "{{ home_directory }}/.byobu/keybindings.tmux"
   tags: terminal
 
-- name: Disable Gnome animations.
-  ansible.builtin.shell: gsettings set org.gnome.desktop.interface enable-animations false
+# ONLY FOR UBUNTU
+#- name: Disable Gnome animations.
+#  ansible.builtin.shell: gsettings set org.gnome.desktop.interface enable-animations false
 
-- name: Disable the Dock.
-  ansible.builtin.shell: gnome-extensions disable ubuntu-dock@ubuntu.com
+#- name: Disable the Dock.
+#  ansible.builtin.shell: gnome-extensions disable ubuntu-dock@ubuntu.com
 
-- name: Disable desktop icons.
-  ansible.builtin.shell: gnome-extensions disable desktop-icons@csoriano
+#- name: Disable desktop icons.
+#  ansible.builtin.shell: gnome-extensions disable desktop-icons@csoriano
 
 - name: Disable background.
   ansible.builtin.shell: gsettings set org.gnome.desktop.background picture-options 'none'
@@ -135,6 +147,9 @@
 
 - name: Disable natural scroll.
   ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+
+- name: Disable XFCE battery notifications.
+  ansible.builtin.shell: xfconf-query --channel xfce4-power-manager --property /xfce4-power-manager/general-notification --set false --create
 
 - name: Clone gruvbox theme.
   ansible.builtin.git:
@@ -212,6 +227,7 @@
     - black
     - glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]
     - speedtest-cli
+    - tldr
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:

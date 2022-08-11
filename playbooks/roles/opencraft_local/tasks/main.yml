@@ -42,7 +42,7 @@
 - name: Add HashiCorp repo.
   become: true
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com jemmy main # TODO REPLACE WITH CODENAME VARIABLE
     state: present
 
 - name: Install Vault.

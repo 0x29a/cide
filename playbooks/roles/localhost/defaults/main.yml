@@ -30,10 +30,11 @@ local_packages_to_remove:
   - rhythmbox
 
 local_snap_packages: []
-obsidian_appimage_url: https://github.com/obsidianmd/obsidian-releases/releases/download/v0.13.23/Obsidian-0.13.23.AppImage
-freetube_deb_url: https://github.com/FreeTubeApp/FreeTube/releases/download/v0.16.0-beta/freetube_0.16.0_amd64.deb
+obsidian_appimage_url: https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/Obsidian-0.15.9.AppImage
+freetube_deb_url: https://github.com/FreeTubeApp/FreeTube/releases/download/v0.17.0-beta/freetube_0.17.0_amd64.deb
 mullvad_deb_url: https://mullvad.net/download/app/deb/latest/
 
 # Run :installnative in the Firefox to get this version.
-tridactyl_version: 1.22.0
+tridactyl_version: 1.22.1
 tridactyl_native_messenger_url: https://raw.githubusercontent.com/tridactyl/native_messenger/master/installers/install.sh
+

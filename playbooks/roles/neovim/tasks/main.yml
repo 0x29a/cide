@@ -1,7 +1,8 @@
 - name: Add nightly neovim ppa.
   become: true
   ansible.builtin.apt_repository:
-    repo: ppa:neovim-ppa/stable 
+    repo: ppa:neovim-ppa/stable
+    codename: jammy # TODO ADD CODENAME TO SOME VARIABLES FILE.
 
 - name: Install neovim.
   become: true
