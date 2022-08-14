@@ -31,3 +31,10 @@
   ansible.builtin.copy:
     src: vscode_settings.json
     dest: "{{ home_directory }}/.config/Code/User/settings.json"
+  tags: vscode-config
+
+- name: Copy VSCode keybindings.
+  ansible.builtin.copy:
+    src: vscode_keybindings.json
+    dest: "{{ home_directory }}/.config/Code/User/keybindings.json"
+  tags: vscode-config

@@ -259,6 +259,7 @@
   ansible.builtin.template:
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
+  tags: obsidian
 
 - name: Install Mullvad.
   become: true
