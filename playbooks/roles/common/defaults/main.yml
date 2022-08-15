@@ -23,3 +23,4 @@ server_packages:
   - apt-transport-https
   - telnet
   - nmap
+  - tree
