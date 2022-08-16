@@ -115,6 +115,9 @@ source $ZSH/oh-my-zsh.sh
 # #############################################
 # Misc ########################################
 
+# default editor
+export EDITOR=/usr/bin/vim
+
 # setting for pip install --user
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -129,6 +132,7 @@ alias v="vim"
 alias nano="vim"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
+alias se="sudo -e"
 
 alias d=docker
 alias dps="docker ps"
