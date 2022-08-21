@@ -1,3 +1,0 @@
-taskwarrior_version: "2.6.2"
-taskwarrior_tarball_url: "https://taskwarrior.org/download/task-{{ taskwarrior_version }}.tar.gz"
-taskwarrior_tui_deb_url: https://github.com/kdheepak/taskwarrior-tui/releases/download/v0.22.0/taskwarrior-tui.deb
