@@ -134,10 +134,8 @@ alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias se="sudo -e"
 
-alias docker="sudo docker"
 alias d=docker
 alias dps="docker ps"
-alias docker-compose="sudo docker-compose"
 alias dck=docker-compose
 alias docker_clean_dangling_images="docker rmi \$(docker images -a --filter=dangling=true -q)"
 alias docker_clean_stopped_containers="docker rm \$(docker ps --filter=status=exited --filter=status=created -q)"
@@ -329,6 +327,10 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
 
   export PATH=$PATH:/usr/local/go/bin
   eval "$(jira --completion-script-bash)"
+
+  # #############################################
+  # docker-compose + podman #####################
+  export DOCKER_HOST=unix:///run/user/$UID/podman/podman.sock
 
 fi
 

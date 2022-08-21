@@ -25,6 +25,9 @@
     - ms-vscode-remote.remote-ssh
     - eamodio.gitlens
     - asvetliakov.vscode-neovim
+    - bradlc.vscode-tailwindcss
+    - austenc.tailwind-docs
+    - ritwickdey.liveserver
   tags: vscode-extensions
 
 - name: Copy VSCode settings.

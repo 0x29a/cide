@@ -53,27 +53,28 @@
     update_cache: true
     state: present
 
-- name: Add Docker key.
-  become: true
-  ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
+# TODO: Remove this block when it's proven that podman is working as expected.
+# - name: Add Docker key.
+#   become: true
+#   ansible.builtin.apt_key:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     state: present
 
-- name: Add Docker repo.
-  become: true
-  ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable
-    state: present
+# - name: Add Docker repo.
+#   become: true
+#   ansible.builtin.apt_repository:
+#     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable
+#     state: present
 
-- name: Install Docker.
-  become: true
-  ansible.builtin.apt:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    update_cache: true
-    state: present
+# - name: Install Docker.
+#   become: true
+#   ansible.builtin.apt:
+#     name:
+#       - docker-ce
+#       - docker-ce-cli
+#       - containerd.io
+#     update_cache: true
+#     state: present
 
 - name: Install Google Cloud public signing key.
   become: true
@@ -130,11 +131,13 @@
   loop:
     - ipython
     - docker-compose
+    - podman-compose
     - awscli
     - lolcat
     - speedtest-cli
     - cookiecutter
     - pre-commit
+  tags: pipx
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:
@@ -142,6 +145,7 @@
     state: inject
     inject_packages:
       - requests
+  tags: pipx
 
 - name: Download and install ufw-docker.
   become: true
@@ -149,16 +153,19 @@
     url: https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
     dest: /usr/local/bin/ufw-docker
     mode: a+x
+  tags: ufw
 
 - name: Install ufw-docker rules
   become: true
   ansible.builtin.shell: ufw-docker install
+  tags: ufw
 
 - name: Restart ufw.
   become: true
   ansible.builtin.service:
     name: ufw
     state: restarted
+  tags: ufw
 
 - name: Import the nodejs role
   ansible.builtin.import_role:

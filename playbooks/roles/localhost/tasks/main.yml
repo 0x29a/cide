@@ -3,17 +3,19 @@
     path: "{{ software_directory }}"
     state: directory
 
-- name: Set default firewall policy.
+- name: Set default firewall policy for the localhost.
   become: true
   community.general.ufw:
     state: enabled
     policy: reject
+  tags: ufw
 
 - name: Restart ufw.
   become: true
   ansible.builtin.service:
     name: ufw
     state: restarted
+  tags: ufw
 
 - name: Run "apt-get update, dist-upgrade and autoremove".
   become: true

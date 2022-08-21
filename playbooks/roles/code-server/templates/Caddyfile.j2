@@ -1,7 +1,11 @@
-{
-    http_port 8111
+{{ searx_domain }} {
+    reverse_proxy 127.0.0.1:8000
 }
 
 space.demid.dev:57666 {
+    reverse_proxy 127.0.0.1:16666
+}
+
+healthcheck.demid.dev {
     reverse_proxy 127.0.0.1:16666
 }

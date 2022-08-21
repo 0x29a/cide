@@ -7,8 +7,10 @@
     "gruvboxMaterial.darkContrast": "soft",
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/vim",
     "editor.scrollBeyondLastLine": false,
-    "window.zoomLevel": 1,
     "python.formatting.blackPath": "/home/demid/.local/bin/black",
     "python.formatting.provider": "black",
-    "workbench.list.automaticKeyboardNavigation": false
+    "workbench.list.automaticKeyboardNavigation": false,
+    "window.zoomLevel": 1,
+    "editor.renderWhitespace": "all",
+    "workbench.tree.renderIndentGuides": "always"
 }

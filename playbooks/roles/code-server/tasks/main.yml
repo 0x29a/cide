@@ -105,12 +105,15 @@
     state: restarted
   tags: caddy
 
+# TODO: Healthcheck has to be moved to the secondary IP (80/443).
 - name: Allow healthcheck port.
   become: true
   community.general.ufw:
     rule: allow
     port: 57666
     proto: tcp
+    dest: "{{ primary_ip_address }}"
+  tags: ufw
 
 - name: Remove previous build.
   ansible.builtin.file:

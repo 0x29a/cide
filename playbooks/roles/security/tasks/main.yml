@@ -44,16 +44,34 @@
     update_cache: true
     state: present
 
-- name: By default allow only ssh.
+- name: By default allow only ssh for the primary IP.
   community.general.ufw:
     rule: allow
     port: "{{ ssh_port }}"
     proto: tcp
+    dest: "{{ primary_ip_address }}"
+  tags: ufw
+
+- name: By default allow only http/https for the secondary IP.
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+    dest: "{{ secondary_ip_address }}"
+  loop:
+    - 80
+    - 443
+  tags: ufw
 
 - name: Set default firewall policy.
   community.general.ufw:
     state: enabled
     policy: reject
+    dest: "{{ item }}"
+  loop:
+    - "{{ primary_ip_address }}"
+    - "{{ secondary_ip_address }}"
+  tags: ufw
 
 - name: Clone Lynis.
   ansible.builtin.git:

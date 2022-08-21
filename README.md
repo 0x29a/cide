@@ -79,6 +79,7 @@ This repository contains playbooks and roles, that I use to:
     cp /media/<username>/<ID>/.zsh_history playbooks/roles/zsh/files/.zsh_history.cloud
     ```
 1. Update Toggl transfer script timestamp in `roles/opencraft/files/.latest`.
+1. Add an additional IP address: `sudo ip address add <SECONDARY_IP_ADDRESS>/32 dev <INTERFACE>`.
 1. Run playbook to deploy user and SSH keys:
     ```sh
     make bootstrap

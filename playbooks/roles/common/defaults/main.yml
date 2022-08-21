@@ -24,3 +24,9 @@ server_packages:
   - telnet
   - nmap
   - tree
+  - pciutils
+  - uidmap
+  - podman
+  - podman-docker
+  - slirp4netns
+  - golang-github-containernetworking-plugin-dnsname

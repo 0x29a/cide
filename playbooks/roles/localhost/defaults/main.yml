@@ -37,4 +37,3 @@ mullvad_deb_url: https://mullvad.net/download/app/deb/latest/
 # Run :installnative in the Firefox to get this version.
 tridactyl_version: 1.22.1
 tridactyl_native_messenger_url: https://raw.githubusercontent.com/tridactyl/native_messenger/master/installers/install.sh
-
