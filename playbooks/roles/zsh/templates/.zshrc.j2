@@ -139,8 +139,8 @@ alias d=docker
 alias dps="docker ps"
 alias docker-compose="sudo docker-compose"
 alias dck=docker-compose
-alias docker_clean_dangling_images="docker rmi $(docker images -a --filter=dangling=true -q)"
-alias docker_clean_stopped_containers="docker rm $(docker ps --filter=status=exited --filter=status=created -q)"
+alias docker_clean_dangling_images="docker rmi \$(docker images -a --filter=dangling=true -q)"
+alias docker_clean_stopped_containers="docker rm \$(docker ps --filter=status=exited --filter=status=created -q)"
 
 alias e="exa --long --all"
 alias b=bat
@@ -245,13 +245,13 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
 
   # tutor shortcuts
   alias t="tutor"
-  alias t_root="cd $(t config printroot)"
+  alias t_root="cd \$(t config printroot)"
   alias nt="TUTOR_APP=nightly_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/nightly/root ${HOME}/Projects/tutor_dirs/nightly/.fenv/bin/tutor"
-  alias nt_root="cd $(nt config printroot)"
+  alias nt_root="cd \$(nt config printroot)"
   alias lt="TUTOR_APP=lilac_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/lilac/root ${HOME}/Projects/tutor_dirs/lilac/.fenv/bin/tutor"
-  alias lt_root="cd $(lt config printroot)"
+  alias lt_root="cd \$(lt config printroot)"
   alias mt="TUTOR_APP=maple_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/maple/root ${HOME}/Projects/tutor_dirs/maple/.fenv/bin/tutor"
-  alias mt_root="cd $(mt config printroot)"
+  alias mt_root="cd \$(mt config printroot)"
 else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
@@ -323,44 +323,6 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   source <(kubectl completion zsh)
   alias k=kubectl
   complete -F __start_kubectl k
-
-  # #############################################
-  # tutor setup config  #########################
-
-  #compdef tutor
-
-  _tutor_completion() {
-      local -a completions
-      local -a completions_with_descriptions
-      local -a response
-      (( ! $+commands[tutor] )) && return 1
-
-      response=("${(@f)$(env COMP_WORDS="${words[*]}" COMP_CWORD=$((CURRENT-1)) _TUTOR_COMPLETE=zsh_complete tutor)}")
-
-      for type key descr in ${response}; do
-          if [[ "$type" == "plain" ]]; then
-              if [[ "$descr" == "_" ]]; then
-                  completions+=("$key")
-              else
-                  completions_with_descriptions+=("$key":"$descr")
-              fi
-          elif [[ "$type" == "dir" ]]; then
-              _path_files -/
-          elif [[ "$type" == "file" ]]; then
-              _path_files -f
-          fi
-      done
-
-      if [ -n "$completions_with_descriptions" ]; then
-          _describe -V unsorted completions_with_descriptions -U
-      fi
-
-      if [ -n "$completions" ]; then
-          compadd -U -V unsorted -a completions
-      fi
-  }
-
-  compdef _tutor_completion tutor;
 
   # #############################################
   # https://github.com/go-jira/jira config  #####
