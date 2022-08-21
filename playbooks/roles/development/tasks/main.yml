@@ -75,13 +75,6 @@
     update_cache: true
     state: present
 
-- name: Ensure user is added to the docker group.
-  become: true
-  ansible.builtin.user:
-    name: "{{ username }}"
-    groups: docker
-    append: true
-
 - name: Install Google Cloud public signing key.
   become: true
   ansible.builtin.apt_key:
