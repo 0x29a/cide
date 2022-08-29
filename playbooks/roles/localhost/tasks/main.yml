@@ -242,6 +242,13 @@
   become: true
   ansible.builtin.apt:
     deb: "{{ freetube_deb_url }}"
+  tags: freetube
+
+- name: Install figma-linux.
+  become: true
+  ansible.builtin.apt:
+    deb: "{{ figma_linux_deb_url }}"
+  tags: figma
 
 - name: Create "obsidian" directory.
   ansible.builtin.file:

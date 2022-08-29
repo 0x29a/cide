@@ -30,3 +30,5 @@ server_packages:
   - podman-docker
   - slirp4netns
   - golang-github-containernetworking-plugin-dnsname
+  - acl
+  - fuse-overlayfs

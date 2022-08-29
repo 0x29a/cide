@@ -1,0 +1,78 @@
+- name: Creating a user named {{ web_template_username }} on the specified web server.
+  become: true
+  ansible.builtin.user:
+    name: "{{ web_template_username }}"
+    password: "{{ web_template_password | password_hash('sha512') }}"
+    shell: /bin/bash
+    state: present
+  register: web_template_user
+  tags: yay
+
+- name: Add .ssh directory.
+  become: true
+  ansible.builtin.file:
+    path: "{{ web_template_home_directory }}/.ssh"
+    state: directory
+    mode: 0700
+    owner: "{{ web_template_username }}"
+    group: "{{ web_template_username }}"
+
+- name: Install the SSH private key used for working with repos.
+  become: true
+  ansible.builtin.copy:
+    content: "{{ web_template_private_key }}"
+    dest: "{{ web_template_home_directory }}/.ssh/id_ed25519"
+    mode: 0600
+    owner: "{{ web_template_username }}"
+    group: "{{ web_template_username }}"
+
+- name: Install the SSH public key.
+  become: true
+  ansible.builtin.copy:
+    content: "{{ web_template_public_key }}"
+    dest: "{{ web_template_home_directory }}/.ssh/id_ed25519.pub"
+    mode: 0644
+    owner: "{{ web_template_username }}"
+    group: "{{ web_template_username }}"
+
+- name: Install the authorized SSH key.
+  become: true
+  ansible.builtin.copy:
+    content: "{{ web_template_authorized_key }}"
+    dest: "{{ web_template_home_directory }}/.ssh/authorized_keys"
+    mode: 0600
+    owner: "{{ web_template_username }}"
+    group: "{{ web_template_username }}"
+
+- name: Run podman ps.
+  become: true
+  become_user: "{{ web_template_username }}"
+  ansible.builtin.shell: podman ps
+
+- name: Fix overlayfs issue.
+  become: true
+  file:
+    path: "{{ web_template_home_directory }}/.local/share/containers"
+    state: absent
+
+- name: Make docker-compose be compatible with podman.
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ web_template_home_directory }}/.profile"
+    line: "{{ item }}"
+  loop:
+    - export DOCKER_HOST=unix:///run/user/{{ web_template_user.uid }}/podman/podman.sock
+
+- name: Install pipx.
+  become: true
+  become_user: "{{ web_template_username }}"
+  ansible.builtin.shell: python3 -m pip install --user pipx
+
+- name: Install docker-compose.
+  become: true
+  become_user: "{{ web_template_username }}"
+  community.general.pipx:
+    name: docker-compose
+
+# IMPORTANT!
+# When this finish, you should run `systemctl --user enable podman.socket && systemctl --user start podman.socket`.

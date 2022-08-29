@@ -225,6 +225,7 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 2101:127.0.0.1:2101 \
   -L 8875:127.0.0.1:8875 \
   -L 6666:127.0.0.1:6666 \
+  -L 8381:127.0.0.1:8381 \
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
@@ -327,10 +328,6 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
 
   export PATH=$PATH:/usr/local/go/bin
   eval "$(jira --completion-script-bash)"
-
-  # #############################################
-  # docker-compose + podman #####################
-  export DOCKER_HOST=unix:///run/user/$UID/podman/podman.sock
 
 fi
 

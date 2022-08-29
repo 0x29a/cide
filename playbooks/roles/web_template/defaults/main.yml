@@ -1,0 +1,8 @@
+web_template_username: web_template
+web_template_home_directory: /home/{{ web_template_username }}
+
+# Has to be defined in secrets.
+web_template_password: null
+web_template_public_key: null
+web_template_private_key: null
+web_template_authorized_key: null
