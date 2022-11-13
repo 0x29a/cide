@@ -2,6 +2,10 @@
     reverse_proxy 127.0.0.1:8000
 }
 
+{{ web_template_domain }} {
+    reverse_proxy 127.0.0.1:8777
+}
+
 space.demid.dev:57666 {
     reverse_proxy 127.0.0.1:16666
 }

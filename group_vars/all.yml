@@ -14,6 +14,7 @@ primary_ip_address: null
 secondary_ip_address: null
 
 searx_domain: null
+web_template_domain: null
 
 hosts_entries: []
 
