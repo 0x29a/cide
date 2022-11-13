@@ -11,6 +11,8 @@
     - role: security
       become: true
       tags: security
+    - role: additional-ip
+      tags: additional-ip
     - role: golang
       tags: golang
     - role: zsh
