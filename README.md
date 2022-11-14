@@ -1,11 +1,9 @@
 # CIDE [![Linting Status][linter-image]][linter-url]
 
-![CIDE](./.github/readme-example.svg)
-
 This repository contains playbooks and roles, that I use to:
-- Set up my local development machine.
-- Deploy my personal cloud IDE based on [code-server](https://github.com/cdr/code-server).
-- Deploy other self-hosted services, such as [SearX](https://searx.me/).
+- Configure my local development environment, from wallpapers and keyboard shortcuts to byobu, firejail and VSCode.
+- Configure my remote development environment on a dedicated server, which usually does all heavy lifting.
+- Deploy many other self-hosted services, such as [SearX](https://searx.me/) or [Firefly III](https://www.firefly-iii.org/).
 
 ## Getting Started 
 
