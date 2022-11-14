@@ -145,6 +145,8 @@
     - speedtest-cli
     - cookiecutter
     - pre-commit
+    - tldr
+    - httpie
   tags: pipx
 
 - name: Inject requests to ipython virtualenv.

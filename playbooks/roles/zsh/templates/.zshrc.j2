@@ -219,12 +219,14 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 8123:127.0.0.1:8123 \
   -L 8124:127.0.0.1:8124 \
   -L 8125:127.0.0.1:8125 \
-  -L 8111:127.0.0.1:81 \
+  -L 8111:127.0.0.1:8111 \
   -L 4000:127.0.0.1:4000 \
   -L 2101:127.0.0.1:2101 \
   -L 8875:127.0.0.1:8875 \
   -L 6666:127.0.0.1:6666 \
   -L 8381:127.0.0.1:8381 \
+  -L 9099:127.0.0.1:9099 \
+  -L 9098:127.0.0.1:9098 \
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
@@ -250,7 +252,9 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias lt_root="cd \$(lt config printroot)"
   alias mt="TUTOR_APP=maple_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/maple/root ${HOME}/Projects/tutor_dirs/maple/.fenv/bin/tutor"
   alias mt_root="cd \$(mt config printroot)"
-else
+  alias ct="TUTOR_APP=ct_nightly_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/ct_nightly/root ${HOME}/Projects/tutor_dirs/ct_nightly/.fenv/bin/tutor"
+  alias ct_root="cd \$(ct config printroot)"
+ else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
 

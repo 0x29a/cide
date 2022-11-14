@@ -230,6 +230,7 @@
     - glances[action,browser,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,web,wifi]
     - speedtest-cli
     - tldr
+    - httpie
 
 - name: Inject requests to ipython virtualenv.
   community.general.pipx:

@@ -24,6 +24,7 @@ local_packages:
   - pidgin
   - pidgin-otr
   - gimp
+  - v4l-utils
 
 local_packages_to_remove:
   - thunderbird
