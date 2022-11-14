@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Lint all playbooks and roles
-      uses: ansible/ansible-lint-action@master
+      uses: ansible/ansible-lint-action@main
       with:
         targets: playbooks
         override-deps: |
