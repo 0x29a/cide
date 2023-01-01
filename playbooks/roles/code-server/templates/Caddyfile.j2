@@ -1,5 +1,9 @@
 {{ searx_domain }} {
-    reverse_proxy 127.0.0.1:8000
+    reverse_proxy 127.0.0.1:8779
+}
+
+{{ firefly_domain }} {
+    reverse_proxy 127.0.0.1:8778
 }
 
 {{ web_template_domain }} {
