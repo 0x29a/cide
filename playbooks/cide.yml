@@ -32,5 +32,3 @@
       tags: syncthing
     - role: opencraft
       tags: opencraft
-    - role: web_template
-      tags: web_template

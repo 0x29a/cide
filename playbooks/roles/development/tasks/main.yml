@@ -53,37 +53,6 @@
     update_cache: true
     state: present
 
-# TODO: Remove this block when it's proven that podman is working as expected.
-- name: Add Docker key.
-  become: true
-  ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-
-- name: Add Docker repo.
-  become: true
-  ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable
-    state: present
-  tags: docker
-
-- name: Install Docker.
-  become: true
-  ansible.builtin.apt:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    update_cache: true
-    state: present
-  tags: docker
-
-- name: Enable podman.socket user service.
-  ansible.builtin.shell: systemctl --user enable podman.socket
-
-- name: Start podman.socket user service.
-  ansible.builtin.shell: systemctl --user start podman.socket
-
 - name: Install Google Cloud public signing key.
   become: true
   ansible.builtin.apt_key:
@@ -138,8 +107,6 @@
     name: "{{ item }}"
   loop:
     - ipython
-    - docker-compose
-    - podman-compose
     - awscli
     - lolcat
     - speedtest-cli
@@ -177,7 +144,7 @@
     state: restarted
   tags: ufw
 
-- name: Import the nodejs role
+- name: Import the nodejs role.
   ansible.builtin.import_role:
     name: geerlingguy.nodejs
   tags: nodejs
