@@ -155,7 +155,7 @@
 
 - name: Clone gruvbox theme.
   ansible.builtin.git:
-    repo: https://github.com/TheGreatMcPain/gruvbox-material-gtk.git 
+    repo: https://github.com/TheGreatMcPain/gruvbox-material-gtk.git
     dest: "{{ projects_directory }}/gruvbox-material-gtk"
   tags: theme
 
@@ -217,6 +217,28 @@
     update_cache: true
     state: present
 
+- name: Install Elementpublic signing key.
+  become: true
+  ansible.builtin.apt_key:
+    url: https://packages.element.io/debian/element-io-archive-keyring.gpg
+    state: present
+  tags: element
+
+- name: Add Element repo.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.element.io/debian/ default main
+    state: present
+  tags: element
+
+- name: Install Element.
+  become: true
+  ansible.builtin.apt:
+    name: element-desktop
+    update_cache: true
+    state: present
+  tags: element
+
 - name: Install pipx.
   ansible.builtin.shell: python3 -m pip install --user pipx
 
@@ -270,6 +292,26 @@
     src: obsidian.desktop
     dest: /usr/share/applications/obsidian.desktop
   tags: obsidian
+
+- name: Create "chatgpt" directory.
+  ansible.builtin.file:
+    path: "{{ software_directory }}/chatgpt"
+    state: directory
+  tags: chatgpt
+
+- name: Download ChatGPT appimage.
+  ansible.builtin.get_url:
+    url: "{{ chatgpt_appimage_url }}"
+    dest: "{{ software_directory }}/chatgpt/chatgpt"
+    mode: a+x
+  tags: chatgpt
+
+- name: Copy chatgpt.desktop.
+  become: true
+  ansible.builtin.template:
+    src: chatgpt.desktop
+    dest: /usr/share/applications/chatgpt.desktop
+  tags: chatgpt
 
 - name: Install Mullvad.
   become: true

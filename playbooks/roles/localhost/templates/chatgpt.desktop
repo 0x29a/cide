@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=ChatGPT
+Comment=OpenAI ChatGPT
+Path={{ software_directory }}/chatgpt
+Exec={{ software_directory }}/chatgpt/chatgpt
+Terminal=false
+Categories=Utility;Application;

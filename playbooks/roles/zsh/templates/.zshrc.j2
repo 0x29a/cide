@@ -169,6 +169,7 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 18400:127.0.0.1:18400 \
   -L 1994:127.0.0.1:1994 \
   -L 18150:127.0.0.1:18150 \
+  -L 18160:127.0.0.1:18160 \
   -L 18000:127.0.0.1:18000 \
   -L 18100:127.0.0.1:18100 \
   -L 19876:127.0.0.1:19876 \
@@ -227,6 +228,8 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 8381:127.0.0.1:8381 \
   -L 9099:127.0.0.1:9099 \
   -L 9098:127.0.0.1:9098 \
+  -L 1333:127.0.0.1:1333 \
+  -L 1999:127.0.0.1:1999 \
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
@@ -254,6 +257,10 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias mt_root="cd \$(mt config printroot)"
   alias ct="TUTOR_APP=ct_nightly_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/ct_nightly/root ${HOME}/Projects/tutor_dirs/ct_nightly/.fenv/bin/tutor"
   alias ct_root="cd \$(ct config printroot)"
+  alias pt="TUTOR_APP=prod_nightly_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/prod_nightly/root ${HOME}/Projects/tutor_dirs/prod_nightly/.fenv/bin/tutor"
+  alias pt_root="cd \$(pt config printroot)"
+  alias ntt="TUTOR_APP=nutmeg_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/nutmeg/root ${HOME}/Projects/tutor_dirs/nutmeg/.fenv/bin/tutor"
+  alias ntt_root="cd \$(ntt config printroot)"
  else
     echo "You have to set CIDE_ENVIRONMENT"
 fi

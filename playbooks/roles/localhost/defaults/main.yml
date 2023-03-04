@@ -32,6 +32,7 @@ local_packages_to_remove:
 
 local_snap_packages: []
 obsidian_appimage_url: https://github.com/obsidianmd/obsidian-releases/releases/download/v0.15.9/Obsidian-0.15.9.AppImage
+chatgpt_appimage_url: https://github.com/lencx/ChatGPT/releases/download/v0.10.3/chat-gpt_0.10.3_amd64.AppImage
 freetube_deb_url: https://github.com/FreeTubeApp/FreeTube/releases/download/v0.17.0-beta/freetube_0.17.0_amd64.deb
 figma_linux_deb_url: https://github.com/Figma-Linux/figma-linux/releases/download/v0.10.0/figma-linux_0.10.0_linux_amd64.deb
 mullvad_deb_url: https://mullvad.net/download/app/deb/latest/

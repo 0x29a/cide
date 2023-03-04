@@ -32,3 +32,4 @@ server_packages:
   - golang-github-containernetworking-plugin-dnsname
   - acl
   - fuse-overlayfs
+  - apparmor
