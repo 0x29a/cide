@@ -8,6 +8,9 @@ virtualenv:
 keys:
 	chmod 600 ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
 
+ansible_requirements: virtualenv
+	$(BIN)/ansible-galaxy install -r requirements.yml
+
 requirements: virtualenv
 	if [ ! -f $(BIN)/ansible-galaxy ]; then $(BIN)/pip install -r requirements.txt; fi
 	if [ ! -d /home/$(USER)/.ansible/collections/ ]; then $(BIN)/ansible-galaxy install -r requirements.yml; fi
