@@ -1,0 +1,83 @@
+- name: Create user account.
+  become: true
+  ansible.builtin.user:
+    name: "{{ docker_user }}"
+    comment: "{{ docker_user }} system user"
+    createhome: yes
+    shell: /bin/false
+    password: '*'
+    state: present
+
+- name: Register {{ docker_user }} user info.
+  become: true
+  ansible.builtin.user:
+    name: "{{ docker_user }}"
+  check_mode: true
+  register: docker_user_info
+
+- name: Ensure {{ docker_user }} user is lingering.
+  ansible.builtin.stat:
+    path: "/var/lib/systemd/linger/{{ docker_user }}"
+  register: docker_user_lingering
+
+- name: Enable lingering for {{ docker_user }} user.
+  become: true
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ docker_user }}"
+  register: enable_lingering
+  changed_when: enable_lingering.rc != 0
+  failed_when: enable_lingering.rc != 0
+  when: not docker_user_lingering.stat.exists
+
+- name: Stat Docker user docker.sock
+  become: true
+  become_user: "{{ docker_user }}"
+  ansible.builtin.stat:
+    path: "/run/user/{{ docker_user_info.uid }}/docker.sock"
+  register: docker_rootless_sock
+
+- name: Install rootless docker
+  become: true
+  become_user: "{{ docker_user }}"
+  environment:
+    PATH: "{{ docker_user_info.home }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    XDG_RUNTIME_DIR: "/run/user/{{ docker_user_info.uid }}"
+  ansible.builtin.command:
+    cmd: dockerd-rootless-setuptool.sh install
+  register: install_rootless_docker
+  changed_when: install_rootless_docker.rc != 0
+  failed_when: install_rootless_docker.rc != 0
+  when: not docker_rootless_sock.stat.exists
+
+- name: Create docker_rootless.sh
+  ansible.builtin.template:
+    src: docker_rootless.sh.j2
+    dest: "{{ ansible_env.HOME }}/docker_rootless.sh"
+    mode: "0700"
+
+- name: Add Docker systemd service.
+  become: true
+  become_user: "{{ docker_user }}"
+  ansible.builtin.template:
+    src: docker_rootless.service.j2
+    dest: "{{ docker_user_info.home }}/.config/systemd/user/docker.service"
+    backup: true
+    mode: "0600"
+
+- name: Enable and start Docker.
+  become: true
+  become_user: "{{ docker_user }}"
+  ansible.builtin.systemd:
+    name: docker.service
+    enabled: true
+    state: started
+    scope: user
+    daemon_reload: true
+
+- name: Add DOCKER_HOST in .profile.
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ docker_user_info.home }}/.bashrc"
+    line: "{{ item }}"
+  loop:
+    - export DOCKER_HOST=unix:///run/user/{{ docker_user_info.uid }}/docker.sock

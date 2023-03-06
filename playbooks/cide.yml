@@ -23,6 +23,8 @@
       tags: neovim
     - role: development
       tags: development
+    - role: searx
+      tags: searx
     - role: code-server
       tags: code-server
     - role: garden

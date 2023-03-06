@@ -53,6 +53,12 @@
     update_cache: true
     state: present
 
+- name: Import geerlingguy.docker role.
+  become: true
+  ansible.builtin.import_role:
+    name: geerlingguy.docker
+  tags: geerlingguy_docker
+
 - name: Install Google Cloud public signing key.
   become: true
   ansible.builtin.apt_key:

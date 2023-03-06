@@ -1,0 +1,5 @@
+- name: Import rootless_docker role.
+  ansible.builtin.import_role:
+    name: rootless_docker
+  vars:
+    docker_user: searx

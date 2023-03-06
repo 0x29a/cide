@@ -5,6 +5,8 @@ roles:
     version: 2.1.0
   - name: mrlesmithjr.netplan
     version: v0.3.0
+  - name: geerlingguy.docker
+    version: 6.1.0
 
 collections:
   - name: https://github.com/dev-sec/ansible-collection-hardening
