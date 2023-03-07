@@ -28,3 +28,4 @@ server_packages:
   - uidmap
   - acl
   - apparmor
+  - python3-docker
