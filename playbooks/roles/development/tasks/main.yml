@@ -57,6 +57,9 @@
   become: true
   ansible.builtin.import_role:
     name: geerlingguy.docker
+  vars:
+    docker_users:
+    - "{{ username }}"
   tags: geerlingguy_docker
 
 - name: Install Google Cloud public signing key.

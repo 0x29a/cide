@@ -5,7 +5,7 @@
     "editor.fontSize": 12,
     "files.autoSave": "onFocusChange",
     "gruvboxMaterial.darkContrast": "soft",
-    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/vim",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
     "editor.scrollBeyondLastLine": false,
     "python.formatting.blackPath": "/home/demid/.local/bin/black",
     "python.formatting.provider": "black",
