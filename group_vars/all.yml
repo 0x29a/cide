@@ -16,7 +16,7 @@ secondary_ip_address: null
 searx_domain: null
 web_template_domain: null
 firefly_domain: null
-lit_domain: null
+bookwyrm_domain: null
 
 hosts_entries: []
 

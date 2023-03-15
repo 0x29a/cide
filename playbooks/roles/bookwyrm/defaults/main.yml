@@ -1,0 +1,17 @@
+bookwyrm_secret_key: null
+bookwyrm_root_domain: null
+bookwyrm_domain: "lit.{{ bookwyrm_root_domain }}"
+bookwyrm_admin_email: null
+bookwyrm_postgres_password: null
+bookwyrm_redis_activity_password: null
+bookwyrm_redis_broker_password: null
+bookwyrm_flower_user: null
+bookwyrm_flower_password: null
+bookwyrm_email_host_user: null
+bookwyrm_email_host_password: null
+bookwyrm_email_sender_domain: "{{ bookwyrm_root_domain }}"
+bookwyrm_aws_access_key_id: null
+bookwyrm_aws_secret_access_key: null
+bookwyrm_aws_storage_bucket: null
+bookwyrm_aws_s3_custom_domain: "files.{{ bookwyrm_root_domain }}"
+bookwyrm_aws_s3_endpoint_url: null
