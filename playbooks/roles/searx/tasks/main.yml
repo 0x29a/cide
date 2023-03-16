@@ -9,19 +9,19 @@
   become_user: searx
   ansible.builtin.git:
     repo: https://github.com/{{ github_username }}/searxng-docker
-    dest: /home/searx/searxng-docker
+    dest: "{{ docker_user_info.home }}/searxng-docker"
   ignore_errors: true
 
 - name: Set a secret key.
   become: true
   ansible.builtin.shell: sed -i "s|ultrasecretkey|$(openssl rand -hex 32)|g" searxng/settings.yml
   args:
-    chdir: /home/searx/searxng-docker
+    chdir: "{{ docker_user_info.home }}/searxng-docker"
 
 - name: Add necessary entries to the .env file.
   become: true
   ansible.builtin.lineinfile:
-    path: /home/searx/searxng-docker/.env
+    path: "{{ docker_user_info.home }}/searxng-docker/.env"
     line: "{{ item }}"
   loop:
     - "SEARXNG_HOSTNAME={{ searx_domain }}"
@@ -30,7 +30,7 @@
   become: true
   become_user: searx
   community.general.docker_compose:
-    project_src: /home/searx/searxng-docker
+    project_src: "{{ docker_user_info.home }}/searxng-docker"
     docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
   vars:
     ansible_python_interpreter: "{{ docker_user_info.home }}/venv/bin/python"
