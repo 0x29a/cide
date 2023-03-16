@@ -25,6 +25,8 @@
       tags: development
     - role: searx
       tags: searx
+    - role: bookwyrm
+      tags: bookwyrm
     - role: code-server
       tags: code-server
     - role: garden

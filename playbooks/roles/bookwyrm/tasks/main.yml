@@ -3,3 +3,40 @@
     name: rootless_docker
   vars:
     docker_user: bookwyrm
+
+- name: Clone my bookwyrm fork.
+  become: true
+  become_user: bookwyrm
+  ansible.builtin.git:
+    repo: https://github.com/{{ github_username }}/bookwyrm
+    dest: /home/bookwyrm/bookwyrm
+    version: lit
+  ignore_errors: true
+
+- name: Generate .env.
+  become: true
+  become_user: bookwyrm
+  ansible.builtin.template:
+    src: .env.j2
+    dest: /home/bookwyrm/bookwyrm/.env
+
+- name: Stop all services.
+  become: true
+  become_user: bookwyrm
+  community.general.docker_compose:
+    project_src: /home/bookwyrm/bookwyrm
+    docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
+    stopped: true
+  vars:
+    ansible_python_interpreter: "{{ docker_user_info.home }}/venv/bin/python"
+
+- name: Launch all services.
+  become: true
+  become_user: bookwyrm
+  community.general.docker_compose:
+    project_src: /home/bookwyrm/bookwyrm
+    docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
+    build: true
+    pull: true
+  vars:
+    ansible_python_interpreter: "{{ docker_user_info.home }}/venv/bin/python"
