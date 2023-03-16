@@ -1,0 +1,95 @@
+- name: Create user account.
+  become: true
+  ansible.builtin.user:
+    name: "{{ k3s_username }}"
+    comment: "{{ k3s_username }} system user"
+    createhome: yes
+    shell: /bin/false
+    password: '*'
+    state: present
+
+- name: Register user info.
+  become: true
+  ansible.builtin.user:
+    name: "{{ k3s_username }}"
+  check_mode: true
+  register: user_info
+
+- name: Download k3s binary.
+  become: true
+  become_user: "{{ k3s_username }}"
+  ansible.builtin.get_url:
+    url: "{{ k3s_download_link }}"
+    dest: "{{ user_info.home }}/k3s"
+    mode: a+x
+
+- name: Create k3s systemd user directory.
+  become: true
+  become_user: "{{ k3s_username }}"
+  ansible.builtin.file:
+    path: "{{ user_info.home }}/.config/systemd/user"
+    state: directory
+
+- name: Ensure k3s user is lingering.
+  ansible.builtin.stat:
+    path: "/var/lib/systemd/linger/{{ k3s_username }}"
+  register: docker_user_lingering
+
+- name: Enable lingering for k3s user.
+  become: true
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ k3s_username }}"
+  register: enable_lingering
+  changed_when: enable_lingering.rc != 0
+  failed_when: enable_lingering.rc != 0
+  when: not docker_user_lingering.stat.exists
+
+- name: Download k3s rootless service file.
+  become: true
+  become_user: "{{ k3s_username }}"
+  ansible.builtin.get_url:
+    url: "{{ k3s_rootless_service_file }}"
+    dest: "{{ user_info.home }}/.config/systemd/user/k3s-rootless.service"
+    mode: "0600"
+
+- name: Replace ExecStart in k3s-rootless.service file
+  become: true
+  ansible.builtin.replace:
+    path: "{{ user_info.home }}/.config/systemd/user/k3s-rootless.service"
+    regexp: 'ExecStart=/usr/local/bin/k3s'
+    replace: 'ExecStart={{ user_info.home }}/k3s'
+
+- name: Ensure "/etc/systemd/system/user@.service.d" directory exists.
+  become: true
+  ansible.builtin.file:
+    path: "/etc/systemd/system/user@.service.d"
+    state: directory
+
+# Host has to be rebooted after this.
+- name: Create delegate.conf.
+  become: true
+  ansible.builtin.copy:
+    src: delegate.conf
+    dest: "/etc/systemd/system/user@.service.d/delegate.conf"
+
+- name: Enable k3s-rootless.service
+  become: true
+  become_user: "{{ k3s_username }}"
+  ansible.builtin.systemd:
+    name: k3s-rootless.service
+    enabled: true
+    state: started
+    scope: user
+    daemon_reload: true
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user_info.uid }}"
+
+# Fix for: "expected sysctl value \"net.ipv4.ip_forward\" to be \"1\", got \"0\";
+- name: Set net.ipv4.ip_forward to 1
+  become: true
+  ansible.builtin.sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: true

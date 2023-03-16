@@ -23,6 +23,8 @@
       tags: neovim
     - role: development
       tags: development
+    - role: k3s
+      tags: k3s
     - role: searx
       tags: searx
     - role: bookwyrm
