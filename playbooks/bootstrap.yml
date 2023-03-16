@@ -14,7 +14,7 @@
         groups: sudo
         append: true
 
-    - name: Add .ssh directory
+    - name: Add .ssh directory.
       ansible.builtin.file:
         path: "{{ home_directory }}/.ssh"
         state: directory
