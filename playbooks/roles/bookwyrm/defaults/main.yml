@@ -1,3 +1,5 @@
+bookwyrm_username: bookwyrm
+
 bookwyrm_secret_key: null
 bookwyrm_root_domain: null
 bookwyrm_domain: "lit.{{ bookwyrm_root_domain }}"

@@ -2,29 +2,29 @@
   ansible.builtin.import_role:
     name: rootless_docker
   vars:
-    docker_user: bookwyrm
+    docker_user: "{{ bookwyrm_username }}"
 
 - name: Clone my bookwyrm fork.
   become: true
-  become_user: bookwyrm
+  become_user: "{{ bookwyrm_username }}"
   ansible.builtin.git:
     repo: https://github.com/{{ github_username }}/bookwyrm
-    dest: /home/bookwyrm/bookwyrm
+    dest: "{{ docker_user_info.home }}/bookwyrm"
     version: lit
   ignore_errors: true
 
 - name: Generate .env.
   become: true
-  become_user: bookwyrm
+  become_user: "{{ bookwyrm_username }}"
   ansible.builtin.template:
     src: .env.j2
-    dest: /home/bookwyrm/bookwyrm/.env
+    dest: "{{ docker_user_info.home }}/bookwyrm/.env"
 
 - name: Stop all services.
   become: true
-  become_user: bookwyrm
+  become_user: "{{ bookwyrm_username }}"
   community.general.docker_compose:
-    project_src: /home/bookwyrm/bookwyrm
+    project_src: "{{ docker_user_info.home }}/bookwyrm"
     docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
     stopped: true
   vars:
@@ -32,9 +32,9 @@
 
 - name: Launch all services.
   become: true
-  become_user: bookwyrm
+  become_user: "{{ bookwyrm_username }}"
   community.general.docker_compose:
-    project_src: /home/bookwyrm/bookwyrm
+    project_src: "{{ docker_user_info.home }}/bookwyrm"
     docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
     build: true
     pull: true
