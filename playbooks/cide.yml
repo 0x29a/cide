@@ -29,6 +29,8 @@
       tags: searx
     - role: bookwyrm
       tags: bookwyrm
+    - role: firefly
+      tags: firefly
     - role: code-server
       tags: code-server
     - role: garden
