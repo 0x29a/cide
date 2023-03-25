@@ -1,0 +1,4 @@
+plausible_username: plausible
+plausible_secret_key_base: null
+plausible_domain: null
+plausible_base_url: "https://{{ plausible_domain }}"

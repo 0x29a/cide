@@ -1,0 +1,39 @@
+- name: Import rootless_dockerrole.
+  ansible.builtin.import_role:
+    name: rootless_docker
+  vars:
+    docker_user: "{{ plausible_username }}"
+
+- name: Clone my plausible/hosting fork.
+  become: true
+  become_user: "{{ plausible_username }}"
+  ansible.builtin.git:
+    repo: https://github.com/{{ github_username }}/plausible_hosting
+    dest: "{{ docker_user_info.home }}/plausible"
+  ignore_errors: true
+
+- name: Generate plausible-conf.env
+  become: true
+  become_user: "{{ plausible_username }}"
+  ansible.builtin.template:
+    src: plausible-conf.env.j2
+    dest: "{{ docker_user_info.home }}/plausible/plausible-conf.env"
+
+- name: Stop all plausible services.
+  become: true
+  become_user: "{{ plausible_username }}"
+  community.general.docker_compose:
+    project_src: "{{ docker_user_info.home }}/plausible"
+    docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
+    stopped: true
+  vars:
+    ansible_python_interpreter: "{{ docker_user_info.home }}/venv/bin/python"
+
+- name: Create and start plausible services.
+  become: true
+  become_user: "{{ plausible_username }}"
+  community.general.docker_compose:
+    project_src: "{{ docker_user_info.home }}/plausible"
+    docker_host: "unix://run/user/{{ docker_user_info.uid }}/docker.sock"
+  vars:
+    ansible_python_interpreter: "{{ docker_user_info.home }}/venv/bin/python"

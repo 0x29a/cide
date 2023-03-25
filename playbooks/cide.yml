@@ -31,6 +31,8 @@
       tags: bookwyrm
     - role: firefly
       tags: firefly
+    - role: plausible
+      tags: plausible
     - role: code-server
       tags: code-server
     - role: garden
