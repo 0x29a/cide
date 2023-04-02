@@ -1,11 +1,11 @@
-# CIDE [![Linting Status][linter-image]][linter-url]
+# CIDE
 
 This repository contains playbooks and roles, that I use to:
 - Configure my local development environment, from wallpapers and keyboard shortcuts to byobu, firejail and VSCode.
 - Configure my remote development environment on a dedicated server, which usually does all heavy lifting.
 - Deploy many other self-hosted services, such as [SearX](https://searx.me/) or [Firefly III](https://www.firefly-iii.org/).
 
-## Getting Started 
+## Getting Started
 
 ### Localhost
 
@@ -105,8 +105,3 @@ This repository contains playbooks and roles, that I use to:
     1. `esbenp.prettier-vscode`.
     1. `ms-vscode.vscode-typescript-tslint-plugin`.
     1. `sainnhe.gruvbox-material`.
-
-<!-- Badges -->
-
-[linter-image]: https://github.com/0x29a/cide/actions/workflows/ansible-lint.yml/badge.svg
-[linter-url]: https://github.com/0x29a/cide/actions/workflows/ansible-lint.yml
