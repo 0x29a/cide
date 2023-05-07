@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+PATH="$HOME/Soft/obsidian:$PATH" tdrop -h 100% obsidian

@@ -127,3 +127,11 @@
   args:
     chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
+
+- name: Add tdrop Obsidian shortcut.
+  ansible.builtin.shell: "python3 add_shortcut.py 'Obsidian open' '{{ software_directory }}/tdrop/tdrop' 'Insert'"
+  args:
+    chdir: "{{ software_directory }}/add_shortcut/"
+  tags:
+    - shortcuts
+    - tdrop

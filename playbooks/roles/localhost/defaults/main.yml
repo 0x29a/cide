@@ -25,6 +25,8 @@ local_packages:
   - pidgin-otr
   - gimp
   - v4l-utils
+  - flatpak
+  - xdotool # for tdrop
 
 local_packages_to_remove:
   - thunderbird

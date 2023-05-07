@@ -392,3 +392,25 @@
     dest: "{{ software_directory }}"
     remote_src: true
   tags: monero
+
+- name: Clone tdrop
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/noctuid/tdrop.git
+    dest: "{{ software_directory }}/tdrop"
+  tags: tdrop
+
+- name: Install tdrop.
+  become: true
+  ansible.builtin.shell: make install
+  args:
+    chdir: "{{ software_directory }}/tdrop"
+  tags: tdrop
+
+- name: Copy tdrop file to the software directory.
+  become: true
+  ansible.builtin.copy:
+    src: tdrop
+    dest: "{{ software_directory }}/tdrop/tdrop"
+    mode: a+x
+  tags: tdrop
