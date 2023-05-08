@@ -394,7 +394,6 @@
   tags: monero
 
 - name: Clone tdrop
-  become: true
   ansible.builtin.git:
     repo: https://github.com/noctuid/tdrop.git
     dest: "{{ software_directory }}/tdrop"
@@ -411,6 +410,6 @@
   become: true
   ansible.builtin.copy:
     src: tdrop
-    dest: "{{ software_directory }}/tdrop/tdrop"
+    dest: "{{ software_directory }}/tdrop/tdrop_wrapper"
     mode: a+x
   tags: tdrop
