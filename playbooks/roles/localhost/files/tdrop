@@ -1,3 +1,6 @@
 #!/bin/zsh
 
-PATH="$HOME/Soft/obsidian:$PATH" tdrop -h 100% obsidian
+if ! pgrep -f "bash /usr/local/bin/tdrop"
+then
+    PATH="$HOME/Soft/obsidian:$PATH" tdrop -A -h 100% obsidian 'obsidian://open?vault=0x29a'
+fi
