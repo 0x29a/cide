@@ -113,6 +113,18 @@
     dest: "{{ home_directory }}/.byobu/.tmux.conf"
   tags: terminal
 
+# This is needed to avoid a very high tmux CPU usage.
+# You may also need to run byobu-quiet.
+- name: Disable date and time in the status bar.
+  ansible.builtin.lineinfile:
+    dest: "{{ home_directory }}/.byobu/profile.tmux"
+    line: "{{ item }}"
+    insertafter: EOF
+  loop:
+    - BYOBU_DATE=""
+    - BYOBU_TIME=""
+  tags: terminal
+
 - name: Clone tmux-jump.
   ansible.builtin.git:
     repo: https://github.com/schasse/tmux-jump
