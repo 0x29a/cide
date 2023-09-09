@@ -135,8 +135,9 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-# private variables
-.vars.private.yml
+# ansible vault password
+.vault_pass
+
 
 # zsh history
 playbooks/roles/zsh/files/.zsh_history.cloud
