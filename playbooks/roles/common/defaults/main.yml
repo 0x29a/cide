@@ -30,3 +30,4 @@ server_packages:
   - acl
   - slirp4netns
   - apparmor
+  - latexmk
