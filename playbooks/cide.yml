@@ -35,8 +35,6 @@
       tags: plausible
     - role: code-server
       tags: code-server
-    - role: garden
-      tags: garden
     - role: syncthing
       become: true
       tags: syncthing

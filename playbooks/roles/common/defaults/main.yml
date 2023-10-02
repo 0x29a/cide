@@ -30,4 +30,9 @@ server_packages:
   - acl
   - slirp4netns
   - apparmor
+  - default-jdk
+  # LaTeX tools
   - latexmk
+  - texlive
+  - texlive-latex-extra
+  - texlive-fonts-extra

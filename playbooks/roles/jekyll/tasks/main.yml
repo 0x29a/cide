@@ -1,0 +1,24 @@
+- name: Install packages necessary for Jekyll.
+  become: true
+  ansible.builtin.apt:
+    name:
+      - ruby-full
+      - build-essential
+      - zlib1g-dev
+    state: present
+
+- name: Install bundler.
+  become: true
+  become_user: "{{ username }}"
+  community.general.gem:
+    name: bundler
+    install_dir: "{{ home_directory }}/gems"
+    user_install: false
+
+- name: Install jekyll.
+  become: true
+  become_user: "{{ username }}"
+  community.general.gem:
+    name: jekyll
+    install_dir: "{{ home_directory }}/gems"
+    user_install: false

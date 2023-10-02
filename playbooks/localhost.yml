@@ -23,3 +23,5 @@
       tags: go-jira
     - role: firejail
       tags: firejail
+    - role: jekyll
+      tags: jekyll
