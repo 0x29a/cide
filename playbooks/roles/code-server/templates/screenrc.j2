@@ -1,9 +1,0 @@
-screen -t healthcheck
-stuff "cd {{ software_directory }}/code-server-healthcheck\n"
-stuff "gunicorn healthcheck:app -b 127.0.0.1:16666\n"
-
-screen -t portainer
-stuff "docker run --rm --volume=/var/run/docker.sock:/var/run/docker.sock --volume=/tmp/portainer:/data -p 9000:9000 portainer/portainer:latest --bind=:9000\n"
-
-screen -t searx
-stuff "docker run --rm -v ${PWD}/searx:/etc/searx -p 8875:8080 -e BASE_URL=http://localhost:8875/ searx/searx\n"

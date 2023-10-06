@@ -1,3 +1,0 @@
-screenrc_path: "{{ home_directory }}/.cide_screenrc"
-code_server_version: "4.3.0"
-code_server_deb: "https://github.com/coder/code-server/releases/download/v{{ code_server_version}}/code-server_{{ code_server_version}}_amd64.deb"

@@ -12,7 +12,6 @@ server_packages:
   - python3-docker
   - build-essential
   - python3-venv
-  - screen
   - ripgrep
   - libssl-dev
   - libreadline-dev

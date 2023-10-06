@@ -1,0 +1,13 @@
+- name: Install cockpit.
+  become: true
+  ansible.builtin.apt:
+    name:
+      - cockpit
+      - cockpit-storaged
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-sosreport
+      - cockpit-system
+      - cockpit-ws
+    state: present
+    update_cache: true

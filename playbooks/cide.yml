@@ -33,10 +33,12 @@
       tags: firefly
     - role: plausible
       tags: plausible
-    - role: code-server
-      tags: code-server
+    - role: caddy
+      tags: caddy
     - role: syncthing
       become: true
       tags: syncthing
     - role: opencraft
       tags: opencraft
+    - role: monitoring
+      tags: monitoring
