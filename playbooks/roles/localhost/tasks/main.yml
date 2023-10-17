@@ -413,3 +413,9 @@
     dest: "{{ software_directory }}/tdrop/tdrop_wrapper"
     mode: a+x
   tags: tdrop
+
+# curl -fsSL https://d2lang.com/install.sh | sh -s -- --uninstall
+# to uninstall
+- name: Install d2
+  ansible.builtin.shell: curl -fsSL https://d2lang.com/install.sh | sh -s --
+  tags: d2
