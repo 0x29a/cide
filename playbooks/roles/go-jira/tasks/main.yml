@@ -34,3 +34,9 @@
   ansible.builtin.copy:
     src: jiraopen.py
     dest: "{{ software_directory }}/Quickopen/jiraopen.py"
+
+- name: Generate "obsidian_jira" script.
+  ansible.builtin.template:
+    src: obsidian_jira.py.j2
+    dest: "{{ software_directory }}/Quickopen/obsidian_jira.py"
+  tags: obsidian_jira

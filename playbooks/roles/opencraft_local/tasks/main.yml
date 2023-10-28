@@ -128,6 +128,14 @@
     chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
 
+- name: Add Obsidian-Jira open shortcut.
+  ansible.builtin.shell: "python3 add_shortcut.py 'Obsidian-Jira open' 'python3 /home/{{ username }}/Soft/Quickopen/obsidian_jira.py' '<Shift>F12'"
+  args:
+    chdir: "{{ software_directory }}/add_shortcut/"
+  tags:
+    - shortcuts
+    - obsidian_jira
+
 - name: Add tdrop Obsidian shortcut.
   ansible.builtin.shell: "python3 add_shortcut.py 'Obsidian open' '{{ software_directory }}/tdrop/tdrop_wrapper' 'Insert'"
   args:

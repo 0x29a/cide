@@ -1,0 +1,73 @@
+import os
+import re
+
+from pathlib import Path
+
+# Will be filled by Ansible.
+WORK_DIRECTORY = Path("{{ personal_vault_directory }}/0x29a/work")
+TDROP_WRAPPER_PATH = Path("{{ software_directory }}/tdrop/tdrop_wrapper")
+OBSIDIAN_PATH = "{{ software_directory }}/obsidian/obsidian"
+
+def get_ticket():
+    clipboard = os.popen("xclip -selection clipboard -o")
+    clipboard_content = clipboard.read()
+    clipboard.close()
+
+    ticket = re.search(r"[A-Z]{2,}-\d+", clipboard_content)
+    if ticket:
+        return ticket.group(0)
+
+
+def get_ticket_summary(ticket):
+    jira = os.popen(f"jira view {ticket} --field=summary")
+    ticket_details = jira.read()
+    jira.close()
+
+    pattern = r"summary:\s*(.*)"
+    match = re.search(pattern, ticket_details)
+
+    
+    return match.group(1) if match else ""
+
+
+def create_ticket_note(ticket, summary):
+    note = (
+        WORK_DIRECTORY / f"{ticket} - {summary}.md"
+        if summary
+        else WORK_DIRECTORY / f"{ticket}.md"
+    )
+    note.touch()
+    return note.name
+
+
+def locate_ticket_note(ticket):
+    for file in WORK_DIRECTORY.iterdir():
+        if ticket in file.name:
+            return file.name
+
+
+def launch_tdrop():
+    os.system(f"{TDROP_WRAPPER_PATH}")
+
+
+def open_ticket_note(note):
+    os.system(f"{OBSIDIAN_PATH} 'obsidian://open?vault=0x29a&file=work/{note}'")
+
+
+def main():
+    ticket = get_ticket()
+    if not ticket:
+        return
+    
+    note = locate_ticket_note(ticket) or create_ticket_note(
+        ticket, get_ticket_summary(ticket)
+    )
+
+    launch_tdrop()
+    
+    open_ticket_note(note)
+
+
+if __name__ == "__main__":
+    main()
+
