@@ -29,8 +29,6 @@
       tags: searx
     - role: bookwyrm
       tags: bookwyrm
-    - role: firefly
-      tags: firefly
     - role: plausible
       tags: plausible
     - role: caddy

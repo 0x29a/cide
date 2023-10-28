@@ -2,26 +2,16 @@
     reverse_proxy 127.0.0.1:8779
 }
 
-{{ firefly_domain }} {
-    reverse_proxy 127.0.0.1:8778
-}
-
 {{ web_template_domain }} {
-    reverse_proxy localhost:10080
+    reverse_proxy 127.0.0.1:10080
 }
 
-{{ bookwyrm_domain }}:80 {
+{{ bookwyrm_domain }} {
+    tls internal
     reverse_proxy 127.0.0.1:8977
 }
 
-{{ plausible_domain }}:80 {
+{{ plausible_domain }} {
+    tls internal
     reverse_proxy 127.0.0.1:8776
-}
-
-space.demid.dev:57666 {
-    reverse_proxy 127.0.0.1:16666
-}
-
-healthcheck.demid.dev {
-    reverse_proxy 127.0.0.1:16666
 }

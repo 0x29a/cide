@@ -62,6 +62,14 @@
     - "{{ username }}"
   tags: geerlingguy_docker
 
+- name: Install docker-cleanup.sh cron script.
+  become: true
+  ansible.builtin.template:
+    src: docker-cleanup.sh.j2
+    dest: /etc/cron.monthly/docker-cleanup.sh
+    mode: "0700"
+  tags: docker_cleanup
+
 - name: Install Google Cloud public signing key.
   become: true
   ansible.builtin.apt_key:

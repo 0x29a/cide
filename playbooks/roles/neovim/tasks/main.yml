@@ -1,15 +1,9 @@
-- name: Add nightly neovim ppa.
+- name: Download nvim and put it to /usr/bin
   become: true
-  ansible.builtin.apt_repository:
-    repo: ppa:neovim-ppa/stable
-    codename: jammy # TODO ADD CODENAME TO SOME VARIABLES FILE.
-
-- name: Install neovim.
-  become: true
-  ansible.builtin.apt:
-    name: neovim
-    update_cache: true
-    state: present
+  get_url:
+    url: https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage
+    dest: /usr/bin/nvim
+    mode: 0755
 
 - name: Create "nvim" directory.
   ansible.builtin.file:

@@ -266,6 +266,8 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   alias pt_root="cd \$(pt config printroot)"
   alias ntt="TUTOR_APP=nutmeg_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/nutmeg/root ${HOME}/Projects/tutor_dirs/nutmeg/.fenv/bin/tutor"
   alias ntt_root="cd \$(ntt config printroot)"
+  alias ptt="TUTOR_APP=prod_tutor TUTOR_ROOT=${HOME}/Projects/tutor_dirs/palm/root ${HOME}/Projects/tutor_dirs/palm/.fenv/bin/tutor"
+  alias ptt_root="cd \$(ptt config printroot)"
  else
     echo "You have to set CIDE_ENVIRONMENT"
 fi
