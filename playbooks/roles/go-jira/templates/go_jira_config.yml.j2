@@ -19,6 +19,13 @@ custom-commands:
        --template table \
        --query "assignee = {{ github_username }} and sprint in openSprints() and sprint not in futureSprints()"
 
+  - name: sp_next
+    help: display all issues in my next sprint
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query "assignee = {{ github_username }} and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
+
   - name: o
     help: open Jira ticket in the Firefox
     script: |-
