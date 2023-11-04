@@ -1,5 +1,7 @@
 # CIDE
 
+**Note**: this repository needs to be cleaned up and refactored. There are many roles and playbooks that are not used anymore, and some of them are not even working. I'm planning to do this in the nearest future. Don't use this repository as a reference for now.
+
 This repository contains playbooks and roles, that I use to:
 - Configure my local development environment, from wallpapers and keyboard shortcuts to byobu, firejail and VSCode.
 - Configure my remote development environment on a dedicated server, which usually does all heavy lifting.
