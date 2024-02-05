@@ -21,7 +21,5 @@
       tags: golang
     - role: go-jira
       tags: go-jira
-    - role: firejail
-      tags: firejail
     - role: jekyll
       tags: jekyll

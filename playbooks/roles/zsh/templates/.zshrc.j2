@@ -126,6 +126,8 @@ export DENO_INSTALL="/$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Ruby gems, needed for Jekyll
+# https://stackoverflow.com/questions/23963018/rvm-is-not-a-function-selecting-rubies-with-rvm-use-will-not-work
+source ~/.rvm/scripts/rvm
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 
@@ -235,6 +237,10 @@ if [ "$CIDE_ENVIRONMENT" = "localhost" ]; then
   -L 9098:127.0.0.1:9098 \
   -L 1333:127.0.0.1:1333 \
   -L 1999:127.0.0.1:1999 \
+{# Jekyll #}
+  -L 4111:127.0.0.1:4111 \
+{# Jekyll live reload #}
+-L 4112:127.0.0.1:4112 \
   demid@cloud"
 
   alias log_time="(cd $HOME/Soft/toggl-tempo-worklog-transfer && $HOME/Soft/toggl-tempo-worklog-transfer/.fenv/bin/python $HOME/Soft/toggl-tempo-worklog-transfer/sync_timelogs.py)"
@@ -346,6 +352,9 @@ elif [ "$CIDE_ENVIRONMENT" = "cloud" ]; then
   export PATH=$PATH:/usr/local/go/bin
   eval "$(jira --completion-script-bash)"
 
+  # #############################################
+  # Direnv  #####################################
+  eval "$(direnv hook zsh)"
 fi
 
 . ${HOME}/Soft/z_jump_around/z.sh

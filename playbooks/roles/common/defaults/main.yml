@@ -30,6 +30,7 @@ server_packages:
   - slirp4netns
   - apparmor
   - default-jdk
+  - direnv
   # LaTeX tools
   - latexmk
   - texlive

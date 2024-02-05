@@ -135,11 +135,21 @@
   tags:
     - shortcuts
     - obsidian_jira
+    - obsidian
 
 - name: Add tdrop Obsidian shortcut.
-  ansible.builtin.shell: "python3 add_shortcut.py 'Obsidian open' '{{ software_directory }}/tdrop/tdrop_wrapper' 'Insert'"
+  ansible.builtin.shell: "python3 add_shortcut.py 'Obsidian open' '{{ software_directory }}/tdrop/tdrop_obsidian' 'Insert'"
   args:
     chdir: "{{ software_directory }}/add_shortcut/"
   tags:
     - shortcuts
     - tdrop
+    - obsidian
+
+- name: Add Firefox Profile manager shortcut
+  ansible.builtin.shell: "python3 add_shortcut.py 'Firefox Profile manager' '/usr/bin/firefox -P' '<Alt>P'"
+  args:
+    chdir: "{{ software_directory }}/add_shortcut/"
+  tags:
+    - shortcuts
+    - firefox

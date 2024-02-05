@@ -3,7 +3,7 @@
 **Note**: this repository needs to be cleaned up and refactored. There are many roles and playbooks that are not used anymore, and some of them are not even working. I'm planning to do this in the nearest future. Don't use this repository as a reference for now.
 
 This repository contains playbooks and roles, that I use to:
-- Configure my local development environment, from wallpapers and keyboard shortcuts to byobu, firejail and VSCode.
+- Configure my local development environment, from wallpapers and keyboard shortcuts to byobu and VSCode.
 - Configure my remote development environment on a dedicated server, which usually does all heavy lifting.
 - Deploy many other self-hosted services, such as [SearX](https://searx.me/) or [Firefly III](https://www.firefly-iii.org/).
 
@@ -53,11 +53,6 @@ This repository contains playbooks and roles, that I use to:
     ```
 1. Log in and log out to activate new default shell.
 1. Open [Syncthing Web UI](http://127.0.0.1:8384/), remove default folder and configure all devices.
-1. Run the follwing in `tridactyl`:
-    ```
-    autocmd TriStart .* source --url https://raw.githubusercontent.com/0x29a/cide/master/playbooks/roles/localhost/files/.tridactylrc
-    ```
-    I need this workaround because `tridactyl` native messenger is tricky to set up in a firejail.
 1. [TO AUTOMATE] Add a new keyboard layout and set <Left Shift><Right Shift> shortcut.
 1. [TO AUTOMATE] Install Tor Browser.
 1. [TO AUTOMATE] Reverse touchpad scroll.
