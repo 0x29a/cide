@@ -26,6 +26,13 @@ custom-commands:
        --template table \
        --query "assignee = {{ github_username }} and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived)"
 
+  - name: sp_next_not_ready
+    help: display all issues in my next sprint that are not ready
+    script: |-
+      {% raw %}{{jira}}{% endraw %} list \
+       --template table \
+       --query assignee = 0x29a and sprint in futureSprints() and status not in (Recurring, Done, \"Deployed & Delivered\", Archived) and \"Ready for a sprint\" = 0"
+
   - name: o
     help: open Jira ticket in the Firefox
     script: |-

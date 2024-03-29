@@ -88,5 +88,4 @@
   ansible.builtin.pip:
     name:
       - docker
-      - docker-compose
     virtualenv: "{{ docker_user_info.home }}/venv"

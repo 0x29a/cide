@@ -1,0 +1,37 @@
+- name: Import rootless_dockerrole.
+  ansible.builtin.import_role:
+    name: rootless_docker
+  vars:
+    docker_user: "{{ isso_username }}"
+
+- name: Register Docker user info
+  become: true
+  ansible.builtin.user:
+    name: "{{ isso_username }}"
+  check_mode: true
+  register: docker_user_info
+
+- name: Copy necessary files to the user's home directory.
+  become: true
+  become_user: "{{ isso_username }}"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ docker_user_info.home }}/{{ item }}"
+  with_items:
+    - Dockerfile
+    - docker-compose.yml
+    - uwsgi.ini
+
+- name: Create isso.cfg from template.
+  become: true
+  become_user: "{{ isso_username }}"
+  ansible.builtin.template:
+    src: isso.cfg.j2
+    dest: "{{ docker_user_info.home }}/isso.cfg"
+
+- name: Start isso services.
+  become: true
+  become_user: "{{ isso_username }}"
+  ansible.builtin.shell: docker compose up --build -d
+  args:
+    chdir: "{{ docker_user_info.home }}"

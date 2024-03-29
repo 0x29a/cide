@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    ports:
+      - 27488:27488
+    volumes:
+      - data:/opt/isso/db
+    restart: always
+
+volumes:
+  data: {}

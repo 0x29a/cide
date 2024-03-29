@@ -1,0 +1,26 @@
+- name: Import rootless_dockerrole.
+  ansible.builtin.import_role:
+    name: rootless_docker
+  vars:
+    docker_user: "{{ ghost_username }}"
+
+- name: Register Docker user info
+  become: true
+  ansible.builtin.user:
+    name: "{{ ghost_username }}"
+  check_mode: true
+  register: docker_user_info
+
+- name: Create docker-compose.yml from template.
+  become: true
+  become_user: "{{ ghost_username }}"
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_user_info.home }}/docker-compose.yml"
+
+- name: Start Ghost services.
+  become: true
+  become_user: "{{ ghost_username }}"
+  ansible.builtin.shell: docker compose up --build -d
+  args:
+    chdir: "{{ docker_user_info.home }}"

@@ -51,3 +51,6 @@ cide_app: requirements
 
 save_guake_settings:
 	guake --save-preferences ~/Projects/cide/playbooks/roles/localhost/files/guake_preferences
+
+vault: requirements
+	$(BIN)/ansible-vault edit .vars.private.yml

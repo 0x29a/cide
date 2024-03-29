@@ -15,3 +15,13 @@
     tls internal
     reverse_proxy 127.0.0.1:8776
 }
+
+{{ isso_domain }} {
+    tls internal
+    reverse_proxy 127.0.0.1:27488
+}
+
+{{ ghost_domain }} {
+    tls internal
+    reverse_proxy 127.0.0.1:2368
+}

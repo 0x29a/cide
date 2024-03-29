@@ -1,0 +1,15 @@
+[general]
+dbpath = /opt/isso/db/comments.db
+host = {{ isso_host }}
+
+[admin]
+enabled = true
+password = {{ isso_password }}
+
+[guard]
+enabled = false
+ratelimit = 2
+direct-reply = 3
+reply-to-self = false
+require-author = false
+require-email = false

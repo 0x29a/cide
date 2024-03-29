@@ -29,6 +29,10 @@
       tags: searx
     - role: bookwyrm
       tags: bookwyrm
+    - role: isso
+      tags: isso
+    - role: ghost
+      tags: ghost
     - role: plausible
       tags: plausible
     - role: caddy
