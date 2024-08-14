@@ -110,7 +110,7 @@
 
 # TODO: convert shortcut installer into a separate role and move this to the localhost role.
 - name: Add shared todoist helper shortcut.
-  ansible.builtin.shell: "python3 add_shortcut.py 'Add obsidian task' 'todoist_helper add-obsidian -i {{ personal_vault_directory }}/0x29a/_todo/Inbox.md' '<Super>Space'"
+  ansible.builtin.shell: "python3 add_shortcut.py 'Add obsidian task' 'todoist_helper add' '<Super>Space'"
   args:
     chdir: "{{ software_directory }}/add_shortcut/"
   tags: shortcuts
