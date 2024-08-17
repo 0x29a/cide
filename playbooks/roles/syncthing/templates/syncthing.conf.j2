@@ -1,0 +1,6 @@
+[program:syncthing]
+autorestart = True
+directory = /home/{{ syncthing_username }}
+user = {{ syncthing_username }}
+command = /usr/bin/syncthing --no-browser --home="/home/{{ syncthing_username }}/.config/syncthing"
+environment = STNORESTART="1", HOME="/home/{{ syncthing_username }}"

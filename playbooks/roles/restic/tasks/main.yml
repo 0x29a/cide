@@ -1,0 +1,18 @@
+- name: Install restic.
+  become: true
+  ansible.builtin.apt:
+    name: restic
+    update_cache: true
+    state: present
+
+- name: Create user account.
+  become: true
+  ansible.builtin.user:
+    name: "{{ restic_username }}"
+    comment: "{{ restic_username }} system user"
+    createhome: yes
+    shell: /bin/false
+    password: '*'
+    state: present
+
+# TODO: add backup tasks

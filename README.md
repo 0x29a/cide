@@ -15,7 +15,7 @@ This repository contains playbooks and roles, that I use to:
 
 1. Backup database:
     ```sh
-    cp -r ~/Cloud /media/<username>/<ID>/Cloud
+    cp -r ~/PersonalVault /media/<username>/<ID>/PersonalVault
     ```
 1. Backup zsh history:
     ```sh

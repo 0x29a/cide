@@ -31,15 +31,14 @@
       tags: bookwyrm
     - role: isso
       tags: isso
-    - role: ghost
-      tags: ghost
     - role: plausible
       tags: plausible
     - role: caddy
       tags: caddy
     - role: syncthing
-      become: true
       tags: syncthing
+    - role: restic
+      tags: restic
     - role: opencraft
       tags: opencraft
     - role: monitoring

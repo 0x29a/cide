@@ -12,9 +12,9 @@
       tags: zsh
     - role: neovim
       tags: neovim
-    - role: syncthing
-      become: true
-      tags: syncthing
+    # TODO: implement for localhost
+    # - role: syncthing
+    #   tags: syncthing
     - role: opencraft_local
       tags: opencraft
     - role: golang

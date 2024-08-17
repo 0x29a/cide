@@ -1,28 +1,112 @@
-- name: Install Syncthing public signing key.
-  ansible.builtin.apt_key:
+- name: Add Syncthing repo key.
+  become: true
+  ansible.builtin.get_url:
     url: https://syncthing.net/release-key.gpg
-    state: present
+    dest: /etc/apt/keyrings/syncthing-archive-keyring.gpg
 
 - name: Add Syncthing repo.
+  become: true
   ansible.builtin.apt_repository:
-    repo: deb https://apt.syncthing.net/ syncthing stable
+    repo: deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable
     state: present
 
 - name: Install Syncthing.
+  become: true
   ansible.builtin.apt:
     name: syncthing
     update_cache: true
     state: present
 
+- name: Create user account.
+  become: true
+  ansible.builtin.user:
+    name: "{{ syncthing_username }}"
+    comment: "{{ syncthing_username }} system user"
+    createhome: yes
+    shell: /bin/false
+    password: '*'
+    state: present
+
+- name: Allow syncthing port.
+  become: true
+  community.general.ufw:
+    rule: allow
+    name: syncthing
+    dest: "{{ primary_ip_address }}"
+
+- name: Allow syncthing port for IPv6.
+  become: true
+  community.general.ufw:
+    rule: allow
+    name: syncthing
+    dest: "::"
+
 - name: Add syncthing.conf supervisor service config.
+  become: true
   ansible.builtin.template:
     src: syncthing.conf.j2
     dest: /etc/supervisor/conf.d/syncthing.conf
 
 - name: Reload supervisor.
+  become: true
   ansible.builtin.service: name=supervisor state=reloaded
 
 - name: Start syncthing process.
+  become: true
   community.general.supervisorctl:
     name: syncthing
     state: started
+
+- name: Install restic.
+  become: true
+  ansible.builtin.apt:
+    name: restic
+    update_cache: true
+    state: present
+
+- name: Define password file path.
+  set_fact:
+    password_file: "/home/{{ syncthing_username }}/.restic_personal_vault_password"
+
+- name: Create password files.
+  become: true
+  become_user: "{{ syncthing_username }}"
+  ansible.builtin.copy:
+    content: "{{ restic_personal_vault_password }}"
+    dest: "{{ password_file }}"
+    mode: 0600
+
+- name: Check if restic repository is initialized.
+  become: true
+  become_user: "{{ syncthing_username }}"
+  ansible.builtin.shell: "restic snapshots --password-file {{ password_file }}"
+  environment:
+    RESTIC_REPOSITORY: "{{ restic_personal_vault_repository }}"
+  register: restic_snapshots_result
+  ignore_errors: yes
+
+- name: Initialize restic repository.
+  become: true
+  become_user: "{{ syncthing_username }}"
+  ansible.builtin.shell: restic init --password-file {{ password_file }}
+  environment:
+    RESTIC_REPOSITORY: "{{ restic_personal_vault_repository }}"
+  when: restic_snapshots_result.rc != 0
+
+- name: Create restic backup cron job for personal vault.
+  become: true
+  become_user: "{{ syncthing_username }}"
+  ansible.builtin.cron:
+    name: restic_backup_personal_vault
+    minute: "0"
+    hour: "2"
+    job: RESTIC_REPOSITORY={{ restic_personal_vault_repository }} restic backup /home/{{ syncthing_username }}/PersonalVault --password-file {{ password_file }}
+
+- name: Create restic cleanup cron job for personal vault.
+  become: true
+  become_user: "{{ syncthing_username }}"
+  ansible.builtin.cron:
+    name: restic_cleanup_personal_vault
+    minute: "0"
+    hour: "3"
+    job: RESTIC_REPOSITORY={{ restic_personal_vault_repository }} restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --password-file {{ password_file }}
