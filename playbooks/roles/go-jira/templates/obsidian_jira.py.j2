@@ -31,9 +31,13 @@ def get_ticket_summary(ticket):
 
 
 def create_ticket_note(ticket, summary):
+    fixed_summary = summary
+    for char in ["<", ">", ":", '"', "/", "\\", "|", "?", "*"]:
+        fixed_summary = fixed_summary.replace(char, "")
+    fixed_summary = fixed_summary.strip()[:50]
     note = (
-        WORK_DIRECTORY / f"{ticket} - {summary}.md"
-        if summary
+        WORK_DIRECTORY / f"{ticket} - {fixed_summary}.md"
+        if fixed_summary
         else WORK_DIRECTORY / f"{ticket}.md"
     )
     note.touch()
