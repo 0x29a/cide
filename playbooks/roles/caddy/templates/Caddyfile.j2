@@ -11,8 +11,7 @@
     reverse_proxy 127.0.0.1:8977
 }
 
-{{ plausible_domain }} {
-    tls internal
+{{ plausible_domain }}:443 {
     reverse_proxy 127.0.0.1:8776
 }
 
@@ -21,7 +20,6 @@
     reverse_proxy 127.0.0.1:27488
 }
 
-{{ ghost_domain }} {
-    tls internal
-    reverse_proxy 127.0.0.1:2368
+{{ genesis_domain }}:443 {
+    reverse_proxy 127.0.0.1:8780
 }

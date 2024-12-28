@@ -31,6 +31,8 @@
       tags: bookwyrm
     - role: isso
       tags: isso
+    - role: genesis
+      tags: genesis
     - role: plausible
       tags: plausible
     - role: caddy

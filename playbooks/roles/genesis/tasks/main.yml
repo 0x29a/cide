@@ -1,0 +1,29 @@
+- name: Import rootless_docker role.
+  ansible.builtin.import_role:
+    name: rootless_docker
+  vars:
+    docker_user: "{{ genesis_username }}"
+
+- name: Generate .env.
+  become: true
+  become_user: "{{ genesis_username }}"
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker_user_info.home }}/.env"
+
+- name: Copy necessary files to the user's home directory.
+  become: true
+  become_user: "{{ genesis_username }}"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ docker_user_info.home }}/{{ item }}"
+  with_items:
+    - wp_php.ini
+    - docker-compose.yml
+
+- name: Start services.
+  become: true
+  become_user: "{{ genesis_username }}"
+  ansible.builtin.shell: docker compose up -d
+  args:
+    chdir: "{{ docker_user_info.home }}"
