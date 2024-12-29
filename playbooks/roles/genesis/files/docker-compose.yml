@@ -30,5 +30,20 @@ services:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
 
+  pma:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      UPLOAD_LIMIT: 50M
+    ports:
+      - ${IP}:8781:80
+    links:
+      - db:db
+    volumes:
+      - ./pma_php.ini:/usr/local/etc/php/conf.d/conf.ini
+      - ./pma_config.php:/etc/phpmyadmin/config.user.inc.php
+
 volumes:
   db_data:

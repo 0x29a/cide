@@ -18,8 +18,10 @@
     src: "{{ item }}"
     dest: "{{ docker_user_info.home }}/{{ item }}"
   with_items:
-    - wp_php.ini
     - docker-compose.yml
+    - wp_php.ini
+    - pma_php.ini
+    - pma_config.php
 
 - name: Start services.
   become: true
